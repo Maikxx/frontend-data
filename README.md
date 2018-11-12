@@ -16,6 +16,10 @@ cd frontend-data
 
 Then install the dependencies with: `yarn` or `npm install`.
 
+## Process
+
+The full log of my process can be found [here](docs/PROCESS.md)!
+
 ## Development
 
 ### Tools
