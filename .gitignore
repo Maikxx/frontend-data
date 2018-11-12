@@ -1,0 +1,6 @@
+# Misc
+.DS_Store
+
+# Development
+node_modules/
+data.json
