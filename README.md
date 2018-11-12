@@ -3,6 +3,7 @@
 ## Table of contents
 
 * [Installation](#Installation)
+* [Process](#Process)
 * [Development](#Development)
     * [Tools](#Tools)
 * [Honourable mentions](#Honourable-mentions)
