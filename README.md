@@ -5,6 +5,7 @@
 * [Installation](#Installation)
 * [Development](#Development)
     * [Tools](#Tools)
+* [Honourable mentions](#Honourable-mentions)
 * [License](#License)
 
 ## Installation
