@@ -4,3 +4,4 @@
 # Development
 node_modules/
 data.json
+dist/

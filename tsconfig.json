@@ -1,5 +1,16 @@
 {
     "compilerOptions": {
-      "lib": ["esnext", "dom"]
-    }
+      "lib": ["esnext"],
+      "rootDir": "./",
+      "target": "es5",
+      "module": "commonjs",
+      "outDir": "./dist",
+      "sourceMap": true
+    },
+    "include": [
+      "**/*.ts"
+    ],
+    "exclude": [
+      "node_modules"
+    ]
   }
