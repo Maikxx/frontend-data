@@ -1,4 +1,5 @@
 import { Result } from './types/Query'
+import * as uniqBy from 'lodash.uniqby'
 
 export const getLanguageFromResult = (result?: Result): string => {
     return result.languages
@@ -14,14 +15,7 @@ export const getAuthorFromResult = (result?: Result): string => {
         || undefined
 }
 
-export const getMainAuthorFromResult = (result?: Result): string => {
-    return result.authors
-        && result.authors['main-author']
-        && result.authors['main-author'].$t
-        || undefined
-}
-
-export const getGenreFromResult = (result?: Result): string | string[] => {
+export const getGenreOrGenresFromResult = (result?: Result): string | string[] => {
     const genres = result.genres
 
     if (genres && genres.genre) {
@@ -61,10 +55,21 @@ const getResultsByLanguageAndYear = (results: Result[], language: string, year: 
     })
 }
 
-const getTitlesByAuthor = (results: Result[], author: string) => {
-    const resultsByAuthor = results.filter(result => (
-        getAuthorFromResult(result) === author || getMainAuthorFromResult(result) === author
-    ))
+const getUniqueResultsByGenre = (resultsByLanguageAndYear: Result[], allResults: Result[]) => {
+    return uniqBy(resultsByLanguageAndYear.map(result => {
+        const genre = getGenreOrGenresFromResult(result) as string
+
+        return {
+            name: genre,
+            children: getAuthorsByGenre(resultsByLanguageAndYear, genre),
+        }
+    }), 'name')
+}
+
+const getTitlesByAuthorAndGenre = (results: Result[], author: string) => {
+    const resultsByAuthor = results.filter(result => {
+        return getAuthorFromResult(result) === author
+    })
 
     return resultsByAuthor.map(result => ({
         name: getTitleFromResult(result),
@@ -72,42 +77,29 @@ const getTitlesByAuthor = (results: Result[], author: string) => {
     }))
 }
 
-const getAuthorsByGenre = (results: Result[], genre: string | string[]) => {
-    return results
+const getAuthorsByGenre = (results: Result[], genre: string) => {
+    const resultsByGenre = results
         .filter(result => {
-            const resultGenre = getGenreFromResult(result)
-
-            if (Array.isArray(genre) && !Array.isArray(resultGenre)) {
-                return genre.includes(resultGenre)
-            } else if (!Array.isArray(genre) && Array.isArray(resultGenre)) {
-                return resultGenre.includes(genre)
-            } else if (Array.isArray(genre) && Array.isArray(resultGenre)) {
-                return genre.filter(g => resultGenre.includes(g))
-            }
+            const resultGenre = getGenreOrGenresFromResult(result)
+            return genre === resultGenre
         })
+
+    return resultsByGenre
         .map(result => {
-            const author = getAuthorFromResult(result) || getMainAuthorFromResult(result)
+            const author = getAuthorFromResult(result)
 
             return {
                 name: author,
-                children: getTitlesByAuthor(results, author),
+                children: getTitlesByAuthorAndGenre(resultsByGenre, author),
             }
         })
 }
 
 export const getDataStructureFromResults = (results: Result[]) => {
+    // Works
     const resultsByLanguageAndYear = getResultsByLanguageAndYear(results, 'dut', 2014)
-
-    const genresByLanguageAndYear = resultsByLanguageAndYear.map(result => {
-        const genre = Array.isArray(getGenreFromResult(result))
-            ? getGenreFromResult(result)[0]
-            : getGenreFromResult(result)
-
-        return {
-            name: genre,
-            children: getAuthorsByGenre(results, genre),
-        }
-    })
+    // Broken: Gets unique genres the contents of it are wrong
+    const genresByLanguageAndYear = getUniqueResultsByGenre(resultsByLanguageAndYear, results)
 
     console.dir(genresByLanguageAndYear, { depth: null })
 

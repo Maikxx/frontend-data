@@ -1,5 +1,5 @@
 import { Query, Facet, Result } from './types/Query'
-import { getGenreFromResult, getYearOfPublicationFromResult } from './getters'
+import { getYearOfPublicationFromResult, getAuthorFromResult, getGenreOrGenresFromResult } from './getters'
 
 const API = require('node-oba-api-wrapper')
 
@@ -12,15 +12,17 @@ const client = new API({
 export const search = async (query: Query, facet: Facet, amount?: number): Promise<Result[]> => {
     return await client.get('search', {
         q: query,
-        librarian: true,
         refine: true,
         facet,
         count: amount || 10,
         filter: (result: Result) => {
             const tenYearsAgo = new Date().getFullYear() - 10
             const publicationYear = getYearOfPublicationFromResult(result)
+            const genreOrGenres = getGenreOrGenresFromResult(result)
 
             return publicationYear >= tenYearsAgo
+                && !!getAuthorFromResult(result)
+                && (genreOrGenres && !Array.isArray(genreOrGenres))
         },
     })
 }
