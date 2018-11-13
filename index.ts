@@ -12,17 +12,19 @@ const app = express()
 const port = 3000
 
 // Data
-import { search } from './api/queries'
+import { queryAll } from './api/queries'
+import { getDataStructureFromResults } from './api/getters'
 
 ; (async () => {
     try {
-        const results = await search(`language:dut`, ['type(book)'], 100)
+        const results = await queryAll()
+        const dataStructure = getDataStructureFromResults(results)
 
-        app.get('/', (req: Express.Request, res: any) => res.json(results))
+        app.get('/', (req: Express.Request, res: any) => res.json(dataStructure))
         app.listen(port, () => console.log(`\nAvailable on: localhost:${port}`))
 
         if (process.env.NODE_ENV !== 'production') {
-            fs.writeFile('data.json', JSON.stringify(results), err => err && console.error(err))
+            fs.writeFile('data.json', JSON.stringify(dataStructure), err => err && console.error(err))
         }
     } catch (error) {
         console.error(error)

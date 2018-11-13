@@ -46,6 +46,18 @@ export interface ResultTitlesShortTitle {
     $t?: string
 }
 
+export interface ResultGenres {
+    genre?: ResultGenre | ResultGenre[]
+}
+
+export interface ResultGenre {
+    translation?: string
+    'search-method'?: string
+    'search-term'?: string
+    'search-type'?: string
+    $t?: string
+}
+
 export interface ResultAuthors {
     'main-author'?: {
         'search-method'?: string
@@ -99,32 +111,26 @@ export interface ResultPublication {
 }
 
 export interface ResultPublicationYear {
-    year?: {
-        translation?: string
-        'search-method'?: string
-        'search-term'?: string
-        'search-type'?: string
-        $t?: string
-    }
+    translation?: string
+    'search-method'?: string
+    'search-term'?: string
+    'search-type'?: string
+    $t?: string
 }
 
 export interface ResultPublicationPublishers {
-    publisher?: {
-        translation?: string
-        'search-method'?: string
-        'search-term'?: string
-        'search-type'?: string
-        year?: string
-        place?: string
-        $t?: string
-    }
+    translation?: string
+    'search-method'?: string
+    'search-term'?: string
+    'search-type'?: string
+    year?: string
+    place?: string
+    $t?: string
 }
 
 export interface ResultPublicationEditions {
-    edition?: {
-        translation?: string
-        $t?: string
-    }
+    translation?: string
+    $t?: string
 }
 
 export interface ResultLanguages {
@@ -308,6 +314,7 @@ export interface Result {
     publication?: ResultPublication
     languages?: ResultLanguages
     subjects?: ResultSubjects
+    genres?: ResultGenres
     description?: ResultDescription
     summaries?: ResultSummaries
     notes?: ResultNotes

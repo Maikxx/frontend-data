@@ -20,6 +20,37 @@ When I finally got it to work, I decided to start transforming the data from the
 I did this, mainly, because I think it will be easier for me to see a pattern of data, which is interesting to explore.
 [Last projects visualization](https://beta.observablehq.com/@maikxx/division-of-books-per-language-at-the-oba) was not very exciting, so I am trying to make it exciting this time.
 
+### Day 2
+
+**Variables required**
+
+* Genres
+* Author
+* Language
+* Title
+* Years
+
+**Concept**
+
+Show a graph with on the X-axis the years, while on the Y-axis the amount of books per year is shown.
+The graph is shown on a language base.
+
+When clicking on a dot on the amount a web opens up, with different levels:
+
+1. Amount of books
+2. Genres
+3. Author
+4. Title
+
+When clicking on a point when it is opened, it closes again. You can also change the language to multiple different languages, which are:
+
+* Dutch
+* German
+* French
+* English
+* Spanish
+* Italian
+
 <!-- Links -->
 [nodemon]: https://nodemon.io
 [typescript]: https://www.typescriptlang.org

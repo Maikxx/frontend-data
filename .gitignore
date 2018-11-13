@@ -3,6 +3,6 @@
 
 # Development
 node_modules/
-data.json
 dist/
 .env
+search.error.json
