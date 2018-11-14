@@ -1311,6 +1311,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
+lodash.uniq@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
+  integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
+
 lodash.uniqby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.uniqby/-/lodash.uniqby-4.7.0.tgz#d99c07a669e9e6d24e1362dfe266c67616af1302"
@@ -1510,12 +1515,18 @@ node-expat@^2.3.15:
     bindings "^1.2.1"
     nan "^2.10.0"
 
+node-filter-async@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/node-filter-async/-/node-filter-async-1.0.1.tgz#5fdf8fb9f7cedd6fda2900d374241ed659a9aafa"
+  integrity sha512-TZPxjE55hBe/vUaS+Jlwj9qFVTj2YSLRaiLDU/MlYCnLErdPpBFA6ZZwLprghfoPXpsSmVMmCwKUD3HUCnxtgQ==
+
 node-oba-api-wrapper@maanlamp/node-oba-api-wrapper:
   version "1.0.0"
-  resolved "https://codeload.github.com/maanlamp/node-oba-api-wrapper/tar.gz/bbf097efbd36e791dd11d90524c834f947463d13"
+  resolved "https://codeload.github.com/maanlamp/node-oba-api-wrapper/tar.gz/8d90b6d3f43db269db77b5f9c52abeeba5ba6d4f"
   dependencies:
     chalk "^2.4.1"
     cli-progress "^2.1.0"
+    node-filter-async "^1.0.1"
     oba-api "github:rijkvanzanten/node-oba-api"
 
 node-pre-gyp@^0.10.0:
