@@ -78,7 +78,7 @@ const getTitlesByAuthorFromResultByGenre = (allResultsByGenre: Result[], author:
             const title = getTitleFromResult(result)
             return {
                 name: title,
-                amount: title.length,
+                size: title.length,
             }
         })
 }
@@ -100,12 +100,8 @@ const getUniqueResultsByGenre = (resultsByLanguageAndYear: Result[], allResults:
 }
 
 export const getDataStructureFromResults = (results: Result[]) => {
-    // Works
     const resultsByLanguageAndYear = getResultsByLanguageAndYear(results, 'dut', 2014)
-    // Broken: Gets unique genres the contents of it are wrong
     const genresByLanguageAndYear = getUniqueResultsByGenre(resultsByLanguageAndYear, results)
-
-    console.dir(genresByLanguageAndYear, { depth: null })
 
     return {
         name: 'genres',

@@ -23,9 +23,9 @@ import { getDataStructureFromResults } from './api/getters'
         app.get('/', (req: Express.Request, res: any) => res.json(dataStructure))
         app.listen(port, () => console.log(`\nAvailable on: localhost:${port}`))
 
-        if (process.env.NODE_ENV !== 'production') {
-            fs.writeFile('data.json', JSON.stringify(dataStructure), err => err && console.error(err))
-        }
+        // if (process.env.NODE_ENV !== 'production') {
+        //     fs.writeFile('data.json', JSON.stringify(dataStructure), err => err && console.error(err))
+        // }
     } catch (error) {
         console.error(error)
 
