@@ -25,7 +25,7 @@ cd frontend-data
 
 ## Concept
 
-<!-- TODO add detailed description per image -->
+<!-- TODO: add detailed description per image -->
 
 ![Concept image 1](docs/concept-visualization-01.jpg)
 ![Concept image 2](docs/concept-visualization-02.jpg)
@@ -34,6 +34,8 @@ cd frontend-data
 ![Concept image 5](docs/concept-visualization-05.jpg)
 
 ## Process
+
+<!-- TODO: Summary -->
 
 The full log of my process can be found [here](docs/PROCESS.md)!
 
