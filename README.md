@@ -18,11 +18,10 @@ git clone git@github.com:Maikxx/frontend-data.git
 cd frontend-data
 ```
 
-Then install the dependencies with: `yarn` or `npm install`.
-Copy the _.env.example_ file with `cp .env.example .env` and provide the API keys.
-Then run the _development server_ with (**Warning: Don't do this on celular**) `yarn serve` or `npm run serve`.
-
-Start _linting_ with `yarn lint` or `npm run lint`.
+1. Install the dependencies with: `yarn` or `npm install`.
+2. Copy the _.env.example_ file with `cp .env.example .env` and provide the API keys.
+3. Run the _development server_ with (**Warning: Don't do this on celular**) `yarn serve` or `npm run serve`.
+4. Start _linting_ with `yarn lint` or `npm run lint`.
 
 ## Concept
 
