@@ -20,6 +20,10 @@ cd frontend-data
 
 Then install the dependencies with: `yarn` or `npm install`.
 
+Then run the _development server_ with (**Warning: Don't do this on celular**) `yarn serve`.
+
+Start _linting_ with `yarn lint`.
+
 ## Concept
 
 ![Concept image 1](docs/concept-visualization-01.jpg)
