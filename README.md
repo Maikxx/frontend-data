@@ -25,6 +25,8 @@ cd frontend-data
 
 ## Concept
 
+<!-- TODO add detailed description per image -->
+
 ![Concept image 1](docs/concept-visualization-01.jpg)
 ![Concept image 2](docs/concept-visualization-02.jpg)
 ![Concept image 3](docs/concept-visualization-03.jpg)

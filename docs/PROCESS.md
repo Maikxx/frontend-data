@@ -81,6 +81,14 @@ This caused multiple problems as well, since for some reason Node can run out of
 
 However, for [Chelsea](https://github.com/chelseadoeleman) we could not find a solution as easy as this, we had to boost the amount of memory allocated to Node, which is something you don't really want to do, but had to be done for now. It might be needed for me in the end as well when binding the data from the API to the cities data.
 
+### Day 4
+
+ <!--TODO  -->
+
+ ### Day 5
+
+ <!-- TODO -->
+
 <!-- Links -->
 [nodemon]: https://nodemon.io
 [typescript]: https://www.typescriptlang.org
