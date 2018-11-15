@@ -1,4 +1,4 @@
-# frontend-data
+# Frontend Data
 
 ## Table of contents
 
