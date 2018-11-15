@@ -4,6 +4,8 @@
 
 * [Week 1](#Week-1)
     * [Day 1](#Day-1)
+    * [Day 2](#Day-2)
+    * [Day 3](#Day-3)
 
 ## Week 1
 
@@ -21,6 +23,9 @@ I did this, mainly, because I think it will be easier for me to see a pattern of
 [Last projects visualization](https://beta.observablehq.com/@maikxx/division-of-books-per-language-at-the-oba) was not very exciting, so I am trying to make it exciting this time.
 
 ### Day 2
+
+Today I spend a lot of time in transforming the data to be a certain format for an example that I found.
+I also thought about the variables I wanted to use, the concept on it's whole and how it would work out.
 
 **Variables required**
 
@@ -50,6 +55,31 @@ When clicking on a point when it is opened, it closes again. You can also change
 * English
 * Spanish
 * Italian
+* Russian
+
+After trying a lot of languages, I found out that Russian and Italian had barely any books in the database, besed on my genres, which caused me to strip them from the lookup, since it took too long.
+
+I iterated a lot of times here to optimize the code.
+
+### Day 3
+
+During the feedback moment of today I got to hear that I would need to change up my concept a bit in order for me to keep challenging myself. This was kind of a bummer, since I put a lot of work in getting it working yesterday, however it would also be fun to do something with a map, as was suggested.
+
+I changed up my concept by thinking of something that I would really like to make.
+I like flying a lot, so I wanted to do something with this.
+
+**Updated Concept**
+
+I started thinking about locations of where the books came from and eventually I came up with a globe, which has a lot of dots on them, which are the publication locations of the books.
+The color of these dots would be a certain scale, based on how long it would take to fly from that location to Amsterdam, based on one of a few airplanes, which can be selected with a select input right besides the globe.
+When you click on a certain location on the globe, the map will zoom out and show you the flying route drawn on the globe.
+
+After thinking of this concept I looked for a large dataset which would have a lot of cities from around the world in it. I soon realised that git does not like files which are more than 100mb in size, which got me stuck at this moment in time.
+
+I have already written the transformation code for the cities, so that is in a more useful format than a string.
+This caused multiple problems as well, since for some reason Node can run out of memory when performing large operations on large files, which is exactly what happend. For me it was enough to write my code a little bit different, so that Node doesn't have to load all the objects in the transformed array at once.
+
+However, for [Chelsea](https://github.com/chelseadoeleman) we could not find a solution as easy as this, we had to boost the amount of memory allocated to Node, which is something you don't really want to do, but had to be done for now. It might be needed for me in the end as well when binding the data from the API to the cities data.
 
 <!-- Links -->
 [nodemon]: https://nodemon.io
