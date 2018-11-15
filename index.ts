@@ -6,6 +6,9 @@ if (process.env.NODE_ENV !== 'production') {
 // Development
 import * as fs from 'fs'
 
+import * as path from 'path'
+const readStream = fs.createReadStream(`${path.join(__dirname, '/api/data')}/worldcitiespop.txt`, 'utf8')
+
 // Server
 import * as express from 'express'
 const app = express()
@@ -13,19 +16,30 @@ const port = 3000
 
 // Data
 import { queryAll } from './api/queries'
-import { getDataStructureFromResults } from './api/getters'
+
+import { getTransformedCityData, getPublicationLocationFromResults } from './api/getters'
 
 ; (async () => {
     try {
-        const results = await queryAll()
-        const dataStructure = getDataStructureFromResults(results)
+        const cityData = []
+        readStream
+            .on('data', chunk => {
+                cityData.push(getTransformedCityData(chunk))
+            })
+            .on('end', async () => {
+                // console.log(cityData)
+            })
 
-        app.get('/', (req: Express.Request, res: any) => res.json(dataStructure))
+        const results = await queryAll()
+        const publicationLocations = results.map(getPublicationLocationFromResults)
+        console.log(publicationLocations)
+
+        app.get('/', (req: Express.Request, res: any) => res.json(results))
         app.listen(port, () => console.log(`\nAvailable on: localhost:${port}`))
 
-        // if (process.env.NODE_ENV !== 'production') {
-        //     fs.writeFile('data.json', JSON.stringify(dataStructure), err => err && console.error(err))
-        // }
+        if (process.env.NODE_ENV !== 'production') {
+            fs.writeFile('data.json', JSON.stringify(results), err => err && console.error(err))
+        }
     } catch (error) {
         console.error(error)
 

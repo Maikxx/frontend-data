@@ -119,13 +119,15 @@ export interface ResultPublicationYear {
 }
 
 export interface ResultPublicationPublishers {
-    translation?: string
-    'search-method'?: string
-    'search-term'?: string
-    'search-type'?: string
-    year?: string
-    place?: string
-    $t?: string
+    publisher?: {
+        translation?: string
+        'search-method'?: string
+        'search-term'?: string
+        'search-type'?: string
+        year?: string
+        place?: string
+        $t?: string
+    }
 }
 
 export interface ResultPublicationEditions {
