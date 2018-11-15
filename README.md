@@ -19,7 +19,7 @@ cd frontend-data
 ```
 
 Then install the dependencies with: `yarn` or `npm install`.
-
+Copy the _.env.example_ file with `cp .env.example .env` and provide the API keys.
 Then run the _development server_ with (**Warning: Don't do this on celular**) `yarn serve`.
 
 Start _linting_ with `yarn lint`.
