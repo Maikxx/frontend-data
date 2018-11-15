@@ -22,11 +22,11 @@ Then install the dependencies with: `yarn` or `npm install`.
 
 ## Concept
 
-![Concept image 1](docs/concept-visualiation-01.jpg)
-![Concept image 2](docs/concept-visualiation-02.jpg)
-![Concept image 3](docs/concept-visualiation-03.jpg)
-![Concept image 4](docs/concept-visualiation-04.jpg)
-![Concept image 5](docs/concept-visualiation-05.jpg)
+![Concept image 1](docs/concept-visualization-01.jpg)
+![Concept image 2](docs/concept-visualization-02.jpg)
+![Concept image 3](docs/concept-visualization-03.jpg)
+![Concept image 4](docs/concept-visualization-04.jpg)
+![Concept image 5](docs/concept-visualization-05.jpg)
 
 ## Process
 
