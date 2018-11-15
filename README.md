@@ -18,6 +18,14 @@ cd frontend-data
 
 Then install the dependencies with: `yarn` or `npm install`.
 
+## Concept
+
+![Concept image 1](docs/concept-visualiation-01.jpg)
+![Concept image 2](docs/concept-visualiation-02.jpg)
+![Concept image 3](docs/concept-visualiation-03.jpg)
+![Concept image 4](docs/concept-visualiation-04.jpg)
+![Concept image 5](docs/concept-visualiation-05.jpg)
+
 ## Process
 
 The full log of my process can be found [here](docs/PROCESS.md)!
@@ -40,6 +48,10 @@ The full log of my process can be found [here](docs/PROCESS.md)!
     Chelsea helped me writing the data transformators and getting me up and running with D3.
 * [Jessie](https://github.com/jessiemasonx):
     Jessie helped me getting up and running with D3.
+
+## Sources
+* Netherlands in the World.svg - Wikimedia Commons [Illustration]. (2011, April 11). Retrieved November 15, 2018, from https://commons.wikimedia.org/wiki/File:Netherlands_in_the_World.svg
+* Spoon, S. (2009, February 3). Blank map of the Netherlands - Wikimedia Commons [Illustration]. Retrieved November 15, 2018, from https://commons.wikimedia.org/wiki/File:Blank_map_of_the_Netherlands.svg
 
 ## License
 
