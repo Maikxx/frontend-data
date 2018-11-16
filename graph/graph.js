@@ -1,3 +1,5 @@
+// Geolocation API //
+
 // MapBox //
 
 const view = "map"

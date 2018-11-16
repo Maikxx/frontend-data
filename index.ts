@@ -11,23 +11,22 @@ import * as express from 'express'
 const app = express()
 const port = 3000
 
-// Data
-import { queryAll } from './api/queries'
-
-import { getPublicationLocationFromResults } from './api/getters'
+import { getTransformedDataFromResults } from './api/getters'
 
 ; (async () => {
     try {
-        const results = await queryAll()
-        const publicationLocations = results.map(getPublicationLocationFromResults)
-        console.log(publicationLocations)
+        fs.readFile(`${__dirname}/data/rawData.json`, (err, data) => {
+            const results = JSON.parse(data.toString())
+            const transformedData = results.map(getTransformedDataFromResults)
 
-        app.get('/', (req: Express.Request, res: any) => res.json(results))
-        app.listen(port, () => console.log(`\nAvailable on: localhost:${port}`))
+            app.get('/', (req: Express.Request, res: any) => res.json(transformedData))
+            app.listen(port, () => console.log(`\nAvailable on: localhost:${port}`))
 
-        if (process.env.NODE_ENV !== 'production') {
-            fs.writeFile('data.json', JSON.stringify(results), err => err && console.error(err))
-        }
+            if (process.env.NODE_ENV !== 'production') {
+                fs.writeFile('data/data.json', JSON.stringify(transformedData), err => err && console.error(err))
+            }
+        })
+
     } catch (error) {
         console.error(error)
 

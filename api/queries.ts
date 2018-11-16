@@ -1,5 +1,5 @@
 import { Query, Facet, Result } from './types/Query'
-import { getPublicationLocationFromResults } from './getters'
+import { getTransformedDataFromResults } from './getters'
 
 const API = require('node-oba-api-wrapper')
 
@@ -16,7 +16,7 @@ export const search = async (query: Query, facet: Facet, amount?: number): Promi
         facet,
         count: amount || 100,
         filter: (result: Result) => {
-            const location = getPublicationLocationFromResults(result)
+            const location = getTransformedDataFromResults(result)
 
             return location && !Array.isArray(location)
         },
