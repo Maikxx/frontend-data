@@ -25,18 +25,8 @@ export const search = async (query: Query, facet: Facet, amount?: number): Promi
 
 export const queryAll = async (): Promise<Result[]> => {
     const dutchBooks = await search('language:dut', ['type(book)'])
-    // const englishBooks = await search('language:eng', ['type(book)'])
-    // const germanBooks = await search('language:ger', ['type(book)'])
-    // const frenchBooks = await search('language:fre', ['type(book)'])
-    // const russianBooks = await search('language:rus', ['type(book)'])
-    // const spanishBooks = await search('language:spa', ['type(book)'])
 
     return [
         ...dutchBooks,
-        // ...englishBooks,
-        // ...germanBooks,
-        // ...frenchBooks,
-        // ...russianBooks,
-        // ...spanishBooks,
     ]
 }
