@@ -4,6 +4,7 @@
 
 * [Installation](#Installation)
 * [Concept](#Concept)
+    * [Future enhancements](#Future-enhancements)
 * [Process](#Process)
 * [Development](#Development)
     * [Tools](#Tools)
@@ -33,6 +34,10 @@ cd frontend-data
 ![Concept image 4](docs/concept-visualization-04.jpg)
 ![Concept image 5](docs/concept-visualization-05.jpg)
 
+### Future enhancements
+
+* Implement search functionality.
+
 ## Process
 
 <!-- TODO: Summary -->
@@ -49,8 +54,6 @@ The full log of my process can be found [here](docs/PROCESS.md)!
 
 ## Honourable mentions
 
-* [Daniël](https://github.com/DanielvandeVelde):
-    Daniël helped me a lot by having a great [README](https://github.com/DanielvandeVelde/functional-programming/blob/master/README.md), which explained pretty much the whole OBA API in an easy way.
 * [Wouter](https://github.com/maanlamp):
     Wouter created the [boilerplate for pagination](https://github.com/maanlamp/node-oba-api-wrapper) with the OBA API.
 * [Chelsea](https://github.com/chelseadoeleman):

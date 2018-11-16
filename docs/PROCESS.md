@@ -85,11 +85,17 @@ However, for [Chelsea](https://github.com/chelseadoeleman) we could not find a s
 
 ### Day 4
 
- <!--TODO  -->
+I didn't have a lot of time today, so I only managed to update my concept and create some wireframes with Illustrator.
+The concept might be very difficult to realize in the end, but we will see about that when we get to that point.
 
- ### Day 5
+### Day 5
 
- <!-- TODO -->
+Today I started working with data in D3, however quickly noted that my idea was way too complex. I decided to leave out the search functionality in it's whole.
+It would be a great addition when there is more time.
+
+I also got a lot of help from [Wouter](https://github.com/maanlamp), Tim and [Chelsea](https://github.com/chelseadoeleman) today, with getting things to work the way I want them to.
+
+On my part I helped [Jessie](https://github.com/jessiemasonx) and [Chelsea](https://github.com/chelseadoeleman) with some of their functionalities. It is great to help people, because you have a bird's eye view of their code, whereas they might have lost it at that point.
 
 <!-- Links -->
 [nodemon]: https://nodemon.io
