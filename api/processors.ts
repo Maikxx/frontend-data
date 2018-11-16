@@ -21,8 +21,7 @@ const processRawData = async () => {
 const processDataWithD3 = async transformedData => {
     await writeFile(dataFile, JSON.stringify(transformedData))
 
-    const transformedLoadedData = await readFile(dataFile)
-    const citiesData = JSON.parse(transformedLoadedData.toString())
+    const citiesData = JSON.parse(transformedData.toString())
     return d3.nest()
         .key(d => d.locationName)
         .entries(citiesData)
