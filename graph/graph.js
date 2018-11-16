@@ -1,4 +1,8 @@
-// Geolocation API //
+(async () => {
+    const serverData = await d3.json('https://api.myjson.com/bins/1fqa5u')
+
+    console.log(locationsToSearchFor)
+})()
 
 // MapBox //
 
