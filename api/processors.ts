@@ -34,6 +34,7 @@ export const preProcessData = async () => {
 
     const filteredLocations = flatten(await getMapLocations(locations))
         .filter(location => !location.error)
+        .map(location => Array.isArray(location) && location[0] || location)
 
     writeFile(d3DataFile, JSON.stringify(filteredLocations))
 }
