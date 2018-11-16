@@ -1,32 +1,9 @@
-import { Query, Facet, Result } from './types/Query'
-import { getTransformedDataFromResults } from './getters'
+import * as fetch from 'node-fetch'
 
-const API = require('node-oba-api-wrapper')
-
-// API
-const client = new API({
-    public: process.env.PUBLIC,
-    secret: process.env.SECRET,
-})
-
-export const search = async (query: Query, facet: Facet, amount?: number): Promise<Result[]> => {
-    return await client.get('search', {
-        q: query,
-        refine: true,
-        facet,
-        count: amount || 100,
-        filter: (result: Result) => {
-            const location = getTransformedDataFromResults(result)
-
-            return location && !Array.isArray(location)
-        },
+export const sendRequest = async location => {
+    const data = await fetch(`https://eu1.locationiq.com/v1/search.php?key=${process.env.LOCATIONIQ_KEY}&city=${location.key}&format=json`, {
+        method: 'GET',
     })
-}
 
-export const queryAll = async (): Promise<Result[]> => {
-    const dutchBooks = await search('language:dut', ['type(book)'])
-
-    return [
-        ...dutchBooks,
-    ]
+    return data.json()
 }

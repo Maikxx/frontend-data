@@ -3,6 +3,9 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').load()
 }
 
+import * as chunk from 'lodash.chunk'
+import { sendRequest } from './queries'
+
 const getCleanPublicationLocation = (publicationLocation: string) => {
     return publicationLocation
         .replace(/\[|\]/g, '')
@@ -25,4 +28,19 @@ export const getTransformedDataFromResults = (result?: any) => {
         book: shortTitle,
         publicationYear,
     }
+}
+
+export const getMapLocations = async locations => {
+    const returnable = []
+
+    const chunked = chunk(locations, 1)
+
+    for (const chunk of chunked) {
+        const request = chunk.map(sendRequest)
+        returnable.push(await Promise.all(request))
+        console.log(returnable)
+        await new Promise(resolve => setTimeout(resolve, 1000))
+    }
+
+    return returnable
 }

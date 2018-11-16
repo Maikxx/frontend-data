@@ -1,20 +1,20 @@
 {
     "type": "FeatureCollection",
     "features": [
-      {
-        "type": "Feature",
-        "properties": {
-          "name": "Amsterdam Centraal",
-          "dataClass": "main",
-          "bookTitles": []
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            4.899431,
-            52.379189
-          ]
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Amsterdam Centraal",
+                "dataClass": "main",
+                "bookTitles": []
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    4.899431,
+                    52.379189
+                ]
+            }
         }
-      }
     ]
-  }
+}

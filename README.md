@@ -52,6 +52,11 @@ The full log of my process can be found [here](docs/PROCESS.md)!
 * [TypeScript](https://www.typescriptlang.org)
 * [Yarn](https://yarnpkg.com/en/)
 
+### API's
+
+* [LocationIQ](https://locationiq.com/docs)
+* [MaxBox](https://www.mapbox.com)
+
 ## Honourable mentions
 
 * [Wouter](https://github.com/maanlamp):
