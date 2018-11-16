@@ -6,9 +6,6 @@ if (process.env.NODE_ENV !== 'production') {
 // Development
 import * as fs from 'fs'
 
-import * as path from 'path'
-const readStream = fs.createReadStream(`${path.join(__dirname, '/api/data')}/worldcitiespop.txt`, 'utf8')
-
 // Server
 import * as express from 'express'
 const app = express()
@@ -17,19 +14,10 @@ const port = 3000
 // Data
 import { queryAll } from './api/queries'
 
-import { getTransformedCityData, getPublicationLocationFromResults } from './api/getters'
+import { getPublicationLocationFromResults } from './api/getters'
 
 ; (async () => {
     try {
-        const cityData = []
-        readStream
-            .on('data', chunk => {
-                cityData.push(getTransformedCityData(chunk))
-            })
-            .on('end', async () => {
-                // console.log(cityData)
-            })
-
         const results = await queryAll()
         const publicationLocations = results.map(getPublicationLocationFromResults)
         console.log(publicationLocations)

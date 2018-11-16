@@ -64,11 +64,17 @@ const getCleanPublicationLocation = (publicationLocation: string) => {
         .trim()
 }
 
-export const getPublicationLocationFromResults = (result?: Result): string => {
+export const getPublicationLocationFromResults = (result?: Result) => {
     return result.publication
         && result.publication.publishers
         && result.publication.publishers.publisher
         && result.publication.publishers.publisher.place
         && getCleanPublicationLocation(result.publication.publishers.publisher.place)
+        && {
+            locationName: getCleanPublicationLocation(result.publication.publishers.publisher.place),
+            lat: undefined,
+            long: undefined,
+            book: getTitleFromResult(result),
+        }
         || undefined
 }
