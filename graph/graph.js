@@ -18,8 +18,7 @@ const canvas = map.getCanvasContainer()
 const svg = d3.select(canvas).append("svg")
 
 map.on('load', async () => {
-    const data = await d3.json("//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/3")
-    console.log(data)
+    const data = await d3.json("//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/4")
     drawData(data)
 })
 
@@ -35,7 +34,7 @@ function drawData(data) {
         .data(data.features)
         .enter()
         .append("circle")
-            .attr("r", 16)
+            .attr("r", 8)
             .attr("class", d => d.properties.dataClass === 'main' ? 'circle--main' : 'circle')
             .on("click", (d) => {
                 // Show all the circles
