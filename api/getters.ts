@@ -5,6 +5,12 @@ if (process.env.NODE_ENV !== 'production') {
 
 import * as chunk from 'lodash.chunk'
 import { sendRequest } from './queries'
+import { promisify } from 'util'
+import * as fs from 'fs'
+import * as path from 'path'
+import { nestDataByLocation } from './processors'
+const dataFile = path.join(__dirname, '/../data/data.json')
+const writeFile = promisify(fs.writeFile)
 
 const getCleanPublicationLocation = (publicationLocation: string) => {
     return publicationLocation
@@ -44,3 +50,20 @@ export const getMapLocations = async locations => {
 
     return returnable
 }
+
+export const getLocations = async transformedData => {
+    await writeFile(dataFile, JSON.stringify(transformedData))
+
+    const citiesData = JSON.parse(transformedData.toString())
+    return nestDataByLocation(citiesData)
+}
+
+export const getGeometryDatafromApiLocation = apiLocation => ({
+    geometry: {
+        type: 'Point',
+        coordinates: [
+            apiLocation.lon,
+            apiLocation.lat,
+        ],
+    },
+})

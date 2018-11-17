@@ -5,17 +5,15 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Server
 import * as express from 'express'
+import { processDataWithD3 } from './api/processors'
 const app = express()
 const port = 3000
 
-// import { preProcessData } from './api/processors'
-
 ; (async () => {
     try {
-        // const transformedData = await preProcessData()
+        const transformedData = await processDataWithD3()
 
-        // app.get('/', (req: Express.Request, res: any) => res.json(transformedData))
-        app.get('/', (req: Express.Request, res: any) => res.json({}))
+        app.get('/', (req: Express.Request, res: any) => res.json(transformedData))
         app.listen(port, () => console.log(`\nAvailable on: localhost:${port}`))
 
     } catch (error) {

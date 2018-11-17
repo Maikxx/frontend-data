@@ -1,9 +1,3 @@
-(async () => {
-    const serverData = await d3.json('https://api.myjson.com/bins/1fqa5u')
-
-    console.log(locationsToSearchFor)
-})()
-
 // MapBox //
 
 const view = "map"
@@ -24,7 +18,8 @@ const canvas = map.getCanvasContainer()
 const svg = d3.select(canvas).append("svg")
 
 map.on('load', async () => {
-    const data = await d3.json("data/cityData.json")
+    const data = await d3.json("//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/3")
+    console.log(data)
     drawData(data)
 })
 
