@@ -3,17 +3,20 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').load()
 }
 
-import * as chunk from 'lodash.chunk'
+import chunk = require('lodash.chunk')
 import { sendRequest } from './queries'
 import { promisify } from 'util'
 import * as fs from 'fs'
 import * as path from 'path'
-import { nestDataByLocation } from './processors'
+import { nestBooksByLocation } from './processors'
+import { LocationIQPlace, GeoLocationFeatureGeometry } from './types/Location'
+import { Book, BooksByLocation } from './types/Book'
+import { Result } from './types/Result'
 const dataFile = path.join(__dirname, '/../data/transformed.data.json')
 const writeFile = promisify(fs.writeFile)
 
 // tslint:disable-next-line:cyclomatic-complexity
-export const getTransformedLocationNameForAPI = (locationName?: string) => {
+export const getTransformedLocationNameForAPI = (locationName?: string): string => {
     const name = locationName && locationName.toLowerCase()
 
     if (!name) {
@@ -83,14 +86,14 @@ export const getTransformedLocationNameForAPI = (locationName?: string) => {
     return locationName
 }
 
-const getCleanPublicationLocation = (publicationLocation: string) => {
+const getCleanPublicationLocation = (publicationLocation: string): string => {
     return publicationLocation
         .replace(/\[|\]/g, '')
         .replace('etc.', '')
         .trim()
 }
 
-export const getTransformedDataFromResults = (result?: any) => {
+export const getTransformedDataFromResults = (result?: Result): Book => {
     const cleanPublicationLocation = result.publication
         && result.publication.place
         && getCleanPublicationLocation(result.publication.place)
@@ -100,36 +103,34 @@ export const getTransformedDataFromResults = (result?: any) => {
 
     return {
         locationName: cleanPublicationLocation,
-        lat: undefined,
-        long: undefined,
         book: shortTitle,
         publicationYear,
     }
 }
 
-export const getMapLocations = async locations => {
+export const getLocationIQPlaces = async (booksByLocations: BooksByLocation[]): Promise<LocationIQPlace[]> => {
     const returnable = []
 
-    const chunked = chunk(locations, 1)
+    const chunked = chunk(booksByLocations, 1)
 
     for (const chunk of chunked) {
         const request = chunk.map(sendRequest)
         returnable.push(await Promise.all(request))
-        console.log(returnable)
+
         await new Promise(resolve => setTimeout(resolve, 1000))
     }
 
     return returnable
 }
 
-export const getLocations = async transformedData => {
-    await writeFile(dataFile, JSON.stringify(transformedData))
+export const getLocations = async (books: Book[]): Promise<BooksByLocation[]> => {
+    await writeFile(dataFile, JSON.stringify(books))
 
-    const citiesData = JSON.parse(transformedData.toString())
-    return nestDataByLocation(citiesData)
+    const citiesData = JSON.parse(books.toString())
+    return nestBooksByLocation(citiesData)
 }
 
-export const getGeometryDatafromApiLocation = apiLocation => ({
+export const getGeometryDatafromApiLocation = (apiLocation: LocationIQPlace): GeoLocationFeatureGeometry => ({
     geometry: {
         type: 'Point',
         coordinates: [
@@ -138,3 +139,9 @@ export const getGeometryDatafromApiLocation = apiLocation => ({
         ],
     },
 })
+
+export const getDataClassForLocation = (location?: string): string => {
+    return location === 'Amsterdam'
+        ? 'main'
+        : 'normal'
+}

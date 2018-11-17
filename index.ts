@@ -5,13 +5,13 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Server
 import * as express from 'express'
-import { processDataWithD3 } from './api/processors'
+import { getGeoLocationsFromBooks } from './api/processors'
 const app = express()
 const port = 3000
 
 ; (async () => {
     try {
-        const transformedData = await processDataWithD3()
+        const transformedData = await getGeoLocationsFromBooks()
 
         app.get('/', (req: Express.Request, res: any) => res.json(transformedData))
         app.listen(port, () => console.log(`\nAvailable on: localhost:${port}`))
