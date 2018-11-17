@@ -1,15 +1,19 @@
 import * as path from 'path'
 import * as d3 from 'd3'
 import * as fs from 'fs'
-import * as flatten from 'lodash.flatten'
+import flatten = require('lodash.flatten')
 import { promisify } from 'util'
 import {
     getTransformedDataFromResults,
-    getMapLocations,
+    getLocationIQPlaces,
     getGeometryDatafromApiLocation,
     getLocations,
-    getTransformedLocationNameForAPI
+    getTransformedLocationNameForAPI,
+    getDataClassForLocation
 } from './getters'
+import { TransformedBook, BooksByLocation, Book } from './types/Book'
+import { filterApiLocationByLocationName, filterBooksByLocationByLocationName } from './filters'
+import { GeoLocationCollection, GeoLocationFeature, LocationIQPlace } from './types/Location'
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
@@ -17,93 +21,76 @@ const writeFile = promisify(fs.writeFile)
 const obaApiDataFile = path.join(__dirname, '/../data/oba.data.json')
 const dataFile = path.join(__dirname, '/../data/transformed.data.json')
 const cityGeoFile = path.join(__dirname, '/../data/city.geo.json')
-const cityConnectionsFile = path.join(__dirname, '/../data/cityConnections.json')
-const APILocationsFile = path.join(__dirname, '/../data/locations.api.json')
+// const cityConnectionsFile = path.join(__dirname, '/../data/cityConnections.json')
+const locationIQPlacesFile = path.join(__dirname, '/../data/locations.api.json')
 
-const processobaApiData = async () => {
+const processobaApiData = async (): Promise<Book[]> => {
     const obaApiData = await readFile(obaApiDataFile)
     const obaApiDataResults = JSON.parse(obaApiData.toString())
+
     return obaApiDataResults.map(getTransformedDataFromResults)
 }
 
-export const nestDataByLocation = data => {
+export const nestBooksByLocation = (transformedCities: TransformedBook[]): BooksByLocation[] => {
     return d3.nest()
-        .key(d => getTransformedLocationNameForAPI(d.locationName))
-        .entries(data)
-        .map(d => ({
-            ...d,
-            values: d.values.filter(dv => dv.locationName),
+        .key((TransformedBook: TransformedBook) => getTransformedLocationNameForAPI(TransformedBook.locationName))
+        .entries(transformedCities)
+        .map((booksByLocation: BooksByLocation) => ({
+            ...booksByLocation,
+            values: filterBooksByLocationByLocationName(booksByLocation),
         }))
 }
 
-const filterApiLocationByLocationName = (apiLocation, locationName: string) => {
-    const displayName = apiLocation && apiLocation.display_name
-
-    if (!displayName || !locationName || locationName === 'undefined' || locationName === 'UK') {
-        return
-    }
-
-    const apiLocationName = displayName.toLowerCase()
-    const nestedLocationName = locationName.toLowerCase()
-
-    return apiLocationName.includes(nestedLocationName)
-}
-
-export const processDataWithD3 = async () => {
+export const getGeoLocationsFromBooks = async (): Promise<GeoLocationCollection> => {
     const data = await readFile(dataFile)
     const citiesData = JSON.parse(data.toString())
 
-    const nestedLocations = nestDataByLocation(citiesData)
+    const booksByLocation = nestBooksByLocation(citiesData)
 
-    const apiLocationsData = await readFile(APILocationsFile)
-    const apiLocations = JSON.parse(apiLocationsData.toString())
+    const locationIQPlacesData = await readFile(locationIQPlacesFile)
+    const locationIQPlaces = JSON.parse(locationIQPlacesData.toString())
 
     const geoJson = {
         type: 'FeatureCollection',
-        features: await nestedLocations
-            .map(nestedLocation => {
-                const { key: locationName } = nestedLocation
-                const dataClass = locationName === 'Amsterdam'
-                    ? 'main'
-                    : 'normal'
+        features: await booksByLocation
+            .map(bookByLocation => {
+                const { key: location } = bookByLocation
 
                 return {
                     type: 'Feature',
                     properties: {
-                        name: locationName,
-                        dataClass,
-                        books: nestedLocation.values.map(nlv => nlv.book),
+                        name: location,
+                        dataClass: getDataClassForLocation(location),
+                        books: bookByLocation.values.map(value => value.book),
                     },
-                    ...apiLocations
-                        .filter(apiLocation => {
-                            return filterApiLocationByLocationName(apiLocation, locationName)
-                        })
+                    ...locationIQPlaces
+                        .filter((apiLocation: LocationIQPlace) => filterApiLocationByLocationName(apiLocation, location))
                         .map(getGeometryDatafromApiLocation)[0],
                 }
             })
-            .filter(geoJsonLocation => geoJsonLocation.geometry),
+            .filter((geoLocationFeature: GeoLocationFeature) => geoLocationFeature.geometry),
     }
 
     await writeFile(cityGeoFile, JSON.stringify(geoJson))
     return geoJson
 }
 
-export const preProcessData = async () => {
+export const preProcessData = async (): Promise<void> => {
     const transformedData = await processobaApiData()
     const locations = await getLocations(transformedData)
 
-    const filteredLocations = flatten(await getMapLocations(locations))
-        .filter(location => !location.error)
-        .map(location => Array.isArray(location) && location[0] || location)
+    const filteredLocations = flatten(await getLocationIQPlaces(locations))
+        .filter((location: LocationIQPlace) => !location.error)
+        .map((location: LocationIQPlace) => Array.isArray(location) && location[0] || location)
 
-    writeFile(APILocationsFile, JSON.stringify(filteredLocations))
+    writeFile(locationIQPlacesFile, JSON.stringify(filteredLocations))
 }
 
-export const connectCities = () => {
-    const connections = {
-        type: 'FeatureCollection',
-        features: [
+// export const connectCities = () => {
+//     const connections = {
+//         type: 'FeatureCollection',
+//         features: [
 
-        ],
-    }
-}
+//         ],
+//     }
+// }
