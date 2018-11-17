@@ -12,7 +12,7 @@ import {
     getDataClassForLocation
 } from './getters'
 import { TransformedBook, BooksByLocation, Book } from './types/Book'
-import { filterApiLocationByLocationName } from './filters'
+import { filterApiLocationByLocationName, filterBooksByLocationByLocationName } from './filters'
 import { GeoLocationCollection, GeoLocationFeature, LocationIQPlace } from './types/Location'
 
 const readFile = promisify(fs.readFile)
@@ -37,7 +37,7 @@ export const nestBooksByLocation = (transformedCities: TransformedBook[]): Books
         .entries(transformedCities)
         .map((booksByLocation: BooksByLocation) => ({
             ...booksByLocation,
-            values: booksByLocation.values.filter(book => book.locationName),
+            values: filterBooksByLocationByLocationName(booksByLocation),
         }))
 }
 
@@ -64,7 +64,7 @@ export const getGeoLocationsFromBooks = async (): Promise<GeoLocationCollection>
                         books: bookByLocation.values.map(value => value.book),
                     },
                     ...locationIQPlaces
-                        .filter(apiLocation => filterApiLocationByLocationName(apiLocation, location))
+                        .filter((apiLocation: LocationIQPlace) => filterApiLocationByLocationName(apiLocation, location))
                         .map(getGeometryDatafromApiLocation)[0],
                 }
             })
