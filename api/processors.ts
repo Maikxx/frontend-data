@@ -3,7 +3,13 @@ import * as d3 from 'd3'
 import * as fs from 'fs'
 import * as flatten from 'lodash.flatten'
 import { promisify } from 'util'
-import { getTransformedDataFromResults, getMapLocations, getGeometryDatafromApiLocation, getLocations } from './getters'
+import {
+    getTransformedDataFromResults,
+    getMapLocations,
+    getGeometryDatafromApiLocation,
+    getLocations,
+    getTransformedLocationNameForAPI
+} from './getters'
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
@@ -21,7 +27,7 @@ const processRawData = async () => {
 
 export const nestDataByLocation = data => {
     return d3.nest()
-        .key(d => d.locationName)
+        .key(d => getTransformedLocationNameForAPI(d.locationName))
         .entries(data)
         .map(d => ({
             ...d,
@@ -40,14 +46,6 @@ const filterApiLocationByLocationName = (apiLocation, locationName: string) => {
     const nestedLocationName = locationName.toLowerCase()
 
     return apiLocationName.includes(nestedLocationName)
-}
-
-const getTransformedLocationNameForAPI = (locationName?: string) => {
-    if (locationName === 'Moskva') {
-        return 'Moscow'
-    }
-
-    return locationName
 }
 
 export const processDataWithD3 = async () => {
@@ -77,7 +75,7 @@ export const processDataWithD3 = async () => {
                     },
                     ...apiLocations
                         .filter(apiLocation => {
-                            return filterApiLocationByLocationName(apiLocation, getTransformedLocationNameForAPI(locationName))
+                            return filterApiLocationByLocationName(apiLocation, locationName)
                         })
                         .map(getGeometryDatafromApiLocation)[0],
                 }

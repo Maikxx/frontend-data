@@ -12,6 +12,77 @@ import { nestDataByLocation } from './processors'
 const dataFile = path.join(__dirname, '/../data/data.json')
 const writeFile = promisify(fs.writeFile)
 
+// tslint:disable-next-line:cyclomatic-complexity
+export const getTransformedLocationNameForAPI = (locationName?: string) => {
+    const name = locationName && locationName.toLowerCase()
+
+    if (!name) {
+        return undefined
+    }
+
+    if (name === 'moskva') {
+        return 'Moscow'
+    }
+
+    if (name === 'edinburgh gate, harlow') {
+        return 'Harlow'
+    }
+
+    if (name.includes(',') || name.includes(':')) {
+        return name.split(/\,|\:/g)[0]
+    }
+
+    if (name === 'frankfurt am main' || name === 'frankfurt a. m.' || name === 'frankfurt a.m.') {
+        return 'Frankfurt'
+    }
+
+    if (name === 'grand duché de luxembourg') {
+        return 'Luxembourg'
+    }
+
+    if (name === 'amsterdam etc') {
+        return 'Amsterdam'
+    }
+
+    if (name.includes(' i.e. ')) {
+        return name.split(' i.e. ')[1]
+    }
+
+    if (name === 'alphen a/d rijn') {
+        return 'Alphen aan den rijn'
+    }
+
+    if (name === 'capelle a/d ijssel') {
+        return 'Capelle aan de ijssel'
+    }
+
+    if (name === 'nieuwerkerk a/d ijssel') {
+        return 'Nieuwerkerk aan den ijssel'
+    }
+
+    if (name === 'paris 6e') {
+        return 'Paris'
+    }
+
+    if (name === 'nieuw vennep') {
+        return 'Nieuw-Vennep'
+    }
+
+    if (name === 'london  simon & schuster' || name === 'londen') {
+        return 'London'
+    }
+
+    if (name === 'nðmegen') {
+        return 'Nijmegen'
+    }
+
+    if (name === 'bagd¯ad') {
+        return 'Bagdad'
+    }
+
+    return locationName
+}
+
 const getCleanPublicationLocation = (publicationLocation: string) => {
     return publicationLocation
         .replace(/\[|\]/g, '')
