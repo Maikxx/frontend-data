@@ -42,6 +42,14 @@ const filterApiLocationByLocationName = (apiLocation, locationName: string) => {
     return apiLocationName.includes(nestedLocationName)
 }
 
+const getTransformedLocationNameForAPI = (locationName?: string) => {
+    if (locationName === 'Moskva') {
+        return 'Moscow'
+    }
+
+    return locationName
+}
+
 export const processDataWithD3 = async () => {
     const data = await readFile(dataFile)
     const citiesData = JSON.parse(data.toString())
@@ -68,7 +76,9 @@ export const processDataWithD3 = async () => {
                         books: nestedLocation.values.map(nlv => nlv.book),
                     },
                     ...apiLocations
-                        .filter(apiLocation => filterApiLocationByLocationName(apiLocation, locationName))
+                        .filter(apiLocation => {
+                            return filterApiLocationByLocationName(apiLocation, getTransformedLocationNameForAPI(locationName))
+                        })
                         .map(getGeometryDatafromApiLocation)[0],
                 }
             })
