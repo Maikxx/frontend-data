@@ -51,6 +51,7 @@ The full log of my process can be found [here](docs/PROCESS.md)!
 * [Nodemon](https://nodemon.io)
 * [TypeScript](https://www.typescriptlang.org)
 * [Yarn](https://yarnpkg.com/en/)
+* [JSON To TS](http://www.jsontots.com)
 
 ### API's
 
