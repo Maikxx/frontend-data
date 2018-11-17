@@ -13,7 +13,7 @@ import {
 } from './getters'
 import { TransformedBook, BooksByLocation, Book } from './types/Book'
 import { filterApiLocationByLocationName } from './filters'
-import { GeoLocationCollection, GeoLocationFeature } from './types/Location'
+import { GeoLocationCollection, GeoLocationFeature, LocationIQPlace } from './types/Location'
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
@@ -22,7 +22,7 @@ const obaApiDataFile = path.join(__dirname, '/../data/oba.data.json')
 const dataFile = path.join(__dirname, '/../data/transformed.data.json')
 const cityGeoFile = path.join(__dirname, '/../data/city.geo.json')
 // const cityConnectionsFile = path.join(__dirname, '/../data/cityConnections.json')
-const APILocationsFile = path.join(__dirname, '/../data/locations.api.json')
+const locationIQPlacesFile = path.join(__dirname, '/../data/locations.api.json')
 
 const processobaApiData = async (): Promise<Book[]> => {
     const obaApiData = await readFile(obaApiDataFile)
@@ -47,8 +47,8 @@ export const getGeoLocationsFromBooks = async (): Promise<GeoLocationCollection>
 
     const booksByLocation = nestBooksByLocation(citiesData)
 
-    const apiLocationsData = await readFile(APILocationsFile)
-    const apiLocations = JSON.parse(apiLocationsData.toString())
+    const locationIQPlacesData = await readFile(locationIQPlacesFile)
+    const locationIQPlaces = JSON.parse(locationIQPlacesData.toString())
 
     const geoJson = {
         type: 'FeatureCollection',
@@ -63,7 +63,7 @@ export const getGeoLocationsFromBooks = async (): Promise<GeoLocationCollection>
                         dataClass: getDataClassForLocation(location),
                         books: bookByLocation.values.map(value => value.book),
                     },
-                    ...apiLocations
+                    ...locationIQPlaces
                         .filter(apiLocation => filterApiLocationByLocationName(apiLocation, location))
                         .map(getGeometryDatafromApiLocation)[0],
                 }
@@ -80,10 +80,10 @@ export const preProcessData = async (): Promise<void> => {
     const locations = await getLocations(transformedData)
 
     const filteredLocations = flatten(await getLocationIQPlaces(locations))
-        .filter(location => !location.error)
-        .map(location => Array.isArray(location) && location[0] || location)
+        .filter((location: LocationIQPlace) => !location.error)
+        .map((location: LocationIQPlace) => Array.isArray(location) && location[0] || location)
 
-    writeFile(APILocationsFile, JSON.stringify(filteredLocations))
+    writeFile(locationIQPlacesFile, JSON.stringify(filteredLocations))
 }
 
 // export const connectCities = () => {

@@ -11,6 +11,7 @@ export interface LocationIQPlace {
     type: string
     importance: number
     icon: string
+    error?: string
 }
 
 export interface GeoLocationCollection {
