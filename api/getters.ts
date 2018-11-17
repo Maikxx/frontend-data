@@ -9,7 +9,7 @@ import { promisify } from 'util'
 import * as fs from 'fs'
 import * as path from 'path'
 import { nestDataByLocation } from './processors'
-const dataFile = path.join(__dirname, '/../data/data.json')
+const dataFile = path.join(__dirname, '/../data/transformed.data.json')
 const writeFile = promisify(fs.writeFile)
 
 // tslint:disable-next-line:cyclomatic-complexity

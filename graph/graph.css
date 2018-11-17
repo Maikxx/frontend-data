@@ -16,6 +16,12 @@ svg {
     height: 100%;
 }
 
+/* path {
+    fill: none;
+    stroke: #41B3A3;
+    stroke-width: 3;
+} */
+
 circle {
     fill: transparent;
     stroke: #41B3A3;

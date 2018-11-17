@@ -14,15 +14,16 @@ import {
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
 
-const rawDataFile = path.join(__dirname, '/../data/rawData.json')
-const dataFile = path.join(__dirname, '/../data/data.json')
-const cityDataFile = path.join(__dirname, '/../data/cityData.json')
-const APILocationsFile = path.join(__dirname, '/../data/d3Data.json')
+const obaApiDataFile = path.join(__dirname, '/../data/oba.data.json')
+const dataFile = path.join(__dirname, '/../data/transformed.data.json')
+const cityGeoFile = path.join(__dirname, '/../data/city.geo.json')
+const cityConnectionsFile = path.join(__dirname, '/../data/cityConnections.json')
+const APILocationsFile = path.join(__dirname, '/../data/locations.api.json')
 
-const processRawData = async () => {
-    const rawData = await readFile(rawDataFile)
-    const rawDataResults = JSON.parse(rawData.toString())
-    return rawDataResults.map(getTransformedDataFromResults)
+const processobaApiData = async () => {
+    const obaApiData = await readFile(obaApiDataFile)
+    const obaApiDataResults = JSON.parse(obaApiData.toString())
+    return obaApiDataResults.map(getTransformedDataFromResults)
 }
 
 export const nestDataByLocation = data => {
@@ -83,12 +84,12 @@ export const processDataWithD3 = async () => {
             .filter(geoJsonLocation => geoJsonLocation.geometry),
     }
 
-    await writeFile(cityDataFile, JSON.stringify(geoJson))
+    await writeFile(cityGeoFile, JSON.stringify(geoJson))
     return geoJson
 }
 
 export const preProcessData = async () => {
-    const transformedData = await processRawData()
+    const transformedData = await processobaApiData()
     const locations = await getLocations(transformedData)
 
     const filteredLocations = flatten(await getMapLocations(locations))
@@ -96,4 +97,13 @@ export const preProcessData = async () => {
         .map(location => Array.isArray(location) && location[0] || location)
 
     writeFile(APILocationsFile, JSON.stringify(filteredLocations))
+}
+
+export const connectCities = () => {
+    const connections = {
+        type: 'FeatureCollection',
+        features: [
+
+        ],
+    }
 }
