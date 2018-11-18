@@ -12,8 +12,16 @@ const map = new mapboxgl.Map({
 // Binding D3 and MapBox //
 const canvas = map.getCanvasContainer()
 const svg = d3.select(canvas).append('svg')
-// const path = svg.append('path')
 const project = d => map.project(new mapboxgl.LngLat(+d[0], +d[1]))
+
+
+function projectPoint (lon, lat) {
+    const point = map.project(new mapboxgl.LngLat(lon, lat))
+    this.stream.point(point.x, point.y)
+}
+
+const transform = d3.geoTransform({ point: projectPoint })
+const path = d3.geoPath().projection(transform)
 
 // D3 //
 const triggerUpdate = () => {
@@ -36,10 +44,10 @@ const update = (transitionTime = 0) => {
             .attr('cx', d => project(d.geometry.coordinates).x )
             .attr('cy', d => project(d.geometry.coordinates).y )
 
-    // svg.select('path')
-    //     .transition()
-    //     .duration(transitionTime)
-    //         .attr('d', d => console.log(d))
+    svg.selectAll('path')
+        .transition()
+        .duration(transitionTime)
+            .attr('d', path)
 }
 
 /**
@@ -61,63 +69,56 @@ const getStyleClassFromDataClass = data => {
         : 'circle'
 }
 
-// let line
+let lines
 
-// function projectPoint(lon, lat) {
-//     let point = map.project(new mapboxgl.LngLat(lon, lat))
-//     this.stream.point(point.x, point.y)
-// }
+const drawLines = lines => {
+    lines = svg.selectAll('path')
+        .data(lines.features)
+        .enter()
+        .append('path')
+            .attr('d', path)
+            .attr('class', d => `line line--${d.properties.fromCity.toLowerCase().replace(' ', '_')}`)
 
-// const transform = d3.geo.transform({ point: projectPoint })
-// const linePath = d3.geo.path().projection(transform)
-
-/**
-* @param {Object} data
-* @param {String} data.type
-* @param {Object} data.properties
-* @param {String} data.properties.name
-* @param {String} data.properties.dataClass
-* @param {String[]} data.properties.books
-* @param {Object} data.geometry
-* @param {String} data.geometry.type
-* @param {Array} data.geometry.coordinates
-* @param {Number} data.geometry.coordinates[].lon
-* @param {Number} data.geometry.coordinates[].lat
-*/
-// const drawLine = data => {
-//     const AMSTERDAM_COORDS = ['4.89797550561798', '52.3745403']
-//     const selectedCityCoordinates = data.geometry.coordinates
-//     const lineCoordinates = [selectedCityCoordinates, AMSTERDAM_COORDS]
-
-//     // const path = d3.line()
-//     //     .curve(d3.curveCardinal)
-
-//     line = svg.select('path')
-//         .attr('d', linePath(lineCoordinates))
-
-//     // triggerUpdate()
-// }
+    triggerUpdate()
+}
 
 let circles
 
-const drawCircles = data => {
+const drawCircles = (circles, lines) => {
     circles = svg.selectAll('circle')
-        .data(data.features)
+        .data(circles.features)
         .enter()
         .append('circle')
             .attr('r', 8)
             .attr('class', getStyleClassFromDataClass)
             .on('click', d => {
-                // drawLine(d)
+                const { name: cityName } = d.properties
+
+                if (cityName === 'Amsterdam') {
+                    return null
+                }
+
+                const transformedCityName = cityName
+                    .toLowerCase()
+                    .replace(' ', '_')
+
+                const className = `line--${transformedCityName}`
+                const shouldLineBeShown = d3.select(`.${className}`).classed('line--visible')
+                    ? false
+                    : true
+
+                d3.select(`.${className}`)
+                    .classed('line--visible', shouldLineBeShown)
+
                 // Think of something to show all the names of the books
             })
 
-    triggerUpdate()
+    drawLines(lines)
 }
 
 map.on('load', async () => {
-    const data = await d3.json('//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/4')
-
-    drawCircles(data)
+    const circles = await d3.json('//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/4')
+    const lines = await d3.json('//api.jsonbin.io/b/5bf149b973474c2f8d97dcce')
+    drawCircles(circles, lines)
 })
 

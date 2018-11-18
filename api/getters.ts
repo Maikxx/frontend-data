@@ -205,7 +205,7 @@ export const getGeometryForConnections = (cityGeoLocationFeature: GeoLocationFea
         type: 'LineString',
         coordinates: [
             toCityCoordinates,
-            getIntermediateCoordinates(AMSTERDAM_COORDINATES, toCityCoordinates),
+            // getIntermediateCoordinates(AMSTERDAM_COORDINATES, toCityCoordinates),
             AMSTERDAM_COORDINATES,
         ],
     }
