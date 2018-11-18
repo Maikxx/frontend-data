@@ -20,7 +20,7 @@ export interface GeoLocationCollection {
 }
 
 export interface GeoLocationFeature extends GeoLocationFeatureGeometry {
-    feature: string
+    type: string
     properties: GeoLocationFeatureProperties
 }
 
@@ -34,5 +34,27 @@ export interface GeoLocationFeatureGeometry {
     geometry: {
         type: string
         coordinates: string[]
+    }
+}
+
+export interface GeoLocationConnectionCollection {
+    type: string
+    features: GeoLocationConnectionCollectionFeature[]
+}
+
+export interface GeoLocationConnectionCollectionFeature extends GeoLocationConnectionGeometry {
+    type: string
+    properties: GeoLocationConnectionFeatureProperties
+}
+
+export interface GeoLocationConnectionFeatureProperties {
+    toCity: string
+    fromCity: string
+}
+
+export interface GeoLocationConnectionGeometry {
+    geometry: {
+        type: string
+        coordinates: string[][]
     }
 }
