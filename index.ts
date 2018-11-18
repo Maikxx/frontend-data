@@ -13,9 +13,8 @@ const port = 3000
     try {
         const cityGeoLocations = await getGeoLocationsFromBooks()
         const cityGeoConnections = await getCityGeoConnections(cityGeoLocations)
-        console.dir(cityGeoConnections, { depth: null })
 
-        app.get('/', (req: Express.Request, res: any) => res.json(cityGeoLocations))
+        app.get('/', (req: Express.Request, res: any) => res.json(cityGeoConnections))
         app.listen(port, () => console.log(`\nAvailable on: localhost:${port}`))
 
     } catch (error) {
