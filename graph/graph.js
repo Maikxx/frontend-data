@@ -78,8 +78,11 @@ const drawCircles = (cities, lines) => {
         .append('circle')
             .attr('r', 8)
             .attr('class', getStyleClassFromDataClass)
-            .on('click', d => {
+            .on('click', function(d) {
                 const { name: cityName } = d.properties
+                this.classList.contains('city--active')
+                    ? this.classList.remove('city--active')
+                    : this.classList.add('city--active')
 
                 if (cityName === 'Amsterdam') {
                     return null
