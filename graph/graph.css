@@ -21,15 +21,34 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+.page-header,
+#map,
+aside {
+    position: absolute
+}
+
+.page-header {
+    top: 0;
+    left: 0;
+    right: 20%;
+    background-color: var(--main-bg-color);
+    color: var(--main-text-color);
+    z-index: 2;
+}
+
+.page-header h1 {
+    padding: 16px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
 #map {
-    position: absolute;
     top: 0;
     bottom: 0;
     width: 100%;
 }
 
 aside {
-    position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
