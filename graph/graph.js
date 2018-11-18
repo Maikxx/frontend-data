@@ -69,10 +69,8 @@ const getStyleClassFromDataClass = data => {
         : 'city'
 }
 
-let lines
-
 const drawLines = lines => {
-    lines = svg.selectAll('path')
+    svg.selectAll('path')
         .data(lines.features)
         .enter()
         .append('path')
@@ -82,10 +80,8 @@ const drawLines = lines => {
     triggerUpdate()
 }
 
-let cities
-
 const drawCircles = (cities, lines) => {
-    cities = svg.selectAll('circle')
+    svg.selectAll('circle')
         .data(cities.features)
         .enter()
         .append('circle')
@@ -120,5 +116,7 @@ map.on('load', async () => {
     const cities = await d3.json('//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/4')
     const lines = await d3.json('//api.jsonbin.io/b/5bf149b973474c2f8d97dcce')
     drawCircles(cities, lines)
+
+
 })
 
