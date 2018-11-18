@@ -9,11 +9,12 @@ import {
     getGeometryDatafromApiLocation,
     getLocations,
     getTransformedLocationNameForAPI,
-    getDataClassForLocation
+    getDataClassForLocation,
+    getGeometryForConnections
 } from './getters'
 import { TransformedBook, BooksByLocation, Book } from './types/Book'
 import { filterApiLocationByLocationName, filterBooksByLocationByLocationName } from './filters'
-import { GeoLocationCollection, GeoLocationFeature, LocationIQPlace } from './types/Location'
+import { GeoLocationCollection, GeoLocationFeature, LocationIQPlace, GeoLocationConnectionCollection } from './types/Location'
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
@@ -21,7 +22,7 @@ const writeFile = promisify(fs.writeFile)
 const obaApiDataFile = path.join(__dirname, '/../data/oba.data.json')
 const dataFile = path.join(__dirname, '/../data/transformed.data.json')
 const cityGeoFile = path.join(__dirname, '/../data/city.geo.json')
-// const cityConnectionsFile = path.join(__dirname, '/../data/cityConnections.json')
+const cityConnectionsFile = path.join(__dirname, '/../data/cityConnections.json')
 const locationIQPlacesFile = path.join(__dirname, '/../data/locations.api.json')
 
 const processobaApiData = async (): Promise<Book[]> => {
@@ -86,11 +87,31 @@ export const preProcessData = async (): Promise<void> => {
     writeFile(locationIQPlacesFile, JSON.stringify(filteredLocations))
 }
 
-// export const connectCities = () => {
-//     const connections = {
-//         type: 'FeatureCollection',
-//         features: [
+export const getCityGeoConnections = async (cityGeoLocations: GeoLocationCollection): Promise<GeoLocationConnectionCollection> => {
+    const { features } = cityGeoLocations
 
-//         ],
-//     }
-// }
+    const geoJson = {
+        type: 'FeatureCollection',
+        features: features
+            .filter((cityGeoLocationFeature: GeoLocationFeature) => {
+                const { name: cityName } = cityGeoLocationFeature.properties
+
+                return cityName !== 'Amsterdam'
+            })
+            .map((cityGeoLocationFeature: GeoLocationFeature) => {
+                const { name: cityName } = cityGeoLocationFeature.properties
+
+                return {
+                    type: 'Feature',
+                    properties: {
+                        toCity: 'Amsterdam',
+                        fromCity: cityName,
+                    },
+                    geometry: getGeometryForConnections(cityGeoLocationFeature),
+                }
+            }),
+    }
+
+    await writeFile(cityConnectionsFile, JSON.stringify(geoJson))
+    return geoJson
+}

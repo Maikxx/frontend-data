@@ -9,7 +9,7 @@ import { promisify } from 'util'
 import * as fs from 'fs'
 import * as path from 'path'
 import { nestBooksByLocation } from './processors'
-import { LocationIQPlace, GeoLocationFeatureGeometry } from './types/Location'
+import { LocationIQPlace, GeoLocationFeatureGeometry, GeoLocationFeature } from './types/Location'
 import { Book, BooksByLocation } from './types/Book'
 import { Result } from './types/Result'
 const dataFile = path.join(__dirname, '/../data/transformed.data.json')
@@ -144,4 +144,69 @@ export const getDataClassForLocation = (location?: string): string => {
     return location === 'Amsterdam'
         ? 'main'
         : 'normal'
+}
+
+// Tucker, T. (2013, September 4). [Center point of two coordinate arrays] [Code].
+// Retrieved November 18, 2018, from https://stackoverflow.com/a/30033564
+const rad2degr = (rad: number) => {
+    return rad * 180 / Math.PI
+}
+const degr2rad = (degr: number) => {
+    return degr * Math.PI / 180
+}
+
+const getLatLngCenter = (latLngInDegr: number[][]) => {
+    const LNGIDX = 0
+    const LATIDX = 1
+    let sumX = 0
+    let sumY = 0
+    let sumZ = 0
+
+    for (let i = 0; i < latLngInDegr.length; i++) {
+        const lng = degr2rad(latLngInDegr[i][LNGIDX])
+        const lat = degr2rad(latLngInDegr[i][LATIDX])
+
+        // Sum of cartesian coordinates
+        sumX += Math.cos(lat) * Math.cos(lng)
+        sumY += Math.cos(lat) * Math.sin(lng)
+        sumZ += Math.sin(lat)
+    }
+
+    const avgX = sumX / latLngInDegr.length
+    const avgY = sumY / latLngInDegr.length
+    const avgZ = sumZ / latLngInDegr.length
+
+    // Convert average x, y, z coordinate to latitude and longtitude
+    const lng = Math.atan2(avgY, avgX)
+    const hyp = Math.sqrt(avgX * avgX + avgY * avgY)
+    const lat = Math.atan2(avgZ, hyp)
+
+    return ([ rad2degr(lng), rad2degr(lat) ])
+}
+
+const getNumberValuesForCoordinates = (coordinates: string[]) => {
+    return coordinates.map((coordinate: string) => Number(coordinate))
+}
+
+const getIntermediateCoordinates = (fromCityCoordinates: string[], toCityCoordinates: string[]) => {
+    const numberValuesForCoordinates = [ getNumberValuesForCoordinates(fromCityCoordinates), getNumberValuesForCoordinates(toCityCoordinates) ]
+    const centerCoordinates = getLatLngCenter(numberValuesForCoordinates)
+    const [ centerCoordinateLon, centerCoordinateLat ] = centerCoordinates
+    const centerCoordinatesWithCurve = [ (centerCoordinateLon + 1).toString(), centerCoordinateLat.toString() ]
+
+    return centerCoordinatesWithCurve
+}
+
+export const getGeometryForConnections = (cityGeoLocationFeature: GeoLocationFeature) => {
+    const AMSTERDAM_COORDINATES = [ '4.89797550561798', '52.3745403' ]
+    const { geometry: { coordinates: toCityCoordinates }} = cityGeoLocationFeature
+
+    return {
+        type: 'LineString',
+        coordinates: [
+            toCityCoordinates,
+            getIntermediateCoordinates(AMSTERDAM_COORDINATES, toCityCoordinates),
+            AMSTERDAM_COORDINATES,
+        ],
+    }
 }

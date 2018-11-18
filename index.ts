@@ -5,15 +5,17 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Server
 import * as express from 'express'
-import { getGeoLocationsFromBooks } from './api/processors'
+import { getGeoLocationsFromBooks, getCityGeoConnections } from './api/processors'
 const app = express()
 const port = 3000
 
 ; (async () => {
     try {
-        const transformedData = await getGeoLocationsFromBooks()
+        const cityGeoLocations = await getGeoLocationsFromBooks()
+        const cityGeoConnections = await getCityGeoConnections(cityGeoLocations)
+        console.dir(cityGeoConnections, { depth: null })
 
-        app.get('/', (req: Express.Request, res: any) => res.json(transformedData))
+        app.get('/', (req: Express.Request, res: any) => res.json(cityGeoLocations))
         app.listen(port, () => console.log(`\nAvailable on: localhost:${port}`))
 
     } catch (error) {
