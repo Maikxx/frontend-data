@@ -33,7 +33,7 @@ aside {
     top: 0;
     right: 0;
     bottom: 0;
-    width: 25%;
+    width: 20%;
     background-color: var(--main-bg-color);
 }
 
@@ -48,7 +48,6 @@ aside {
     font-weight: var(--sub-heading-font-weight);
     padding-top: 24px;
     width: 100%;
-    margin-bottom: var(--sub-heading-spacing-bottom);
 }
 
 .form .label {
@@ -68,6 +67,8 @@ aside {
     display: block;
     padding: 16px;
     text-align: end;
+    position: absolute;
+    bottom: 24px;
 }
 
 .data-legend__heading {
@@ -86,7 +87,7 @@ aside {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding-left: 20%;
+    padding-left: 24px;
 }
 
 .data-legend__list-item + .data-legend__list-item {
@@ -153,6 +154,11 @@ svg {
 }
 
 .city--main {
+    fill: var(--home-city-color);
+    stroke: var(--home-city-color);
+}
+
+.city--main:hover {
     fill: var(--home-city-color);
     stroke: var(--home-city-color);
 }
