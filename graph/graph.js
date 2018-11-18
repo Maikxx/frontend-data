@@ -15,6 +15,10 @@ const svg = d3.select(canvas).append('svg')
 const project = d => map.project(new mapboxgl.LngLat(+d[0], +d[1]))
 
 
+/**
+* @param {String} lon
+* @param {String} lat
+*/
 function projectPoint (lon, lat) {
     const point = map.project(new mapboxgl.LngLat(lon, lat))
     this.stream.point(point.x, point.y)
@@ -50,19 +54,6 @@ const update = (transitionTime = 0) => {
             .attr('d', path)
 }
 
-/**
-* @param {Object} data
-* @param {String} data.type
-* @param {Object} data.properties
-* @param {String} data.properties.name
-* @param {String} data.properties.dataClass
-* @param {String[]} data.properties.books
-* @param {Object} data.geometry
-* @param {String} data.geometry.type
-* @param {Array} data.geometry.coordinates
-* @param {Number} data.geometry.coordinates[].lon
-* @param {Number} data.geometry.coordinates[].lat
-*/
 const getStyleClassFromDataClass = data => {
     return data.properties.dataClass === 'main'
         ? 'city city--main'
