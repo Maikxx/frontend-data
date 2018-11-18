@@ -27,7 +27,7 @@ svg {
     stroke-width: 3;
 }
 
-circle {
+.city {
     fill: #41B3A3;
     stroke: #41B3A3;
     stroke-width: 5;
@@ -35,11 +35,11 @@ circle {
     transition: 0.3s stroke-width;
 }
 
-circle:hover {
+.city:hover {
     stroke-width: 10;
 }
 
-.circle--main {
+.city--main {
     fill: #E27D60;
     stroke: #E27D60;
 }

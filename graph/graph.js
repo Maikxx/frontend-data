@@ -38,7 +38,7 @@ const triggerUpdate = () => {
 * @param {Number} transitionTime
 */
 const update = (transitionTime = 0) => {
-    svg.selectAll('circle')
+    svg.selectAll('.city')
         .transition()
         .duration(transitionTime)
             .attr('cx', d => project(d.geometry.coordinates).x )
@@ -65,8 +65,8 @@ const update = (transitionTime = 0) => {
 */
 const getStyleClassFromDataClass = data => {
     return data.properties.dataClass === 'main'
-        ? 'circle--main'
-        : 'circle'
+        ? 'city city--main'
+        : 'city'
 }
 
 let lines
@@ -82,11 +82,11 @@ const drawLines = lines => {
     triggerUpdate()
 }
 
-let circles
+let cities
 
-const drawCircles = (circles, lines) => {
-    circles = svg.selectAll('circle')
-        .data(circles.features)
+const drawCircles = (cities, lines) => {
+    cities = svg.selectAll('circle')
+        .data(cities.features)
         .enter()
         .append('circle')
             .attr('r', 8)
@@ -117,8 +117,8 @@ const drawCircles = (circles, lines) => {
 }
 
 map.on('load', async () => {
-    const circles = await d3.json('//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/4')
+    const cities = await d3.json('//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/4')
     const lines = await d3.json('//api.jsonbin.io/b/5bf149b973474c2f8d97dcce')
-    drawCircles(circles, lines)
+    drawCircles(cities, lines)
 })
 
