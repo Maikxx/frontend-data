@@ -5,6 +5,7 @@ const map = new mapboxgl.Map({
     style: 'mapbox://styles/mapbox/dark-v9',
     zoom: 11.5,
     center: [4.899431, 52.379189],
+    doubleClickZoom: false,
 })
 
 const canvas = map.getCanvasContainer()
@@ -27,17 +28,24 @@ function projectPoint (lon, lat) {
 const transform = d3.geoTransform({ point: projectPoint })
 const path = d3.geoPath().projection(transform)
 
-const update = (transitionTime = 0) => {
+const updateCities = (transitionTime) => {
     svg.selectAll('.city')
-        .transition()
-        .duration(transitionTime)
-            .attr('cx', d => project(d.geometry.coordinates).x )
-            .attr('cy', d => project(d.geometry.coordinates).y )
+    .transition()
+    .duration(transitionTime)
+        .attr('cx', d => project(d.geometry.coordinates).x )
+        .attr('cy', d => project(d.geometry.coordinates).y )
+}
 
+const updateLines = (transitionTime) => {
     svg.selectAll('path')
-        .transition()
-        .duration(transitionTime)
-            .attr('d', path)
+    .transition()
+    .duration(transitionTime)
+        .attr('d', path)
+}
+
+const update = (transitionTime = 5) => {
+    updateCities(transitionTime)
+    updateLines(transitionTime)
 }
 
 const getCityStyleClassFromData = (data) => {
