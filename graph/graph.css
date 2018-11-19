@@ -157,6 +157,8 @@ svg {
     fill: none;
     transition: 0.3s stroke-width, 0.3s stroke;
     stroke-width: 0;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .line--visible {

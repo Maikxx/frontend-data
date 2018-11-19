@@ -17,7 +17,7 @@ const interactionOptions = {
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/dark-v9',
-    zoom: 11.5,
+    zoom: 9,
     center: [4.899431, 52.379189],
     doubleClickZoom: false,
 })
