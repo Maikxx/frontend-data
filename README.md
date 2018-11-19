@@ -60,10 +60,10 @@ I coupled the flight data with this, because I thought it would make the visuali
 * The speed is not live, which means that flight times may always vary with wind speeds.
 * Probably the most books don't arrive in the Netherlands by plane, and even may or may not come from the publication city.
 
-### TODO
+<!-- TODO -->
 
-* Animate the route when a point is clicked.
-* Remove the active state from other routes when another is clicked.
+<!-- * Animate the route when a point is clicked.
+* Remove the active state from other routes when another is clicked. -->
 
 ### Future enhancements
 
