@@ -330,11 +330,15 @@ const animateOnDataLoaded = () => {
 
 // Initializer //
 map.on('load', async () => {
-    geoJson.cities = await d3.json('../data/city.geo.json')
-    geoJson.lines = await d3.json('../data/cityConnections.geo.json')
+    try {
+        geoJson.cities = await d3.json('../data/city.geo.json')
+        geoJson.lines = await d3.json('../data/cityConnections.geo.json')
 
-    drawCircles()
-    animateOnDataLoaded()
+        drawCircles()
+        animateOnDataLoaded()
+    } catch (error) {
+        toastError(error)
+    }
 })
 
 window.addEventListener('load', (event) => {
