@@ -105,15 +105,15 @@ The full log of my process can be found [here](docs/PROCESS.md)!
 
 ## Sources
 
-* Wikipedia contributors. (2018, 18 november). Airbus A340 - Wikipedia. Geraadpleegd op 18 november 2018, van https://en.wikipedia.org/wiki/Airbus_A340.
+* Wikipedia contributors. (2018, november 18). Airbus A340 - Wikipedia. Retreived november 18 2018, from https://en.wikipedia.org/wiki/Airbus_A340.
 * Wikipedia contributors. (2018, November 18). Airbus A380 - Wikipedia. Retrieved November 18, 2018, from https://en.wikipedia.org/wiki/Airbus_A380.
-* Wikipedia contributors. (2018, 18 november). Antonov An-22 - Wikipedia. Geraadpleegd op 18 november 2018, van https://en.wikipedia.org/wiki/Antonov_An-22.
-* Wikipedia contributors. (2018, 18 november). Antonov An-124 Ruslan - Wikipedia. Geraadpleegd op 18 november 2018, van https://en.wikipedia.org/wiki/Antonov_An-124_Ruslan.
-* Wikipedia contributors. (2018, 15 november). strategic airlifter by Antonov. Geraadpleegd op 18 november 2018, van https://en.wikipedia.org/wiki/Antonov_An-225_Mriya.
-* Wikipedia contributors. (2018, November 18). Boeing 747 - Wikipedia. Retrieved November 18, 2018, from https://en.wikipedia.org/wiki/Boeing_747.
-* Wikipedia contributors. (2018, 18 november). Boeing 777 - Wikipedia. Geraadpleegd op 18 november 2018, van https://en.wikipedia.org/wiki/Boeing_777.
-* Wikipedia contributors. (2018, 14 november). Fokker 100 - Wikipedia. Geraadpleegd op 18 november 2018, van https://en.wikipedia.org/wiki/Fokker_100.
-* Wikipedia contributors. (2018, 17 november). Hughes H-4 Hercules - Wikipedia. Geraadpleegd op 18 november 2018, van https://en.wikipedia.org/wiki/Hughes_H-4_Hercules.
+* Wikipedia contributors. (2018, november 18). Antonov An-22 - Wikipedia. Retreived november 18 2018, from https://en.wikipedia.org/wiki/Antonov_An-22.
+* Wikipedia contributors. (2018, november 18). Antonov An-124 Ruslan - Wikipedia. Retreived november 18 2018, from https://en.wikipedia.org/wiki/Antonov_An-124_Ruslan.
+* Wikipedia contributors. (2018, november 15). strategic airlifter by Antonov. Retreived november 18 2018, from https://en.wikipedia.org/wiki/Antonov_An-225_Mriya.
+* Wikipedia contributors. (2018, november 18). Boeing 747 - Wikipedia. Retrieved November 18, 2018, from https://en.wikipedia.org/wiki/Boeing_747.
+* Wikipedia contributors. (2018, november 18). Boeing 777 - Wikipedia. Retreived november 18 2018, from https://en.wikipedia.org/wiki/Boeing_777.
+* Wikipedia contributors. (2018, november 14). Fokker 100 - Wikipedia. Retreived november 18 2018, from https://en.wikipedia.org/wiki/Fokker_100.
+* Wikipedia contributors. (2018, november 17). Hughes H-4 Hercules - Wikipedia. Retreived november 18 2018, from https://en.wikipedia.org/wiki/Hughes_H-4_Hercules.
 
 ## License
 
