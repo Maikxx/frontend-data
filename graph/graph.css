@@ -13,6 +13,8 @@
     --publication-city-color: #41B3A3;
     --highlighted-city-color: #85DCBC;
 
+    --color-danger: #FC4445;
+
     /* Sub Headings */
     --sub-heading-font-size: 1.2rem;
     --sub-heading-font-weight: 700;
@@ -28,7 +30,8 @@ body {
 
 .page-header,
 #map,
-aside {
+aside,
+#error-toast {
     position: absolute
 }
 
@@ -215,4 +218,13 @@ svg {
 .information-section li span {
     color: var(--secondary-text-color);
     font-size: .8rem;
+}
+
+#error-toast {
+    bottom: -34px;
+    left: 40%;
+    transform: translateX(-40%);
+    background-color: var(--color-danger);
+    padding: 4px 16px;
+    border-radius: 4px 4px 0 0;
 }

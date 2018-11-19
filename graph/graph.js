@@ -114,10 +114,9 @@ const getReadableFlyTime = () => {
     if (flyTimeInMinutes > 60) {
         const hours = flyTimeInMinutes / 60
         const fullMinutes = Math.floor(Number('0.' + hours.toString().split('.')[1]) * 60)
-        const hoursTranslation = hours === 1 ? 'uur' : 'uren'
         const minutesTranslation = fullMinutes === 1 ? 'minuut' : 'minuten'
 
-        flyTimeWithUnits = `${Math.floor(hours)} ${hoursTranslation} en ${fullMinutes} ${minutesTranslation}`
+        flyTimeWithUnits = `${Math.floor(hours)} uur en ${fullMinutes} ${minutesTranslation}`
     }
 
     return flyTimeWithUnits
@@ -200,6 +199,26 @@ const setSettings = () => {
     dataList.forEach(options => updateExistingListItem(options))
 }
 
+const toastError = (error) => {
+    const tIn = d3.transition()
+        .duration(300)
+        .ease(d3.easeLinear)
+
+    const tOut = d3.transition()
+        .delay(2000)
+        .duration(300)
+        .ease(d3.easeLinear)
+
+    d3.select('#error-toast')
+        .text(error)
+        .transition(tIn)
+        .style('bottom', '0px')
+
+    d3.select('#error-toast')
+        .transition(tOut)
+        .style('bottom', '-34px')
+}
+
 // Handlers //
 function handleCircleClick(d) {
     const { name: cityName } = d.properties
@@ -210,7 +229,10 @@ function handleCircleClick(d) {
     }
 
     if (!flySpeed) {
-        throw new Error('Please, select an airplane first')
+        const error = 'Please, select an airplane first'
+
+        toastError(error)
+        throw new Error(error)
     }
 
     const transformedCityName = getTransformedCityName(cityName)
@@ -308,11 +330,15 @@ const animateOnDataLoaded = () => {
 
 // Initializer //
 map.on('load', async () => {
-    geoJson.cities = await d3.json('../data/city.geo.json')
-    geoJson.lines = await d3.json('../data/cityConnections.geo.json')
+    try {
+        geoJson.cities = await d3.json('../data/city.geo.json')
+        geoJson.lines = await d3.json('../data/cityConnections.geo.json')
 
-    drawCircles()
-    animateOnDataLoaded()
+        drawCircles()
+        animateOnDataLoaded()
+    } catch (error) {
+        toastError(error)
+    }
 })
 
 window.addEventListener('load', (event) => {
