@@ -1,3 +1,4 @@
+// Projection //
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFpa3h4IiwiYSI6ImNqb2p0b2c1ZzA4NWIzdnBhNTJhMjk3MmIifQ.WWh5GShedNrj-2eYYnkXxw'
 
 const map = new mapboxgl.Map({
@@ -12,14 +13,6 @@ const canvas = map.getCanvasContainer()
 const svg = d3.select(canvas).append('svg')
 const project = d => map.project(new mapboxgl.LngLat(+d[0], +d[1]))
 
-const triggerUpdate = () => {
-    update()
-
-    map.on('viewreset', update)
-    map.on('move', update)
-    map.on('moveend', update)
-}
-
 function projectPoint (lon, lat) {
     const point = map.project(new mapboxgl.LngLat(lon, lat))
     this.stream.point(point.x, point.y)
@@ -28,6 +21,7 @@ function projectPoint (lon, lat) {
 const transform = d3.geoTransform({ point: projectPoint })
 const path = d3.geoPath().projection(transform)
 
+// Updaters //
 const updateCities = (transitionTime) => {
     svg.selectAll('.city')
     .transition()
@@ -48,21 +42,19 @@ const update = (transitionTime = 5) => {
     updateLines(transitionTime)
 }
 
+const triggerUpdate = () => {
+    update()
+
+    map.on('viewreset', update)
+    map.on('move', update)
+    map.on('moveend', update)
+}
+
+// Getters //
 const getCityStyleClassFromData = (data) => {
     return data.properties.dataClass === 'main'
         ? 'city city--main'
         : 'city'
-}
-
-const drawLines = (lines) => {
-    svg.selectAll('path')
-        .data(lines.features)
-        .enter()
-        .append('path')
-            .attr('d', path)
-            .attr('class', d => `line line--${d.properties.fromCity.toLowerCase().replace(' ', '_')}`)
-
-    triggerUpdate()
 }
 
 const getTransformedCityName = (cityName) => {
@@ -71,6 +63,7 @@ const getTransformedCityName = (cityName) => {
         .replace(' ', '_')
 }
 
+// Filters //
 const filterLinesByCityName = (lines, cityName) => {
     return lines.features.filter(feature => {
         const transformedCityName = getTransformedCityName(feature.properties.fromCity)
@@ -78,16 +71,7 @@ const filterLinesByCityName = (lines, cityName) => {
     })
 }
 
-const setD3LineClassName = (cityName) => {
-    const className = `line--${cityName}`
-    const shouldLineBeShown = d3.select(`.${className}`).classed('line--visible')
-        ? false
-        : true
-
-    d3.select(`.${className}`)
-        .classed('line--visible', shouldLineBeShown)
-}
-
+// Handlers //
 function handleCircleClick(d, lines) {
     const { name: cityName } = d.properties
 
@@ -107,6 +91,18 @@ function handleCircleClick(d, lines) {
     console.log(distanceBetweenCities)
 }
 
+// Drawers //
+const drawLines = (lines) => {
+    svg.selectAll('path')
+        .data(lines.features)
+        .enter()
+        .append('path')
+            .attr('d', path)
+            .attr('class', d => `line line--${d.properties.fromCity.toLowerCase().replace(' ', '_')}`)
+
+    triggerUpdate()
+}
+
 const drawCircles = (cities, lines) => {
     svg.selectAll('circle')
         .data(cities.features)
@@ -119,6 +115,18 @@ const drawCircles = (cities, lines) => {
     drawLines(lines)
 }
 
+// Setters //
+const setD3LineClassName = (cityName) => {
+    const className = `line--${cityName}`
+    const shouldLineBeShown = d3.select(`.${className}`).classed('line--visible')
+        ? false
+        : true
+
+    d3.select(`.${className}`)
+        .classed('line--visible', shouldLineBeShown)
+}
+
+// Initializer //
 map.on('load', async () => {
     const cities = await d3.json('//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/4')
     const lines = await d3.json('//api.jsonbin.io/b/5bf149b973474c2f8d97dcce')
