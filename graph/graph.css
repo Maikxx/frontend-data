@@ -19,6 +19,7 @@ body {
     color: var(--main-text-color);
     background-color: var(--main-bg-color);
     font-family: 'Open Sans', sans-serif;
+    opacity: 0;
 }
 
 .page-header,

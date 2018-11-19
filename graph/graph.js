@@ -290,6 +290,16 @@ const setupListeners = () => {
     selectionElement.addEventListener('change', handleOnSelectorChange)
 }
 
+// Animators //
+const animateOnWindowLoad = () => {
+    const t = d3.transition()
+        .duration(750)
+        .ease(d3.easeLinear)
+
+    d3.selectAll("body").transition(t)
+        .style("opacity", "1")
+}
+
 // Initializer //
 map.on('load', async () => {
     geoJson.cities = await d3.json('//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/4')
@@ -299,6 +309,7 @@ map.on('load', async () => {
 })
 
 window.addEventListener('load', (event) => {
+    animateOnWindowLoad()
     setupListeners()
     setSettings()
 })
