@@ -161,23 +161,16 @@ svg {
     transition: 0.3s all;
 }
 
-.city:hover {
+.city:hover,
+.city--active {
     stroke-width: 10;
     stroke: var(--highlighted-city-color);
     fill: var(--highlighted-city-color);
 }
 
-.city--active {
-    fill: var(--highlighted-city-color);
-    stroke: var(--highlighted-city-color);
-}
-
-.city--main {
-    fill: var(--home-city-color);
-    stroke: var(--home-city-color);
-}
-
+.city--main,
 .city--main:hover {
+    stroke-width: 5;
     fill: var(--home-city-color);
     stroke: var(--home-city-color);
 }
