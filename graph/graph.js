@@ -11,6 +11,7 @@ const interactionOptions = {
     airplane: undefined,
     distanceBetweenCities: undefined,
     flyTimeInMinutes: undefined,
+    transformedFlyTime: undefined,
 }
 
 const map = new mapboxgl.Map({
@@ -90,6 +91,38 @@ const getCleanPlaneNameFromSelectedPlane = (text) => {
         .trim()
 }
 
+const getReadableFlyTime = () => {
+    const { flyTimeInMinutes } = interactionOptions
+    let flyTimeWithUnits
+
+    if (flyTimeInMinutes <= 2) {
+        const seconds = Math.floor(flyTimeInMinutes * 60)
+        const secondsTranslation = seconds === 1 ? 'seconde' : 'secondes'
+
+        flyTimeWithUnits = `${seconds} ${secondsTranslation}`
+    }
+
+    if (flyTimeInMinutes > 2 && flyTimeInMinutes <= 60) {
+        const fullMinutes = Math.floor(flyTimeInMinutes)
+        const seconds = Math.floor(Number('0.' + flyTimeInMinutes.toString().split('.')[1]) * 60)
+        const minutesTranslation = fullMinutes === 1 ? 'minuut' : 'minuten'
+        const secondsTranslation = seconds === 1 ? 'seconde' : 'secondes'
+
+        flyTimeWithUnits = `${fullMinutes} ${minutesTranslation} en ${seconds} ${secondsTranslation}`
+    }
+
+    if (flyTimeInMinutes > 60) {
+        const hours = flyTimeInMinutes / 60
+        const fullMinutes = Math.floor(Number('0.' + hours.toString().split('.')[1]) * 60)
+        const hoursTranslation = hours === 1 ? 'uur' : 'uren'
+        const minutesTranslation = fullMinutes === 1 ? 'minuut' : 'minuten'
+
+        flyTimeWithUnits = `${Math.floor(hours)} ${hoursTranslation} en ${fullMinutes} ${minutesTranslation}`
+    }
+
+    return flyTimeWithUnits
+}
+
 // Filters //
 const filterLinesByCityName = (cityName) => {
     const { lines } = geoJson
@@ -117,7 +150,6 @@ function handleCircleClick(d) {
     setD3LineClassName(transformedCityName)
 
     if (this.classList.contains('city--active')) {
-        console.log('hoi')
         this.classList.remove('city--active')
 
         // Breaking out of the function to stop the setting of a flySpeed
@@ -132,7 +164,8 @@ function handleCircleClick(d) {
 
     const flyTimeInMinutes = distanceBetweenCities / flySpeed * 60
     interactionOptions.flyTimeInMinutes = flyTimeInMinutes
-    console.log(flyTimeInMinutes)
+
+    console.log(getReadableFlyTime())
 }
 
 function handleOnSelectorChange({ target }) {
