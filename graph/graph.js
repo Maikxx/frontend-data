@@ -6,6 +6,11 @@ const geoJson = {
     cities: undefined,
 }
 
+const interactionOptions = {
+    flySpeed: undefined,
+    airplane: undefined,
+}
+
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/dark-v9',
@@ -68,6 +73,21 @@ const getTransformedCityName = (cityName) => {
         .replace(' ', '_')
 }
 
+const getSpeedFromSelectedPlane = (text) => {
+    const cleanedText = text
+        .split('(')[1]
+        .split('km/h')[0]
+        .trim()
+
+    return Number(cleanedText)
+}
+
+const getCleanPlaneNameFromSelectedPlane = (text) => {
+    return text
+        .split('(')[0]
+        .trim()
+}
+
 // Filters //
 const filterLinesByCityName = (cityName) => {
     const { lines } = geoJson
@@ -98,8 +118,12 @@ function handleCircleClick(d) {
     console.log(distanceBetweenCities)
 }
 
-function handleOnSelectorChange(e) {
-    console.log(e)
+function handleOnSelectorChange({ target }) {
+    const selectedOption = target.options[target.selectedIndex]
+    const selectedPlane = selectedOption.text
+
+    interactionOptions.plane = getCleanPlaneNameFromSelectedPlane(selectedPlane)
+    interactionOptions.flySpeed = getSpeedFromSelectedPlane(selectedPlane)
 }
 
 // Drawers //
@@ -143,7 +167,7 @@ const setD3LineClassName = (cityName) => {
 
 const setupListeners = () => {
     const selectionElement = document.getElementById('select-plane')
-    selectionElement.addEventListener('change', () => null)
+    selectionElement.addEventListener('change', handleOnSelectorChange)
 }
 
 // Initializer //
