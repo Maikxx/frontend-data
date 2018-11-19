@@ -142,7 +142,7 @@ const setNewListItem = (list, options) => {
     const span = document.createElement('span')
 
     item.appendChild(h3)
-        .textContent = `${title}: `
+        .textContent = title
 
     item.appendChild(span)
         .textContent = value

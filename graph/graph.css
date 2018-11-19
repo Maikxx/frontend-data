@@ -54,6 +54,7 @@ aside {
     bottom: 0;
     width: 20%;
     background-color: var(--main-bg-color);
+    overflow-y: scroll;
 }
 
 form fieldset {
@@ -86,8 +87,6 @@ form select {
     display: block;
     padding: 16px;
     text-align: end;
-    position: absolute;
-    bottom: 24px;
 }
 
 .data-legend h2 {
