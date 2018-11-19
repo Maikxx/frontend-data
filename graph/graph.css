@@ -31,7 +31,8 @@ aside {
 .page-header {
     top: 0;
     left: 0;
-    right: 20%;
+    right: 0;
+    transform: translateY(-65px);
     background-color: var(--main-bg-color);
     color: var(--main-text-color);
     z-index: 2;
@@ -40,6 +41,7 @@ aside {
 .page-header h1 {
     padding: 16px;
     font-size: 1.5rem;
+    margin-right: 20%;
     text-align: center;
 }
 
@@ -54,8 +56,10 @@ aside {
     right: 0;
     bottom: 0;
     width: 20%;
+    transform: translateX(100%);
     background-color: var(--main-bg-color);
     overflow-y: scroll;
+    z-index: 4;
 }
 
 form fieldset {

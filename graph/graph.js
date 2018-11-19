@@ -291,13 +291,19 @@ const setupListeners = () => {
 }
 
 // Animators //
-const animateOnWindowLoad = () => {
+const animateOnDataLoaded = () => {
     const t = d3.transition()
-        .duration(750)
+        .duration(600)
         .ease(d3.easeLinear)
 
-    d3.selectAll("body").transition(t)
-        .style("opacity", "1")
+    d3.select('body').transition(t)
+        .style('opacity', '1')
+
+    d3.select('.page-header').transition(t)
+        .style('transform', 'translateY(0)')
+
+    d3.select('aside').transition(t)
+        .style('transform', 'translateX(0)')
 }
 
 // Initializer //
@@ -306,10 +312,10 @@ map.on('load', async () => {
     geoJson.lines = await d3.json('../data/cityConnections.geo.json')
 
     drawCircles()
+    animateOnDataLoaded()
 })
 
 window.addEventListener('load', (event) => {
-    animateOnWindowLoad()
     setupListeners()
     setSettings()
 })
