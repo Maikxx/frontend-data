@@ -5,18 +5,100 @@
 <head>
     <meta charset="utf-8" />
     <title>
-        Where does your book come from and how long did it take for it to fly?
+        Hoe lang heeft jouw boek gevlogen voor het in de OBA lag?
     </title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.css" rel="stylesheet" />
+    <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script>
     <link href="graph/graph.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.js"></script>
     <script src="https://d3js.org/d3-array.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo.v1.min.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
 <body>
-    <div id="map"></div>
+    <header class="page-header">
+        <h1>
+            Hoe lang heeft jouw boek gevlogen om bij de OBA terecht te komen?
+        </h1>
+    </header>
+    <main id="map"></main>
+    <aside>
+        <form action="#" id="interaction-form" class="form">
+            <fieldset>
+                <legend>
+                    Ontdek nog meer
+                </legend>
+                <label for="select-plane" class="label">
+                    Selecteer een vliegtuig
+                </label>
+                <select name="select-plane" id="select-plane" class="input">
+                    <option value="" disabled="disabled" selected="true" class="option">
+                        Kies een vliegtuig
+                    </option>
+                    <option value="a340" class="option">
+                        Airbus A340 (871 km/h)
+                    </option>
+                    <option value="a380" class="option">
+                        Airbus A380 (1050 km/h)
+                    </option>
+                    <option value="an-22" class="option">
+                        Antonov An-22 (740 km/h)
+                    </option>
+                    <option value="an-124" class="option">
+                        Antonov An-124 Ruslan (865 km/h)
+                    </option>
+                    <option value="an-225" class="option">
+                        Antonov An-225 Mriya (800 km/h)
+                    </option>
+                    <option value="747" class="option">
+                        Boeing 747-400 (1056 km/h)
+                    </option>
+                    <option value="777" class="option">
+                        Boeing 777 (905 km/h)
+                    </option>
+                    <option value="fokker" class="option">
+                        Fokker 100 (800 km/h)
+                    </option>
+                    <option value="h-4" class="option">
+                        Hughes H-4 Hercules (408 km/h)
+                    </option>
+                </select>
+            </fieldset>
+        </form>
+        <section class="information-section">
+            <h2>
+                Huidige instellingen
+            </h2>
+            <ul id="settings-list"></ul>
+        </section>
+        <footer class="data-legend">
+            <h2 class="data-legend__heading">
+                Legenda
+            </h2>
+            <ul class="data-legend__list">
+                <li class="data-legend__list-item">
+                    <i class="data-legend-icon data-legend-icon--home-city"></i>
+                    <span class="data-legend-text data-legend-text--home-city">
+                        Amsterdam
+                    </span>
+                </li>
+                <li class="data-legend__list-item">
+                    <i class="data-legend-icon data-legend-icon--publication-city"></i>
+                    <span class="data-legend-text data-legend-text--publication-city">
+                        Locatie waar minstens een boek is uitgegeven
+                    </span>
+                </li>
+                <li class="data-legend__list-item">
+                    <i class="data-legend-icon data-legend-icon--highlighted-city"></i>
+                    <span class="data-legend-text data-legend-text--highlighted-city">
+                        Gehighlight
+                    </span>
+                </li>
+            </ul>
+        </footer>
+    </aside>
     <script src="graph/graph.js"></script>
 </body>
 </html>
