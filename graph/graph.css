@@ -181,3 +181,37 @@ svg {
     fill: var(--home-city-color);
     stroke: var(--home-city-color);
 }
+
+.information-section {
+    padding: 16px;
+}
+
+.information-section h2 {
+    font-size: var(--sub-heading-font-size);
+    font-weight: var(--sub-heading-font-weight);
+    text-align: end;
+}
+
+.information-section ul {
+    list-style-type: none;
+    padding-top: 16px;
+    padding-left: 10%;
+}
+
+.information-section li {
+    text-align: right;
+}
+
+.information-section li + li {
+    margin-top: 8px;
+}
+
+.information-section li h3 {
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+.information-section li span {
+    color: #A9A9A9;
+    font-size: .8rem;
+}

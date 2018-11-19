@@ -11,7 +11,7 @@ const interactionOptions = {
     airplane: undefined,
     distanceBetweenCities: undefined,
     flyTimeInMinutes: undefined,
-    transformedFlyTime: undefined,
+    readableFlyTime: undefined,
 }
 
 const map = new mapboxgl.Map({
@@ -133,10 +133,47 @@ const filterLinesByCityName = (cityName) => {
     })
 }
 
+// Data Display
+const setNewListItem = (list, textContent) => {
+    const { title, value } = textContent
+
+    const item = document.createElement('li')
+    const h3 = document.createElement('h3')
+    const span = document.createElement('span')
+
+    item.appendChild(h3)
+        .textContent = `${title}: `
+
+    item.appendChild(span)
+        .textContent = value
+
+    list.appendChild(item)
+}
+
+const setSettings = () => {
+    const { flySpeed, distanceBetweenCities, airplane, readableFlyTime } = interactionOptions
+    const list = document.getElementById('settings-list')
+    const children = list.childNodes
+
+    if (children) {
+        list.innerHTML = ''
+    }
+
+    const roundFlySpeed = Math.floor(flySpeed)
+    const roundDistance = Math.floor(distanceBetweenCities)
+    const planePlaceholder = 'Selecteer een vliegtuig'
+    const placeholderForInfoRequiringPlane = airplane ? 'Selecteer een locatie' : planePlaceholder
+
+    setNewListItem(list, {title: `Vliegtuig type`, value: airplane || planePlaceholder})
+    setNewListItem(list, {title: `Kruissnelheid`, value: roundFlySpeed ? `${roundFlySpeed}km/h` : placeholderForInfoRequiringPlane})
+    setNewListItem(list, {title: `Astand`, value: roundDistance ? `${roundDistance}km` : placeholderForInfoRequiringPlane})
+    setNewListItem(list, {title: `Geschatte vluchtduur`, value: readableFlyTime ? readableFlyTime : placeholderForInfoRequiringPlane})
+}
+
 // Handlers //
 function handleCircleClick(d) {
     const { name: cityName } = d.properties
-    const { flySpeed, airplane } = interactionOptions
+    const { flySpeed } = interactionOptions
 
     if (cityName === 'Amsterdam') {
         return null
@@ -164,15 +201,16 @@ function handleCircleClick(d) {
 
     const flyTimeInMinutes = distanceBetweenCities / flySpeed * 60
     interactionOptions.flyTimeInMinutes = flyTimeInMinutes
+    interactionOptions.readableFlyTime = getReadableFlyTime()
 
-    console.log(getReadableFlyTime())
+    setSettings()
 }
 
 function handleOnSelectorChange({ target }) {
     const selectedOption = target.options[target.selectedIndex]
     const selectedPlane = selectedOption.text
 
-    interactionOptions.plane = getCleanPlaneNameFromSelectedPlane(selectedPlane)
+    interactionOptions.airplane = getCleanPlaneNameFromSelectedPlane(selectedPlane)
     interactionOptions.flySpeed = getSpeedFromSelectedPlane(selectedPlane)
 }
 
@@ -230,4 +268,5 @@ map.on('load', async () => {
 
 window.addEventListener('load', (event) => {
     setupListeners()
+    setSettings()
 })
