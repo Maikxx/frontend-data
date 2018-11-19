@@ -180,7 +180,7 @@ const setSettings = () => {
             identifier: 'plane-speed'
         },
         {
-            title: `Astand`,
+            title: `Afstand`,
             value: roundDistance ? `${roundDistance}km` : placeholderForInfoRequiringPlane,
             identifier: 'distance'
         },
