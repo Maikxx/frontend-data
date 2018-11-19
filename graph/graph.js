@@ -114,10 +114,9 @@ const getReadableFlyTime = () => {
     if (flyTimeInMinutes > 60) {
         const hours = flyTimeInMinutes / 60
         const fullMinutes = Math.floor(Number('0.' + hours.toString().split('.')[1]) * 60)
-        const hoursTranslation = hours === 1 ? 'uur' : 'uren'
         const minutesTranslation = fullMinutes === 1 ? 'minuut' : 'minuten'
 
-        flyTimeWithUnits = `${Math.floor(hours)} ${hoursTranslation} en ${fullMinutes} ${minutesTranslation}`
+        flyTimeWithUnits = `${Math.floor(hours)} uur en ${fullMinutes} ${minutesTranslation}`
     }
 
     return flyTimeWithUnits
