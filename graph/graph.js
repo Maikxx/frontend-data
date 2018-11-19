@@ -1,6 +1,11 @@
 // Projection //
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFpa3h4IiwiYSI6ImNqb2p0b2c1ZzA4NWIzdnBhNTJhMjk3MmIifQ.WWh5GShedNrj-2eYYnkXxw'
 
+const geoJson = {
+    lines: undefined,
+    cities: undefined,
+}
+
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/dark-v9',
@@ -64,7 +69,9 @@ const getTransformedCityName = (cityName) => {
 }
 
 // Filters //
-const filterLinesByCityName = (lines, cityName) => {
+const filterLinesByCityName = (cityName) => {
+    const { lines } = geoJson
+
     return lines.features.filter(feature => {
         const transformedCityName = getTransformedCityName(feature.properties.fromCity)
         return transformedCityName === cityName
@@ -72,7 +79,7 @@ const filterLinesByCityName = (lines, cityName) => {
 }
 
 // Handlers //
-function handleCircleClick(d, lines) {
+function handleCircleClick(d) {
     const { name: cityName } = d.properties
 
     this.classList.contains('city--active')
@@ -86,13 +93,19 @@ function handleCircleClick(d, lines) {
     const transformedCityName = getTransformedCityName(cityName)
     setD3LineClassName(transformedCityName)
 
-    const lineByCityName = filterLinesByCityName(lines, transformedCityName)[0]
+    const lineByCityName = filterLinesByCityName(transformedCityName)[0]
     const distanceBetweenCities = turf.lineDistance(lineByCityName)
     console.log(distanceBetweenCities)
 }
 
+function handleOnSelectorChange(e) {
+    console.log(e)
+}
+
 // Drawers //
-const drawLines = (lines) => {
+const drawLines = () => {
+    const { lines } = geoJson
+
     svg.selectAll('path')
         .data(lines.features)
         .enter()
@@ -103,16 +116,18 @@ const drawLines = (lines) => {
     triggerUpdate()
 }
 
-const drawCircles = (cities, lines) => {
+const drawCircles = () => {
+    const { cities } = geoJson
+
     svg.selectAll('circle')
         .data(cities.features)
         .enter()
         .append('circle')
             .attr('r', 8)
             .attr('class', getCityStyleClassFromData)
-            .on('click', function (d) { handleCircleClick.call(this, d, lines) })
+            .on('click', handleCircleClick)
 
-    drawLines(lines)
+    drawLines()
 }
 
 // Setters //
@@ -126,10 +141,19 @@ const setD3LineClassName = (cityName) => {
         .classed('line--visible', shouldLineBeShown)
 }
 
+const setupListeners = () => {
+    const selectionElement = document.getElementById('select-plane')
+    selectionElement.addEventListener('change', () => null)
+}
+
 // Initializer //
 map.on('load', async () => {
-    const cities = await d3.json('//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/4')
-    const lines = await d3.json('//api.jsonbin.io/b/5bf149b973474c2f8d97dcce')
-    drawCircles(cities, lines)
+    geoJson.cities = await d3.json('//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/4')
+    geoJson.lines = await d3.json('//api.jsonbin.io/b/5bf149b973474c2f8d97dcce')
+
+    drawCircles()
 })
 
+window.addEventListener('load', (event) => {
+    setupListeners()
+})
