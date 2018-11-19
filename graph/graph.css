@@ -56,26 +56,26 @@ aside {
     background-color: var(--main-bg-color);
 }
 
-.form fieldset {
+form fieldset {
     border: 0;
     text-align: end;
     padding: 16px;
 }
 
-.form legend {
+form legend {
     font-size: var(--sub-heading-font-size);
     font-weight: var(--sub-heading-font-weight);
     padding-top: 24px;
     width: 100%;
 }
 
-.form .label {
+form label {
     font-size: 0.9rem;
     margin-bottom: 8px;
     display: block;
 }
 
-.form .input {
+form select {
     background-color: var(--main-bg-color);
     color: var(--main-text-color);
     height: 24px;
@@ -90,18 +90,18 @@ aside {
     bottom: 24px;
 }
 
-.data-legend__heading {
+.data-legend h2 {
     font-size: var(--sub-heading-font-size);
     font-weight: var(--sub-heading-font-weight);
     margin-bottom: var(--sub-heading-spacing-bottom);
     display: block;
 }
 
-.data-legend__list {
+.data-legend ul {
     list-style-type: none;
 }
 
-.data-legend__list-item {
+.data-legend li {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -109,7 +109,7 @@ aside {
     padding-left: 24px;
 }
 
-.data-legend__list-item + .data-legend__list-item {
+.data-legend li + li {
     margin-top: 16px;
 }
 
@@ -132,7 +132,7 @@ aside {
     background-color: var(--highlighted-city-color);
 }
 
-.data-legend-text {
+.data-legend span {
     max-width: 70%;
 }
 
