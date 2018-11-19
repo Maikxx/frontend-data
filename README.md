@@ -26,17 +26,53 @@ cd frontend-data
 
 ## Concept
 
-<!-- TODO: add detailed description per image -->
+*Note: These designs might be a little outdated, but the global concept still stands*
+
+I originally planned to make a graph, which would hold all the variables of the books from the OBA in it. However, this felt like it was not interesting enough. I also received feedback that I needed to make a visualization which was interesting to me personally.
+
+When I heard that, I immediately looked at a way to implement airplanes in the visualization.
+I eventually came up with a map, which holds all the cities in which atleast one books is published.
+The landing page can be seen in this image:
 
 ![Concept image 1](docs/concept-visualization-01.jpg)
+
+Here you can select an airplane and then select a city on the map.
+You could also zoom out on the map to reveal more of the world.
+When you click on a specific point you can explore the books that are published at this location from a popup.
+My initial way to visualize this can be seen in the following image:
+
 ![Concept image 2](docs/concept-visualization-02.jpg)
+
+However, after exploring the amount of books I had per location, I quickly realized this was not possible.
+I have thought of something new when you read this, check out the live visualization. <!-- TODO Add a link here -->
+
+On the next two images another interaction state can be seen. The color of the city changes and there is a line being drawn from the selected city to the destination city, which is always Amsterdam.
+
 ![Concept image 3](docs/concept-visualization-03.jpg)
 ![Concept image 4](docs/concept-visualization-04.jpg)
-![Concept image 5](docs/concept-visualization-05.jpg)
+
+The main thought behind this visualization was to have the user explore the world to find their favorite books.
+I coupled the flight data with this, because I thought it would make the visualization a lot more interesting.
+
+**Disclaimers**
+
+* There is no way the flight times are 100% accurate, since the calculation takes the cruising speed of a plane, in other words, the take-off and landing speeds are not taken into account.
+* The speed is not live, which means that flight times may always vary with wind speeds.
+* Probably the most books don't arrive in the Netherlands by plane, and even may or may not come from the publication city.
+
+### TODO
+
+* Animate the route when a point is clicked.
+* Remove the active state from other routes when another is clicked.
 
 ### Future enhancements
 
-* Implement search functionality.
+* Implement search functionality. **Minor**
+* Add live weather information for the clicked city to calibrate the flight duration. **Major**
+* Take take-off and landing speeds into account calculating the time it takes between destinations. **Medium**
+* Add curve to the plane route, which corresponds with the curvature of the globe. **Medium**
+* Integrate the cost it takes for a book (based on weight) to ship it to Amsterdam. **Medium**
+* Integrate multi-library support **Major**
 
 ## Process
 
