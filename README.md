@@ -92,7 +92,7 @@ The full log of my process can be found [here](docs/PROCESS.md)!
 ### API's
 
 * [LocationIQ](https://locationiq.com/docs)
-* [MaxBox](https://www.mapbox.com)
+* [MapBox](https://www.mapbox.com)
 
 ## Honourable mentions
 
