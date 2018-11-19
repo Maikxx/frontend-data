@@ -153,8 +153,6 @@ const setNewListItem = (list, options) => {
 const updateExistingListItem = (options) => {
     const { value, identifier } = options
 
-    console.log(identifier)
-    console.log(document.getElementById(identifier))
     const textElement = document.getElementById(identifier).querySelector('span')
     textElement.textContent = value
 }
