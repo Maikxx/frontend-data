@@ -134,8 +134,8 @@ const filterLinesByCityName = (cityName) => {
 }
 
 // Data Display
-const setNewListItem = (list, textContent) => {
-    const { title, value } = textContent
+const setNewListItem = (list, options) => {
+    const { title, value, identifier } = options
 
     const item = document.createElement('li')
     const h3 = document.createElement('h3')
@@ -147,27 +147,57 @@ const setNewListItem = (list, textContent) => {
     item.appendChild(span)
         .textContent = value
 
+    item.id = identifier
     list.appendChild(item)
+}
+
+const updateExistingListItem = (options) => {
+    const { value, identifier } = options
+
+    console.log(identifier)
+    console.log(document.getElementById(identifier))
+    const textElement = document.getElementById(identifier).querySelector('span')
+    textElement.textContent = value
 }
 
 const setSettings = () => {
     const { flySpeed, distanceBetweenCities, airplane, readableFlyTime } = interactionOptions
     const list = document.getElementById('settings-list')
-    const children = list.childNodes
-
-    if (children) {
-        list.innerHTML = ''
-    }
 
     const roundFlySpeed = Math.floor(flySpeed)
     const roundDistance = Math.floor(distanceBetweenCities)
     const planePlaceholder = 'Selecteer een vliegtuig'
     const placeholderForInfoRequiringPlane = airplane ? 'Selecteer een locatie' : planePlaceholder
 
-    setNewListItem(list, {title: `Vliegtuig type`, value: airplane || planePlaceholder})
-    setNewListItem(list, {title: `Kruissnelheid`, value: roundFlySpeed ? `${roundFlySpeed}km/h` : placeholderForInfoRequiringPlane})
-    setNewListItem(list, {title: `Astand`, value: roundDistance ? `${roundDistance}km` : placeholderForInfoRequiringPlane})
-    setNewListItem(list, {title: `Geschatte vluchtduur`, value: readableFlyTime ? readableFlyTime : placeholderForInfoRequiringPlane})
+    const dataList = [
+        {
+            title: `Vliegtuig type`,
+            value: airplane || planePlaceholder,
+            identifier: 'plane-type'
+        },
+        {
+            title: `Kruissnelheid`,
+            value: roundFlySpeed ? `${roundFlySpeed}km/h` : placeholderForInfoRequiringPlane,
+            identifier: 'plane-speed'
+        },
+        {
+            title: `Astand`,
+            value: roundDistance ? `${roundDistance}km` : placeholderForInfoRequiringPlane,
+            identifier: 'distance'
+        },
+        {
+            title: `Geschatte vluchtduur`,
+            value: readableFlyTime ? readableFlyTime : placeholderForInfoRequiringPlane,
+            identifier: 'flight-duration'
+        }
+    ]
+
+    if (!list.childNodes.length) {
+        dataList.forEach(options => setNewListItem(list, options))
+        return null
+    }
+
+    dataList.forEach(options => updateExistingListItem(options))
 }
 
 // Handlers //
@@ -212,6 +242,8 @@ function handleOnSelectorChange({ target }) {
 
     interactionOptions.airplane = getCleanPlaneNameFromSelectedPlane(selectedPlane)
     interactionOptions.flySpeed = getSpeedFromSelectedPlane(selectedPlane)
+
+    setSettings()
 }
 
 // Drawers //
