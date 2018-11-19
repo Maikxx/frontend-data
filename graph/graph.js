@@ -302,8 +302,8 @@ const animateOnWindowLoad = () => {
 
 // Initializer //
 map.on('load', async () => {
-    geoJson.cities = await d3.json('//api.jsonbin.io/b/5bf00a8518a56238b6f7c928/4')
-    geoJson.lines = await d3.json('//api.jsonbin.io/b/5bf149b973474c2f8d97dcce')
+    geoJson.cities = await d3.json('https://github.com/Maikxx/frontend-data/blob/master/data/city.geo.json')
+    geoJson.lines = await d3.json('https://raw.githubusercontent.com/Maikxx/frontend-data/master/data/cityConnections.json')
 
     drawCircles()
 })
