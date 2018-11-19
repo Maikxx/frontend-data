@@ -9,6 +9,8 @@ const geoJson = {
 const interactionOptions = {
     flySpeed: undefined,
     airplane: undefined,
+    distanceBetweenCities: undefined,
+    flyTimeInMinutes: undefined,
 }
 
 const map = new mapboxgl.Map({
@@ -101,10 +103,11 @@ const filterLinesByCityName = (cityName) => {
 // Handlers //
 function handleCircleClick(d) {
     const { name: cityName } = d.properties
+    const { flySpeed, airplane } = interactionOptions
 
-    this.classList.contains('city--active')
-        ? this.classList.remove('city--active')
-        : this.classList.add('city--active')
+    if (!flySpeed) {
+        throw new Error('Please, select an airplane first')
+    }
 
     if (cityName === 'Amsterdam') {
         return null
@@ -113,9 +116,23 @@ function handleCircleClick(d) {
     const transformedCityName = getTransformedCityName(cityName)
     setD3LineClassName(transformedCityName)
 
+    if (this.classList.contains('city--active')) {
+        console.log('hoi')
+        this.classList.remove('city--active')
+
+        // Breaking out of the function to stop the setting of a flySpeed
+        return null
+    } else {
+        this.classList.add('city--active')
+    }
+
     const lineByCityName = filterLinesByCityName(transformedCityName)[0]
     const distanceBetweenCities = turf.lineDistance(lineByCityName)
-    console.log(distanceBetweenCities)
+    interactionOptions.distanceBetweenCities = distanceBetweenCities
+
+    const flyTimeInMinutes = distanceBetweenCities / flySpeed * 60
+    interactionOptions.flyTimeInMinutes = flyTimeInMinutes
+    console.log(flyTimeInMinutes)
 }
 
 function handleOnSelectorChange({ target }) {
