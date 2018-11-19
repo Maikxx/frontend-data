@@ -105,12 +105,12 @@ function handleCircleClick(d) {
     const { name: cityName } = d.properties
     const { flySpeed, airplane } = interactionOptions
 
-    if (!flySpeed) {
-        throw new Error('Please, select an airplane first')
-    }
-
     if (cityName === 'Amsterdam') {
         return null
+    }
+
+    if (!flySpeed) {
+        throw new Error('Please, select an airplane first')
     }
 
     const transformedCityName = getTransformedCityName(cityName)
