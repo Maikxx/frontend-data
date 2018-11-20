@@ -296,7 +296,7 @@ const drawLines = () => {
                 const lineDistance = turf.lineDistance(d, 'kilometers')
                 const arc = []
 
-                const steps = 100
+                const steps = 50
 
                 for (let i = 0; i < lineDistance; i += lineDistance / steps) {
                     const segment = turf.along(d, i, 'kilometers')
