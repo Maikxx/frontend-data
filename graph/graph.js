@@ -162,9 +162,10 @@ const updateExistingListItem = (options) => {
         booksListItem.innerHTML = ''
 
         const h3 = document.createElement('h3')
+        const amountOfBooks = value.length
 
         booksListItem.appendChild(h3)
-            .textContent = `Boeken (${value.length})`
+            .textContent = `Boek${amountOfBooks === 1 ? '' : 'en'} (${amountOfBooks})`
 
         value.map(v => {
             const span = document.createElement('span')
