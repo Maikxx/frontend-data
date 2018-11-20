@@ -12,6 +12,7 @@ const interactionOptions = {
     distanceBetweenCities: undefined,
     flyTimeInMinutes: undefined,
     readableFlyTime: undefined,
+    cityName: undefined,
 }
 
 const map = new mapboxgl.Map({
@@ -217,6 +218,18 @@ const toastError = (error) => {
         .style('bottom', '-34px')
 }
 
+const setFlightTimeAndDistance = (cityName) => {
+    const { flySpeed } = interactionOptions
+    const lineByCityName = filterLinesByCityName(cityName)[0]
+    const distanceBetweenCities = turf.lineDistance(lineByCityName)
+    interactionOptions.distanceBetweenCities = distanceBetweenCities
+
+    const flyTimeInMinutes = distanceBetweenCities / flySpeed * 60
+    interactionOptions.flyTimeInMinutes = flyTimeInMinutes
+    interactionOptions.readableFlyTime = getReadableFlyTime()
+    interactionOptions.cityName = cityName
+}
+
 // Handlers //
 function handleCircleClick(d) {
     const { name: cityName } = d.properties
@@ -245,23 +258,22 @@ function handleCircleClick(d) {
         this.classList.add('city--active')
     }
 
-    const lineByCityName = filterLinesByCityName(transformedCityName)[0]
-    const distanceBetweenCities = turf.lineDistance(lineByCityName)
-    interactionOptions.distanceBetweenCities = distanceBetweenCities
-
-    const flyTimeInMinutes = distanceBetweenCities / flySpeed * 60
-    interactionOptions.flyTimeInMinutes = flyTimeInMinutes
-    interactionOptions.readableFlyTime = getReadableFlyTime()
-
+    setFlightTimeAndDistance(transformedCityName)
     setSettings()
 }
 
 function handleOnSelectorChange({ target }) {
     const selectedOption = target.options[target.selectedIndex]
     const selectedPlane = selectedOption.text
+    const { cityName } = interactionOptions
 
     interactionOptions.airplane = getCleanPlaneNameFromSelectedPlane(selectedPlane)
     interactionOptions.flySpeed = getSpeedFromSelectedPlane(selectedPlane)
+
+    if (cityName) {
+        const transformedCityName = getTransformedCityName(cityName)
+        setFlightTimeAndDistance(transformedCityName)
+    }
 
     setSettings()
 }
