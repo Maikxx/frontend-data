@@ -63,13 +63,7 @@ I coupled the flight data with this, because I thought it would make the visuali
 
 ### Future enhancements
 
-* Implement search functionality. **Minor**
-* Add live weather information for the clicked city to calibrate the flight duration. **Major**
-* Take take-off and landing speeds into account calculating the time it takes between destinations. **Medium**
-* Add curve to the plane route, which corresponds with the curvature of the globe. **Medium**
-* Integrate the cost it takes for a book (based on weight) to ship it to Amsterdam. **Major**
-* Integrate multi-library support **Major**
-* Integrate multi-language support. **Medium**
+For an up to date list of future enhancements, you can take a look [here](https://github.com/Maikxx/frontend-data/issues).
 
 ## Process
 
