@@ -8,6 +8,9 @@
     * [Day 3](#Day-3)
     * [Day 4](#Day-4)
     * [Day 5](#Day-5)
+* [Weekend](#Weekend)
+* [Week 2](#Week-2)
+    * [Day 6](#Day-6)
 
 ## Week 1
 
@@ -97,7 +100,7 @@ I also got a lot of help from [Wouter](https://github.com/maanlamp), Tim and [Ch
 
 On my part I helped [Jessie](https://github.com/jessiemasonx) and [Chelsea](https://github.com/chelseadoeleman) with some of their functionalities. It is great to help people, because you have a bird's eye view of their code, whereas they might have lost it at that point.
 
-### Weekend
+## Weekend
 
 During the weekend I worked a lot on this project to get up to speed with the rest, I focussed on transforming the data into GeoJSON, which could be used by MapBox. This was a lot more difficult than it sounds, because I had to make a connection to another external API from the server, which is LocationIQ.
 
@@ -107,6 +110,8 @@ When the weekend was over I had a completely functional map with MapBox as the m
 
 I had also made a simple connection and interaction between the selected city (like London) to Amsterdam, which would draw a line on the map between these two cities.
 I was not satisfied with this line yet though, as it was a straight line, while if you look at plane route maps, they always curve along with the earths rounding.
+
+## Week 2
 
 ### Day 6
 
