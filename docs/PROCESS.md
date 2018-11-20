@@ -97,6 +97,32 @@ I also got a lot of help from [Wouter](https://github.com/maanlamp), Tim and [Ch
 
 On my part I helped [Jessie](https://github.com/jessiemasonx) and [Chelsea](https://github.com/chelseadoeleman) with some of their functionalities. It is great to help people, because you have a bird's eye view of their code, whereas they might have lost it at that point.
 
+### Weekend
+
+During the weekend I worked a lot on this project to get up to speed with the rest, I focussed on transforming the data into GeoJSON, which could be used by MapBox. This was a lot more difficult than it sounds, because I had to make a connection to another external API from the server, which is LocationIQ.
+
+When working with this I found out soon enough that this API wasn't made for mass requests like mine (230 requests approximately). It kept throwing `419` error codes, which meant I was sending too much requests. I finally solved this by leaving a second in between requests.
+
+When the weekend was over I had a completely functional map with MapBox as the map provider and with publication locations of OBA books across the world.
+
+I had also made a simple connection and interaction between the selected city (like London) to Amsterdam, which would draw a line on the map between these two cities.
+I was not satisfied with this line yet though, as it was a straight line, while if you look at plane route maps, they always curve along with the earths rounding.
+
+### Day 6
+
+After having the map semi-functional I decided it was time to focus on the UI. I wanted to include at least a legend, a way to change the plane on which the speed is based, and an overview of the selected variables from within the UI and the map. I ofcourse also needed a title for the map.
+
+The title was quickly integrated, along with the UI sidebar.
+The tricky part was the selected values data display section.
+This would need to be essentially a React like component, with state and an ability to modify it's values, without it being React. To do this I created a global variable (👀) to store this data, since I needed these values in multiple functions.
+
+I spent a lot of my day trying to calculate the distance between coordinates, and showing this in the UI in a nice way (like: 1 hour and 40 minutes). This prove to be harder than I thought, because the modulus operator does not return the decimal value if the variable on which it is performed is less than the right hand side of the operation.
+To fix this, I had to write very ugly code, which could be definately be refactored. I just had spend enough time on this issue.
+
+Finally I looked into a way to curve the lines shown on the map according to the globes curvature.
+This was, as usual, harder than it sounds, since there are pretty much no fitting examples to be found anywhere.
+I fixed this by mixmashing my own code with some of an example of MapBox.
+
 <!-- Links -->
 [nodemon]: https://nodemon.io
 [typescript]: https://www.typescriptlang.org
