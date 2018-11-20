@@ -44,7 +44,7 @@ My initial way to visualize this can be seen in the following image:
 ![Concept image 2](docs/concept-visualization-02.jpg)
 
 However, after exploring the amount of books I had per location, I quickly realized this was not possible.
-I have thought of something new when you read this, check out the live visualization. <!-- TODO Add a link here -->
+I have thought of something new when you read this, check out the [live visualization](https://maikxx.github.io/frontend-data/index.html).
 
 On the next two images another interaction state can be seen. The color of the city changes and there is a line being drawn from the selected city to the destination city, which is always Amsterdam.
 
@@ -60,10 +60,6 @@ I coupled the flight data with this, because I thought it would make the visuali
 * The speed is not live, which means that flight times may always vary with wind speeds.
 * Probably the most books don't arrive in the Netherlands by plane, and even may or may not come from the publication city.
 
-<!-- TODO -->
-
-<!-- * Animate the route when a point is clicked.
-* Remove the active state from other routes when another is clicked. -->
 
 ### Future enhancements
 
@@ -71,12 +67,11 @@ I coupled the flight data with this, because I thought it would make the visuali
 * Add live weather information for the clicked city to calibrate the flight duration. **Major**
 * Take take-off and landing speeds into account calculating the time it takes between destinations. **Medium**
 * Add curve to the plane route, which corresponds with the curvature of the globe. **Medium**
-* Integrate the cost it takes for a book (based on weight) to ship it to Amsterdam. **Medium**
+* Integrate the cost it takes for a book (based on weight) to ship it to Amsterdam. **Major**
 * Integrate multi-library support **Major**
+* Integrate multi-language support. **Medium**
 
 ## Process
-
-<!-- TODO: Summary -->
 
 The full log of my process can be found [here](docs/PROCESS.md)!
 
@@ -105,6 +100,7 @@ The full log of my process can be found [here](docs/PROCESS.md)!
 
 ## Sources
 
+* MapBox. (2018, november 19). Animate a point along a route. Retreived november 19 2018, from https://www.mapbox.com/mapbox-gl-js/example/animate-point-along-route/.
 * Wikipedia contributors. (2018, november 18). Airbus A340 - Wikipedia. Retreived november 18 2018, from https://en.wikipedia.org/wiki/Airbus_A340.
 * Wikipedia contributors. (2018, November 18). Airbus A380 - Wikipedia. Retrieved November 18, 2018, from https://en.wikipedia.org/wiki/Airbus_A380.
 * Wikipedia contributors. (2018, november 18). Antonov An-22 - Wikipedia. Retreived november 18 2018, from https://en.wikipedia.org/wiki/Antonov_An-22.

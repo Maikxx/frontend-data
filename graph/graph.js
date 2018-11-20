@@ -274,7 +274,21 @@ const drawLines = () => {
         .data(lines.features)
         .enter()
         .append('path')
-            .attr('d', path)
+            .attr('d', d => {
+                // Heavily inspired by MapBox's (2018) example about animating a point along a route.
+                const lineDistance = turf.lineDistance(d, 'kilometers')
+                const arc = []
+
+                const steps = 100
+
+                for (let i = 0; i < lineDistance; i += lineDistance / steps) {
+                    const segment = turf.along(d, i, 'kilometers')
+                    arc.push(segment.geometry.coordinates)
+                }
+
+                d.geometry.coordinates = arc
+                return path(d)
+            })
             .attr('class', d => `line line--${d.properties.fromCity.toLowerCase().replace(' ', '_')}`)
 
     triggerUpdate()
@@ -332,8 +346,8 @@ map.on('load', async () => {
         geoJson.cities = await d3.json('../data/city.geo.json')
         geoJson.lines = await d3.json('../data/cityConnections.geo.json')
 
-        drawCircles()
         animateOnDataLoaded()
+        drawCircles()
     } catch (error) {
         toastError(error)
     }
