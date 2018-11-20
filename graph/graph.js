@@ -235,8 +235,10 @@ function handleCircleClick(d) {
     const { name: cityName } = d.properties
     const { flySpeed } = interactionOptions
 
-    svg.select('.line--visible')
-        .attr('class', '.line')
+    const visibleLine = document.getElementsByClassName('.line--visible')[0]
+    if (visibleLine) {
+        visibleLine.classList.remove('.line--visible')
+    }
 
     if (cityName === 'Amsterdam') {
         return null
