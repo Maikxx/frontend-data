@@ -13,6 +13,7 @@ const interactionOptions = {
     flyTimeInMinutes: undefined,
     readableFlyTime: undefined,
     cityName: undefined,
+    bookNames: [],
 }
 
 const map = new mapboxgl.Map({
@@ -139,10 +140,11 @@ const setNewListItem = (list, options) => {
 
     const item = document.createElement('li')
     const h3 = document.createElement('h3')
-    const span = document.createElement('span')
 
     item.appendChild(h3)
         .textContent = title
+
+    const span = document.createElement('span')
 
     item.appendChild(span)
         .textContent = value
@@ -152,14 +154,38 @@ const setNewListItem = (list, options) => {
 }
 
 const updateExistingListItem = (options) => {
-    const { value, identifier } = options
+    const { value, identifier,  } = options
 
-    const textElement = document.getElementById(identifier).querySelector('span')
-    textElement.textContent = value
+    if (Array.isArray(value)) {
+        const booksListItem = document.getElementById('books')
+        const dataList = booksListItem.parentElement
+        booksListItem.innerHTML = ''
+
+        const h3 = document.createElement('h3')
+
+        booksListItem.appendChild(h3)
+            .textContent = 'Boeken'
+
+        value.map(v => {
+            const span = document.createElement('span')
+
+            booksListItem
+                .appendChild(span)
+                .textContent = v
+        })
+
+        booksListItem.classList.add('data-list')
+        booksListItem.classList.add('data-list--multiple')
+
+        dataList.appendChild(booksListItem)
+    } else {
+        const textElement = document.getElementById(identifier).querySelector('span')
+        textElement.textContent = value
+    }
 }
 
 const setSettings = () => {
-    const { flySpeed, distanceBetweenCities, airplane, readableFlyTime } = interactionOptions
+    const { flySpeed, distanceBetweenCities, airplane, readableFlyTime, books } = interactionOptions
     const list = document.getElementById('settings-list')
 
     const roundFlySpeed = Math.floor(flySpeed)
@@ -187,6 +213,11 @@ const setSettings = () => {
             title: `Geschatte vluchtduur`,
             value: readableFlyTime ? readableFlyTime : placeholderForInfoRequiringPlane,
             identifier: 'flight-duration'
+        },
+        {
+            title: `Boeken`,
+            value: books || 'Geen boeken gevonden',
+            identifier: 'books'
         }
     ]
 
@@ -232,13 +263,8 @@ const setFlightTimeAndDistance = (cityName) => {
 
 // Handlers //
 function handleCircleClick(d) {
-    const { name: cityName } = d.properties
+    const { name: cityName, books } = d.properties
     const { flySpeed } = interactionOptions
-
-    const visibleLines = document.getElementsByClassName('line--visible')
-    if (visibleLines.length > 0) {
-        [...visibleLines].map(visibleLine => visibleLine.classList.remove('line--visible'))
-    }
 
     if (cityName === 'Amsterdam') {
         return null
@@ -249,6 +275,13 @@ function handleCircleClick(d) {
 
         toastError(error)
         throw new Error(error)
+    }
+
+    interactionOptions.books = books
+
+    const visibleLines = document.getElementsByClassName('line--visible')
+    if (visibleLines.length > 0) {
+        [...visibleLines].map(visibleLine => visibleLine.classList.remove('line--visible'))
     }
 
     const activeCities = document.getElementsByClassName('city--active')
