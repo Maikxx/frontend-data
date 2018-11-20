@@ -73,6 +73,7 @@ I coupled the flight data with this, because I thought it would make the visuali
 * Add curve to the plane route, which corresponds with the curvature of the globe. **Medium**
 * Integrate the cost it takes for a book (based on weight) to ship it to Amsterdam. **Medium**
 * Integrate multi-library support **Major**
+* Integrate multi-language support. **Medium**
 
 ## Process
 
