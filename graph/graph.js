@@ -235,9 +235,9 @@ function handleCircleClick(d) {
     const { name: cityName } = d.properties
     const { flySpeed } = interactionOptions
 
-    const visibleLine = document.getElementsByClassName('line--visible')[0]
-    if (visibleLine) {
-        visibleLine.classList.remove('line--visible')
+    const visibleLines = document.getElementsByClassName('line--visible')
+    if (visibleLines.length > 0) {
+        [...visibleLines].map(visibleLine => visibleLine.classList.remove('line--visible'))
     }
 
     if (cityName === 'Amsterdam') {
@@ -251,17 +251,15 @@ function handleCircleClick(d) {
         throw new Error(error)
     }
 
+    const activeCities = document.getElementsByClassName('city--active')
+    if (activeCities.length > 0) {
+        [...activeCities].map(activeCity => activeCity.classList.remove('city--active'))
+    }
+
+    this.classList.add('city--active')
+
     const transformedCityName = getTransformedCityName(cityName)
     setD3LineClassName(transformedCityName)
-
-    if (this.classList.contains('city--active')) {
-        this.classList.remove('city--active')
-
-        // Breaking out of the function to stop the setting of a flySpeed
-        return null
-    } else {
-        this.classList.add('city--active')
-    }
 
     setFlightTimeAndDistance(transformedCityName)
     setSettings()
