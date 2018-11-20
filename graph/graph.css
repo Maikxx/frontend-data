@@ -26,6 +26,7 @@ body {
     background-color: var(--primary-bg-color);
     font-family: 'Open Sans', sans-serif;
     opacity: 0;
+    overflow-y: hidden;
 }
 
 .page-header,
@@ -145,6 +146,7 @@ form select {
 
 .data-legend span {
     max-width: 70%;
+    display: block;
 }
 
 svg {
@@ -206,6 +208,8 @@ svg {
 
 .information-section li {
     text-align: right;
+    max-height: 150px;
+    overflow-y: scroll;
 }
 
 .information-section li + li {
@@ -215,11 +219,34 @@ svg {
 .information-section li h3 {
     font-size: .9rem;
     font-weight: 700;
+    position: sticky;
+    margin-bottom: 4px;
+    top: 0;
+    background-color: var(--primary-bg-color);
 }
 
 .information-section li span {
     color: var(--secondary-text-color);
     font-size: .8rem;
+    display: block;
+}
+
+.data-list.data-list--multiple span {
+    max-width: 100%;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    will-change: white-space;
+    transition: all 300ms;
+}
+
+.data-list.data-list--multiple span:hover {
+    white-space: unset;
+    color: var(--primary-text-color);
+}
+
+.data-list.data-list--multiple span + span {
+    margin-top: 4px;
 }
 
 #error-toast {
