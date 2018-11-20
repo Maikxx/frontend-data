@@ -11,6 +11,7 @@
 * [Weekend](#Weekend)
 * [Week 2](#Week-2)
     * [Day 6](#Day-6)
+    * [Day 7](#Day-7)
 
 ## Week 1
 
@@ -127,6 +128,15 @@ To fix this, I had to write very ugly code, which could be definately be refacto
 Finally I looked into a way to curve the lines shown on the map according to the globes curvature.
 This was, as usual, harder than it sounds, since there are pretty much no fitting examples to be found anywhere.
 I fixed this by mixmashing my own code with some of an example of MapBox.
+
+### Day 7
+
+Today I had little time to make something happen, however I fixed some bugs and updated the documentation a lot.
+I also started working with Github issues to track my todo's and future enhacements, instead of writing it in a todo list comment.
+
+I feel like it is great to have an organized way of storing these kind of plans.
+
+Furthermore, I am starting to get the hang of working in branches. For minor tweeks and documentation updates I won't go into a branch, because I simply think it is overkill if I work alone, but for the larger features, like curving the lines, I think it is great to have the feature contained in it's own branch.
 
 <!-- Links -->
 [nodemon]: https://nodemon.io

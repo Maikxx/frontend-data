@@ -4,10 +4,9 @@
 
 * [Installation](#Installation)
 * [Concept](#Concept)
-    * [Future enhancements](#Future-enhancements)
+* [Future enhancements](#Future-enhancements)
 * [Process](#Process)
 * [Development](#Development)
-    * [Tools](#Tools)
 * [Honourable mentions](#Honourable-mentions)
 * [Sources](#Sources)
 * [License](#License)
@@ -61,27 +60,53 @@ I coupled the flight data with this, because I thought it would make the visuali
 * Probably the most books don't arrive in the Netherlands by plane, and even may or may not come from the publication city.
 
 
-### Future enhancements
+## Future enhancements
 
 For an up to date list of future enhancements, you can take a look [here](https://github.com/Maikxx/frontend-data/issues).
 
 ## Process
 
+During these two weeks I learned a lot more than I had initially thought.
+The learning process started with, what was a mystery for me, that GitHub doesn't like to have large files stored on it's servers.
+
+I had to use a `git` tool, called [Git-LFS](https://git-lfs.github.com) to store the data file I originally had. This was a text file containing all the geographic coordinates of cities in the world.
+I eventually stopped using this file, because my computer could not handle the amount of computations required to `filter` and `map` through the data to transform it.
+
+I then choose to use an external API to load the coordinates by city name (at this point I had transformed all the cities to cleaned names). I thought these requests (±230) could be fired from the client, however I quickly found out that the API only allows 1 request per second, which would make the load time of the map equivalent to the amount of requests, which was way too long.
+
+Finally, in this chain of events I choose to take an approach I think is rather unnecessary, but after started to apreciate. One might call this *the long route*, which involved me writing a data file to my computer for each significant step in the data transformation process. You can find all these resulting files [here](./data).
+
+Because you write a file every significant step, getting lost in the data is harder, which is a good thing.
+Because of this approach the client only has to do two requests, which is to [this](./data/city.geo.json) and this [this](./data/cityConnections.geo.json).
+
+More things I learned these past weeks include, of course D3, but also MapBox, which is a great Map provider, which makes interaction with it and placing svg layers on top super easy.
+
+As for the concepting part of this project, well... The moment I heard from Titus that I should make something that is fun for me to make, I was just flying (pun intended) to do something with airplanes for once after two years of not having the time to make something like that happen.
+
+The concept really just evolved over time, and at this moment it is still a work in progress, which I think is great, because I can add a lot of things to the visualization when it progresses.
+
+I initially thought I was going to hate D3, because everyone I know said it was awefull, however the reality is that I love it. It makes a lot of things so much more easy.
+The things that I could not easily write myself or solve with D3, I fixed by using Lodash.
+
+The further the project got, the more I started enjoying it, and now I would like to keep this project up to date and develop it to the next level when I have the time for it. You can look at my [GitHub issues]((https://github.com/Maikxx/frontend-data/issues) to see what I want to add in the future.
+
+Finally, I am starting to like working with GitHub issues and git branches each time a little bit more, which I would not have imagined I would ever say for a solo project.
+
 The full log of my process can be found [here](docs/PROCESS.md)!
 
 ## Development
 
-### Tools
-
+* [D3](https://d3js.org)
+* [Git-LFS](https://git-lfs.github.com)
+* [JSON To TS](http://www.jsontots.com)
+* [JSONbin](https://jsonbin.io)
+* [LocationIQ](https://locationiq.com/docs)
+* [Lodash](https://lodash.com)
+* [MapBox](https://www.mapbox.com)
+* [Node.js](https://nodejs.org/en/)
 * [Nodemon](https://nodemon.io)
 * [TypeScript](https://www.typescriptlang.org)
 * [Yarn](https://yarnpkg.com/en/)
-* [JSON To TS](http://www.jsontots.com)
-
-### API's
-
-* [LocationIQ](https://locationiq.com/docs)
-* [MapBox](https://www.mapbox.com)
 
 ## Honourable mentions
 
