@@ -138,6 +138,19 @@ I feel like it is great to have an organized way of storing these kind of plans.
 
 Furthermore, I am starting to get the hang of working in branches. For minor tweeks and documentation updates I won't go into a branch, because I simply think it is overkill if I work alone, but for the larger features, like curving the lines, I think it is great to have the feature contained in it's own branch.
 
+### Day 8
+
+Most of my time today was spent on helping others, like Jessie, Linda and Chelsea.
+
+The rest of the time I spent making the visualization more impactful by adding a transition and viewport reposition when clicking on the legend item for Amsterdam. The code for this can be found [here](../graph/graph.js#L424). This was fortunately surprisingly easy with MapBox.
+
+More things I did include:
+
+* [Zooming out in the map shrinks the radius of the cities](../graph/graph.js#L519). This is great for improving the experience of the distance that you really are at from the world.
+* [Cities now have a color which represents the amount of books it contains](../graph/graph.js#L388). This feature came along with an update to the legend in the bottom right corner. Mainly the gradient scale of the legend I had trouble was what I had trouble with, so the code will probably look terrible.
+
+*Note* I am also slowly starting to lose grip on both the [JavaScript](../graph/graph.js) and [CSS](../graph/graph.css) files because of their immense size. This makes me definately want to look into a build process from the start the next project I make.
+
 <!-- Links -->
 [nodemon]: https://nodemon.io
 [typescript]: https://www.typescriptlang.org

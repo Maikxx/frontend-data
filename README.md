@@ -120,7 +120,7 @@ The full log of my process can be found [here](docs/PROCESS.md)!
 ## Sources
 
 * D3 Gradient Bar - Map Legend Example [Code]. (2017, June 12). Retrieved November 21, 2018, from https://bl.ocks.org/duspviz-mit/9b6dce37101c30ab80d0bf378fe5e583.
-* MapBox. (2018, november 19). Animate a point along a route. Retreived november 19 2018, from https://www.mapbox.com/mapbox-gl-js/example/animate-point-along-route/.
+* MapBox. (2018, november 19). Animate a point along a route [Code]. Retreived november 19 2018, from https://www.mapbox.com/mapbox-gl-js/example/animate-point-along-route/.
 * Wikipedia contributors. (2018, november 18). Airbus A340 - Wikipedia. Retreived november 18 2018, from https://en.wikipedia.org/wiki/Airbus_A340.
 * Wikipedia contributors. (2018, November 18). Airbus A380 - Wikipedia. Retrieved November 18, 2018, from https://en.wikipedia.org/wiki/Airbus_A380.
 * Wikipedia contributors. (2018, november 18). Antonov An-22 - Wikipedia. Retreived november 18 2018, from https://en.wikipedia.org/wiki/Antonov_An-22.
