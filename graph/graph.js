@@ -153,7 +153,7 @@ const filterLinesByCityName = (cityName) => {
     })
 }
 
-const setNewListItem = (list, options) => {
+const setNewUISelectionListItem = (list, options) => {
     const { title, value, identifier } = options
 
     const item = document.createElement('li')
@@ -171,7 +171,7 @@ const setNewListItem = (list, options) => {
     list.appendChild(item)
 }
 
-const updateExistingListItem = (options) => {
+const updateExistingUISelectionListItem = (options) => {
     const { value, identifier,  } = options
 
     if (Array.isArray(value)) {
@@ -203,7 +203,7 @@ const updateExistingListItem = (options) => {
     }
 }
 
-const setSettings = () => {
+const setUISelectionSettings = () => {
     const { flySpeed, distanceBetweenCities, airplane, readableFlyTime, books } = interactionOptions
     const list = document.getElementById('settings-list')
 
@@ -212,7 +212,7 @@ const setSettings = () => {
     const planePlaceholder = 'Selecteer een vliegtuig'
     const placeholderForInfoRequiringPlane = airplane ? 'Selecteer een locatie' : planePlaceholder
 
-    const dataList = [
+    const dataOptions = [
         {
             title: `Vliegtuig type`,
             value: airplane || planePlaceholder,
@@ -230,7 +230,7 @@ const setSettings = () => {
         },
         {
             title: `Geschatte vluchtduur`,
-            value: readableFlyTime ? readableFlyTime : placeholderForInfoRequiringPlane,
+            value: readableFlyTime || placeholderForInfoRequiringPlane,
             identifier: 'flight-duration'
         },
         {
@@ -241,11 +241,11 @@ const setSettings = () => {
     ]
 
     if (!list.childNodes.length) {
-        dataList.forEach(options => setNewListItem(list, options))
+        dataOptions.forEach(options => setNewUISelectionListItem(list, options))
         return null
     }
 
-    dataList.forEach(updateExistingListItem)
+    dataOptions.forEach(updateExistingUISelectionListItem)
 }
 const toastError = (error) => {
     const tIn = d3.transition()
@@ -265,6 +265,8 @@ const toastError = (error) => {
     d3.select('#error-toast')
         .transition(tOut)
         .style('bottom', '-34px')
+
+    throw new Error(error)
 }
 
 const setFlightTimeAndDistance = (cityName) => {
@@ -291,28 +293,24 @@ function handleCircleClick(d) {
         const error = 'Please, select an airplane first'
 
         toastError(error)
-        throw new Error(error)
     }
 
     interactionOptions.books = books
 
-    const visibleLines = document.getElementsByClassName('line--visible')
-    if (visibleLines.length > 0) {
-        [...visibleLines].map(visibleLine => visibleLine.classList.remove('line--visible'))
-    }
+    d3.selectAll('.line')
+        .style('stroke-width', '0')
 
-    const activeCities = document.getElementsByClassName('city--active')
-    if (activeCities.length > 0) {
-        [...activeCities].map(activeCity => activeCity.classList.remove('city--active'))
-    }
+    d3.selectAll('.city')
+        .style('stroke-width', 5)
 
-    this.classList.add('city--active')
+    d3.select(this)
+        .style('stroke-width', 10)
 
     const transformedCityName = getTransformedCityName(cityName)
-    setD3LineClassName(transformedCityName)
+    setLineToActive(transformedCityName)
 
     setFlightTimeAndDistance(transformedCityName)
-    setSettings()
+    setUISelectionSettings()
 }
 
 function handleOnSelectorChange({ target }) {
@@ -328,7 +326,7 @@ function handleOnSelectorChange({ target }) {
         setFlightTimeAndDistance(transformedCityName)
     }
 
-    setSettings()
+    setUISelectionSettings()
 }
 
 const createArc = (d) => {
@@ -347,10 +345,6 @@ const createArc = (d) => {
     return path(d)
 }
 
-const setInitalLineClass = (d) => {
-    return `line line--${getTransformedCityName(d.properties.fromCity)}`
-}
-
 const drawLines = () => {
     const { lines } = geoJson
     const normalColorScale = getNormalColorScale()
@@ -360,7 +354,7 @@ const drawLines = () => {
         .enter()
         .append('path')
             .attr('d', createArc)
-            .attr('class', setInitalLineClass)
+            .attr('class', d => `line line--${getTransformedCityName(d.properties.fromCity)}`)
             .style('stroke', d => {
                 const { cities } = geoJson
                 const { features } = cities
@@ -411,14 +405,16 @@ const drawCircles = () => {
     drawLines()
 }
 
-const setD3LineClassName = (cityName) => {
+const setLineToActive = (cityName) => {
     const className = `line--${cityName}`
-    const shouldLineBeShown = d3.select(`.${className}`).classed('line--visible')
-        ? false
-        : true
+
+    const t = d3.transition()
+        .duration(300)
+        .ease(d3.easeLinear)
 
     d3.select(`.${className}`)
-        .classed('line--visible', shouldLineBeShown)
+        .transition(t)
+        .style('stroke-width', '5')
 }
 
 const handleOnAmsterdamLegendItemClick = (event) => {
@@ -433,8 +429,9 @@ const handleOnAmsterdamLegendItemClick = (event) => {
 
 const setupListeners = () => {
     const amsterdamLegendElement = document.getElementById('legend-item--amsterdam')
-    amsterdamLegendElement.addEventListener('click', handleOnAmsterdamLegendItemClick)
     const selectionElement = document.getElementById('select-plane')
+
+    amsterdamLegendElement.addEventListener('click', handleOnAmsterdamLegendItemClick)
     selectionElement.addEventListener('change', handleOnSelectorChange)
 }
 
@@ -443,13 +440,16 @@ const animateOnDataLoaded = () => {
         .duration(600)
         .ease(d3.easeLinear)
 
-    d3.select('body').transition(t)
+    d3.select('body')
+        .transition(t)
         .style('opacity', '1')
 
-    d3.select('.page-header').transition(t)
+    d3.select('.page-header')
+        .transition(t)
         .style('transform', 'translateY(0)')
 
-    d3.select('aside').transition(t)
+    d3.select('aside')
+        .transition(t)
         .style('transform', 'translateX(0)')
 }
 
@@ -466,10 +466,10 @@ const createScaleLegend = () => {
     const height = 20
 
     const key = d3.select('#legend-item--scale')
-      .append('svg')
-      .attr('id', 'scale-svg')
-      .attr('width', width - 20)
-      .attr('height', height)
+        .append('svg')
+        .attr('id', 'scale-svg')
+        .attr('width', width - 20)
+        .attr('height', height)
 
     const legend = key.append('defs')
         .append('svg:linearGradient')
@@ -544,5 +544,5 @@ map.on('load', async () => {
 
 window.addEventListener('load', (event) => {
     setupListeners()
-    setSettings()
+    setUISelectionSettings()
 })

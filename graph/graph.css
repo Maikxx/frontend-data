@@ -46,7 +46,7 @@ aside,
 }
 
 .page-header h1 {
-    padding: 16px;
+    padding: 8px 16px;
     font-size: 1.5rem;
     margin-right: 20%;
     text-align: center;
@@ -98,7 +98,7 @@ form select {
 .data-legend {
     display: block;
     padding: 16px;
-    text-align: end;
+    text-align: right;
 }
 
 .data-legend h2 {
@@ -158,19 +158,14 @@ svg:not(#scale-svg) {
     stroke-linejoin: round;
 }
 
-.line--visible {
-    stroke-width: 3;
-}
-
 .city {
     stroke-width: 5;
     cursor: pointer;
     transition: 0.3s all;
 }
 
-.city:hover,
-.city--active {
-    stroke-width: 10;
+.city:hover {
+    stroke-width: 10 !important;
 }
 
 .city--main,
@@ -181,7 +176,7 @@ svg:not(#scale-svg) {
 }
 
 .information-section {
-    padding: 16px;
+    padding: 16px 16px 16px 0;
 }
 
 .information-section h2 {
@@ -193,7 +188,7 @@ svg:not(#scale-svg) {
 .information-section ul {
     list-style-type: none;
     padding-top: 16px;
-    padding-left: 10%;
+    padding-left: 16px;
 }
 
 .information-section li {
@@ -266,4 +261,9 @@ svg:not(#scale-svg) {
     font-size: 0.9rem;
     text-align: right;
     margin-bottom: 4px;
+}
+
+.mapboxgl-ctrl-bottom-left,
+.mapboxgl-ctrl-bottom-right {
+    display: none;
 }
