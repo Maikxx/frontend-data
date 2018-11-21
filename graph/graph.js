@@ -384,7 +384,7 @@ const drawCircles = () => {
         .data(cities.features)
         .enter()
         .append('circle')
-            .attr('r', 5)
+            .attr('r', 9)
             .attr('class', getCityStyleClassFromData)
             .style('fill', d => d.properties.name !== 'Amsterdam' && normalColorScale(d.properties.books.length))
             .style('stroke', d => d.properties.name !== 'Amsterdam' && normalColorScale(d.properties.books.length))
@@ -498,6 +498,18 @@ const createScaleLegend = () => {
     scale.appendChild(divNode)
 }
 
+const setWindowZoomListener = () => {
+    map.on('zoom', (e) => {
+        const t = d3.transition()
+            .duration(300)
+            .ease(d3.easeLinear)
+
+        svg.selectAll('circle')
+            .transition(t)
+            .attr('r', map.getZoom())
+    })
+}
+
 map.on('load', async () => {
     try {
         geoJson.cities = await d3.json('https://raw.githubusercontent.com/Maikxx/frontend-data/master/data/city.geo.json')
@@ -506,6 +518,7 @@ map.on('load', async () => {
         animateOnDataLoaded()
         drawCircles()
         createScaleLegend()
+        setWindowZoomListener()
     } catch (error) {
         toastError(error)
     }
