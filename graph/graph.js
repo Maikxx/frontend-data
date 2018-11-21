@@ -432,8 +432,8 @@ const animateOnDataLoaded = () => {
 
 map.on('load', async () => {
     try {
-        geoJson.cities = await d3.json('../data/city.geo.json')
-        geoJson.lines = await d3.json('../data/cityConnections.geo.json')
+        geoJson.cities = await d3.json('https://raw.githubusercontent.com/Maikxx/frontend-data/master/data/city.geo.json')
+        geoJson.lines = await d3.json('https://raw.githubusercontent.com/Maikxx/frontend-data/master/data/cityConnections.geo.json')
 
         animateOnDataLoaded()
         drawCircles()
