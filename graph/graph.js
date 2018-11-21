@@ -35,22 +35,25 @@ function projectPoint (lon, lat) {
 const transform = d3.geoTransform({ point: projectPoint })
 const path = d3.geoPath().projection(transform)
 
+const getMinAmountOfBooks = () => {
+    return d3.min(geoJson.cities.features, f => f.properties.books.length)
+}
+
+const getMaxAmountOfBooks = () => {
+    return d3.max(geoJson.cities.features, f => f.properties.books.length)
+}
+
 const getNormalColorScale = () => {
-    const maxAmountOfBooks = d3.max(geoJson.cities.features, f => f.properties.books.length)
-    const minAmountOfBooks = d3.min(geoJson.cities.features, f => f.properties.books.length)
     return d3.scaleLog()
         .base(30)
-        .domain([minAmountOfBooks, maxAmountOfBooks])
+        .domain([getMinAmountOfBooks(), getMaxAmountOfBooks()])
         .range(['#66FCF1', '#2F2FA2'])
 }
 
 const getHoverColorScale = () => {
-    const maxAmountOfBooks = d3.max(geoJson.cities.features, f => f.properties.books.length)
-    const minAmountOfBooks = d3.min(geoJson.cities.features, f => f.properties.books.length)
-
     return d3.scaleLog()
         .base(30)
-        .domain([minAmountOfBooks, maxAmountOfBooks])
+        .domain([getMinAmountOfBooks(), getMaxAmountOfBooks()])
         .range(['#0ffae9', '#232379'])
 }
 
@@ -430,6 +433,71 @@ const animateOnDataLoaded = () => {
         .style('transform', 'translateX(0)')
 }
 
+const createScaleLegend = () => {
+    const node = document.getElementById('legend-item-list')
+    const { width } = node.getBoundingClientRect()
+    const titleNode = document.createElement('h3')
+    titleNode.textContent = 'Aantal boeken'
+    const li = document.createElement('li')
+    li.appendChild(titleNode)
+    li.id = 'scale-legend'
+    node.appendChild(li)
+
+    const height = 20
+
+    const key = d3.select('#scale-legend')
+      .append('svg')
+      .attr('id', 'scale-svg')
+      .attr('width', width - 20)
+      .attr('height', height)
+
+    const legend = key.append('defs')
+        .append('svg:linearGradient')
+        .attr('id', 'gradient')
+        .attr('x1', '0%')
+        .attr('y1', '100%')
+        .attr('x2', '100%')
+        .attr('y2', '100%')
+        .attr('spreadMethod', 'pad')
+
+    legend.append('stop')
+        .attr('offset', '0%')
+        .attr('stop-color', '#66FCF1')
+        .attr('stop-opacity', 1)
+
+    legend.append('stop')
+        .attr('offset', '33%')
+        .attr('stop-color', '#54B8D7')
+        .attr('stop-opacity', 1)
+
+    legend.append('stop')
+        .attr('offset', '66%')
+        .attr('stop-color', '#4173BC')
+        .attr('stop-opacity', 1)
+
+    legend.append('stop')
+        .attr('offset', '100%')
+        .attr('stop-color', '#2F2FA2')
+        .attr('stop-opacity', 1)
+
+    key.append('rect')
+        .attr('width', width)
+        .attr('height', height)
+        .style('fill', 'url(#gradient)')
+
+    const scale = node.querySelector('li:last-child')
+
+    const startNode = document.createElement('span')
+    const endNode = document.createElement('span')
+    const divNode = document.createElement('div')
+
+    startNode.textContent = getMinAmountOfBooks()
+    endNode.textContent = getMaxAmountOfBooks()
+    divNode.appendChild(startNode)
+    divNode.appendChild(endNode)
+    scale.appendChild(divNode)
+}
+
 map.on('load', async () => {
     try {
         geoJson.cities = await d3.json('https://raw.githubusercontent.com/Maikxx/frontend-data/master/data/city.geo.json')
@@ -437,6 +505,7 @@ map.on('load', async () => {
 
         animateOnDataLoaded()
         drawCircles()
+        createScaleLegend()
     } catch (error) {
         toastError(error)
     }

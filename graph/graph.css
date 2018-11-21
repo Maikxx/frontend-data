@@ -135,16 +135,12 @@ form select {
     background-color: var(--home-city-color);
 }
 
-.data-legend-icon--publication-city {
-    background-color: var(--publication-city-color);
-}
-
 .data-legend span {
     max-width: 70%;
     display: block;
 }
 
-svg {
+svg:not(#scale-svg) {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -246,4 +242,24 @@ svg {
     background-color: var(--color-danger);
     padding: 4px 16px;
     border-radius: 4px 4px 0 0;
+}
+
+li#scale-legend {
+    flex-direction: column;
+    align-items: unset;
+}
+
+li#scale-legend div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+li#scale-legend h3 {
+    font-size: 0.9rem;
+    text-align: right;
+    margin-bottom: 4px;
 }
