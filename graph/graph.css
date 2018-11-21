@@ -11,7 +11,6 @@
 
     --home-city-color: #E27D60;
     --publication-city-color: #41B3A3;
-    --highlighted-city-color: #85DCBC;
 
     --color-danger: #FC4445;
 
@@ -138,10 +137,6 @@ form select {
 
 .data-legend-icon--publication-city {
     background-color: var(--publication-city-color);
-}
-
-.data-legend-icon--highlighted-city {
-    background-color: var(--highlighted-city-color);
 }
 
 .data-legend span {
