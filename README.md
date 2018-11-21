@@ -88,7 +88,7 @@ The concept really just evolved over time, and at this moment it is still a work
 I initially thought I was going to hate D3, because everyone I know said it was awefull, however the reality is that I love it. It makes a lot of things so much more easy.
 The things that I could not easily write myself or solve with D3, I fixed by using Lodash.
 
-The further the project got, the more I started enjoying it, and now I would like to keep this project up to date and develop it to the next level when I have the time for it. You can look at my [GitHub issues]((https://github.com/Maikxx/frontend-data/issues) to see what I want to add in the future.
+The further the project got, the more I started enjoying it, and now I would like to keep this project up to date and develop it to the next level when I have the time for it. You can look at my [GitHub issues](https://github.com/Maikxx/frontend-data/issues) to see what I want to add in the future.
 
 Finally, I am starting to like working with GitHub issues and git branches each time a little bit more, which I would not have imagined I would ever say for a solo project.
 
