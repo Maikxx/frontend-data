@@ -375,10 +375,18 @@ const drawLines = () => {
     triggerUpdate()
 }
 
+const getNormalFillOrStrokeColor = (d) => {
+    const normalColorScale = getNormalColorScale()
+    return d.properties.name !== 'Amsterdam' && normalColorScale(d.properties.books.length)
+}
+
+const getHoverFillOrStrokeColor = (d) => {
+    const hoverColorScale = getHoverColorScale()
+    return d.properties.name !== 'Amsterdam' && hoverColorScale(d.properties.books.length)
+}
+
 const drawCircles = () => {
     const { cities } = geoJson
-    const normalColorScale = getNormalColorScale()
-    const hoverColorScale = getHoverColorScale()
 
     svg.selectAll('circle')
         .data(cities.features)
@@ -386,18 +394,18 @@ const drawCircles = () => {
         .append('circle')
             .attr('r', 9)
             .attr('class', getCityStyleClassFromData)
-            .style('fill', d => d.properties.name !== 'Amsterdam' && normalColorScale(d.properties.books.length))
-            .style('stroke', d => d.properties.name !== 'Amsterdam' && normalColorScale(d.properties.books.length))
+            .style('fill', getNormalFillOrStrokeColor)
+            .style('stroke', getNormalFillOrStrokeColor)
             .on('click', handleCircleClick)
-            .on('mouseover', function(d) {
+            .on('mouseover', function() {
                 d3.select(this)
-                    .style('fill', d => d.properties.name !== 'Amsterdam' && hoverColorScale(d.properties.books.length))
-                    .style('stroke', d => d.properties.name !== 'Amsterdam' && hoverColorScale(d.properties.books.length))
+                    .style('fill', getHoverFillOrStrokeColor)
+                    .style('stroke', getHoverFillOrStrokeColor)
             })
-            .on('mouseleave', function(d) {
+            .on('mouseleave', function() {
                 d3.select(this)
-                    .style('fill', d => d.properties.name !== 'Amsterdam' && normalColorScale(d.properties.books.length))
-                    .style('stroke', d => d.properties.name !== 'Amsterdam' && normalColorScale(d.properties.books.length))
+                    .style('fill', getNormalFillOrStrokeColor)
+                    .style('stroke', getNormalFillOrStrokeColor)
             })
 
     drawLines()
@@ -413,7 +421,19 @@ const setD3LineClassName = (cityName) => {
         .classed('line--visible', shouldLineBeShown)
 }
 
+const handleOnAmsterdamLegendItemClick = (event) => {
+    map.flyTo({
+        center: [
+            4.899431,
+            52.379189,
+        ],
+        zoom: 9,
+    })
+}
+
 const setupListeners = () => {
+    const amsterdamLegendElement = document.getElementById('legend-item--amsterdam')
+    amsterdamLegendElement.addEventListener('click', handleOnAmsterdamLegendItemClick)
     const selectionElement = document.getElementById('select-plane')
     selectionElement.addEventListener('change', handleOnSelectorChange)
 }

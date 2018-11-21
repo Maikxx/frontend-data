@@ -120,6 +120,10 @@ form select {
     padding-left: 24px;
 }
 
+.data-legend li:first-child {
+    cursor: pointer;
+}
+
 .data-legend li + li {
     margin-top: 16px;
 }
