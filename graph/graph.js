@@ -35,6 +35,25 @@ function projectPoint (lon, lat) {
 const transform = d3.geoTransform({ point: projectPoint })
 const path = d3.geoPath().projection(transform)
 
+const getNormalColorScale = () => {
+    const maxAmountOfBooks = d3.max(geoJson.cities.features, f => f.properties.books.length)
+    const minAmountOfBooks = d3.min(geoJson.cities.features, f => f.properties.books.length)
+    return d3.scaleLog()
+        .base(30)
+        .domain([minAmountOfBooks, maxAmountOfBooks])
+        .range(['#66FCF1', '#2F2FA2'])
+}
+
+const getHoverColorScale = () => {
+    const maxAmountOfBooks = d3.max(geoJson.cities.features, f => f.properties.books.length)
+    const minAmountOfBooks = d3.min(geoJson.cities.features, f => f.properties.books.length)
+
+    return d3.scaleLog()
+        .base(30)
+        .domain([minAmountOfBooks, maxAmountOfBooks])
+        .range(['#0ffae9', '#232379'])
+}
+
 const updateCities = (transitionTime) => {
     svg.selectAll('.city')
     .transition()
@@ -63,16 +82,17 @@ const triggerUpdate = () => {
     map.on('moveend', update)
 }
 
-const getCityStyleClassFromData = (data) => {
-    return data.properties.dataClass === 'main'
-        ? 'city city--main'
-        : 'city'
-}
-
 const getTransformedCityName = (cityName) => {
     return cityName
         .toLowerCase()
+        .replace('\'', '')
         .replace(' ', '_')
+}
+
+const getCityStyleClassFromData = (data) => {
+    return data.properties.dataClass === 'main'
+        ? `city city--${getTransformedCityName(data.properties.name)} city--main`
+        : `city city--${getTransformedCityName(data.properties.name)}`
 }
 
 const getSpeedFromSelectedPlane = (text) => {
@@ -325,11 +345,12 @@ const createArc = (d) => {
 }
 
 const setInitalLineClass = (d) => {
-    return `line line--${d.properties.fromCity.toLowerCase().replace(' ', '_')}`
+    return `line line--${getTransformedCityName(d.properties.fromCity)}`
 }
 
 const drawLines = () => {
     const { lines } = geoJson
+    const normalColorScale = getNormalColorScale()
 
     svg.selectAll('path')
         .data(lines.features)
@@ -337,12 +358,24 @@ const drawLines = () => {
         .append('path')
             .attr('d', createArc)
             .attr('class', setInitalLineClass)
+            .style('stroke', d => {
+                const { cities } = geoJson
+                const { features } = cities
+                const cityName = d.properties.fromCity
+                const filteredCity = features.filter(feature => feature.properties.name === cityName)[0]
+                const { books } = filteredCity.properties
+                const amountOfBooks = books.length
+
+                return normalColorScale(amountOfBooks)
+            })
 
     triggerUpdate()
 }
 
 const drawCircles = () => {
     const { cities } = geoJson
+    const normalColorScale = getNormalColorScale()
+    const hoverColorScale = getHoverColorScale()
 
     svg.selectAll('circle')
         .data(cities.features)
@@ -350,7 +383,19 @@ const drawCircles = () => {
         .append('circle')
             .attr('r', 5)
             .attr('class', getCityStyleClassFromData)
+            .style('fill', d => d.properties.name !== 'Amsterdam' && normalColorScale(d.properties.books.length))
+            .style('stroke', d => d.properties.name !== 'Amsterdam' && normalColorScale(d.properties.books.length))
             .on('click', handleCircleClick)
+            .on('mouseover', function(d) {
+                d3.select(this)
+                    .style('fill', d => d.properties.name !== 'Amsterdam' && hoverColorScale(d.properties.books.length))
+                    .style('stroke', d => d.properties.name !== 'Amsterdam' && hoverColorScale(d.properties.books.length))
+            })
+            .on('mouseleave', function(d) {
+                d3.select(this)
+                    .style('fill', d => d.properties.name !== 'Amsterdam' && normalColorScale(d.properties.books.length))
+                    .style('stroke', d => d.properties.name !== 'Amsterdam' && normalColorScale(d.properties.books.length))
+            })
 
     drawLines()
 }
