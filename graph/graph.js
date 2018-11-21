@@ -222,9 +222,8 @@ const setSettings = () => {
         return null
     }
 
-    dataList.forEach(options => updateExistingListItem(options))
+    dataList.forEach(updateExistingListItem)
 }
-
 const toastError = (error) => {
     const tIn = d3.transition()
         .duration(300)
