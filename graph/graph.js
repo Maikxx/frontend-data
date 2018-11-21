@@ -350,7 +350,7 @@ const drawCircles = () => {
         .data(cities.features)
         .enter()
         .append('circle')
-            .attr('r', 8)
+            .attr('r', 5)
             .attr('class', getCityStyleClassFromData)
             .on('click', handleCircleClick)
 
