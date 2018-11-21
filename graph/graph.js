@@ -336,7 +336,7 @@ const createArc = (d) => {
     const lineDistance = turf.lineDistance(d, 'kilometers')
     const arc = []
 
-    const steps = 50
+    const steps = 40
 
     for (let i = 0; i < lineDistance; i += lineDistance / steps) {
         const segment = turf.along(d, i, 'kilometers')
