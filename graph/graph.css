@@ -164,13 +164,10 @@ svg {
 }
 
 .line--visible {
-    stroke: var(--highlighted-city-color);
     stroke-width: 3;
 }
 
 .city {
-    fill: var(--publication-city-color);
-    stroke: var(--publication-city-color);
     stroke-width: 5;
     cursor: pointer;
     transition: 0.3s all;
@@ -179,8 +176,6 @@ svg {
 .city:hover,
 .city--active {
     stroke-width: 10;
-    stroke: var(--highlighted-city-color);
-    fill: var(--highlighted-city-color);
 }
 
 .city--main,
