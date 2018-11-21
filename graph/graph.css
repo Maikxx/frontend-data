@@ -244,12 +244,12 @@ svg:not(#scale-svg) {
     border-radius: 4px 4px 0 0;
 }
 
-li#scale-legend {
+#legend-item--scale {
     flex-direction: column;
     align-items: unset;
 }
 
-li#scale-legend div {
+#legend-item--scale div {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -258,7 +258,7 @@ li#scale-legend div {
     font-size: 0.8rem;
 }
 
-li#scale-legend h3 {
+#legend-item--scale h3 {
     font-size: 0.9rem;
     text-align: right;
     margin-bottom: 4px;

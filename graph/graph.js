@@ -440,12 +440,12 @@ const createScaleLegend = () => {
     titleNode.textContent = 'Aantal boeken'
     const li = document.createElement('li')
     li.appendChild(titleNode)
-    li.id = 'scale-legend'
+    li.id = 'legend-item--scale'
     node.appendChild(li)
 
     const height = 20
 
-    const key = d3.select('#scale-legend')
+    const key = d3.select('#legend-item--scale')
       .append('svg')
       .attr('id', 'scale-svg')
       .attr('width', width - 20)
@@ -485,8 +485,6 @@ const createScaleLegend = () => {
         .attr('height', height)
         .style('fill', 'url(#gradient)')
 
-    const scale = node.querySelector('li:last-child')
-
     const startNode = document.createElement('span')
     const endNode = document.createElement('span')
     const divNode = document.createElement('div')
@@ -495,7 +493,7 @@ const createScaleLegend = () => {
     endNode.textContent = getMaxAmountOfBooks()
     divNode.appendChild(startNode)
     divNode.appendChild(endNode)
-    scale.appendChild(divNode)
+    li.appendChild(divNode)
 }
 
 const setWindowZoomListener = () => {
