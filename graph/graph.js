@@ -1,4 +1,3 @@
-// Projection //
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFpa3h4IiwiYSI6ImNqb2p0b2c1ZzA4NWIzdnBhNTJhMjk3MmIifQ.WWh5GShedNrj-2eYYnkXxw'
 
 const geoJson = {
@@ -36,7 +35,6 @@ function projectPoint (lon, lat) {
 const transform = d3.geoTransform({ point: projectPoint })
 const path = d3.geoPath().projection(transform)
 
-// Updaters //
 const updateCities = (transitionTime) => {
     svg.selectAll('.city')
     .transition()
@@ -65,7 +63,6 @@ const triggerUpdate = () => {
     map.on('moveend', update)
 }
 
-// Getters //
 const getCityStyleClassFromData = (data) => {
     return data.properties.dataClass === 'main'
         ? 'city city--main'
@@ -124,7 +121,6 @@ const getReadableFlyTime = () => {
     return flyTimeWithUnits
 }
 
-// Filters //
 const filterLinesByCityName = (cityName) => {
     const { lines } = geoJson
 
@@ -134,7 +130,6 @@ const filterLinesByCityName = (cityName) => {
     })
 }
 
-// Data Display
 const setNewListItem = (list, options) => {
     const { title, value, identifier } = options
 
@@ -262,7 +257,6 @@ const setFlightTimeAndDistance = (cityName) => {
     interactionOptions.cityName = cityName
 }
 
-// Handlers //
 function handleCircleClick(d) {
     const { name: cityName, books } = d.properties
     const { flySpeed } = interactionOptions
@@ -315,7 +309,26 @@ function handleOnSelectorChange({ target }) {
     setSettings()
 }
 
-// Drawers //
+const createArc = (d) => {
+    // Heavily inspired by MapBox's (2018) example about animating a point along a route.
+    const lineDistance = turf.lineDistance(d, 'kilometers')
+    const arc = []
+
+    const steps = 50
+
+    for (let i = 0; i < lineDistance; i += lineDistance / steps) {
+        const segment = turf.along(d, i, 'kilometers')
+        arc.push(segment.geometry.coordinates)
+    }
+
+    d.geometry.coordinates = arc
+    return path(d)
+}
+
+const setInitalLineClass = (d) => {
+    return `line line--${d.properties.fromCity.toLowerCase().replace(' ', '_')}`
+}
+
 const drawLines = () => {
     const { lines } = geoJson
 
@@ -323,22 +336,8 @@ const drawLines = () => {
         .data(lines.features)
         .enter()
         .append('path')
-            .attr('d', d => {
-                // Heavily inspired by MapBox's (2018) example about animating a point along a route.
-                const lineDistance = turf.lineDistance(d, 'kilometers')
-                const arc = []
-
-                const steps = 50
-
-                for (let i = 0; i < lineDistance; i += lineDistance / steps) {
-                    const segment = turf.along(d, i, 'kilometers')
-                    arc.push(segment.geometry.coordinates)
-                }
-
-                d.geometry.coordinates = arc
-                return path(d)
-            })
-            .attr('class', d => `line line--${d.properties.fromCity.toLowerCase().replace(' ', '_')}`)
+            .attr('d', createArc)
+            .attr('class', setInitalLineClass)
 
     triggerUpdate()
 }
@@ -357,7 +356,6 @@ const drawCircles = () => {
     drawLines()
 }
 
-// Setters //
 const setD3LineClassName = (cityName) => {
     const className = `line--${cityName}`
     const shouldLineBeShown = d3.select(`.${className}`).classed('line--visible')
@@ -373,7 +371,6 @@ const setupListeners = () => {
     selectionElement.addEventListener('change', handleOnSelectorChange)
 }
 
-// Animators //
 const animateOnDataLoaded = () => {
     const t = d3.transition()
         .duration(600)
@@ -389,7 +386,6 @@ const animateOnDataLoaded = () => {
         .style('transform', 'translateX(0)')
 }
 
-// Initializer //
 map.on('load', async () => {
     try {
         geoJson.cities = await d3.json('../data/city.geo.json')
