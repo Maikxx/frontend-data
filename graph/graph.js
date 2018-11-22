@@ -185,13 +185,15 @@ const updateExistingUISelectionListItem = (options) => {
         booksListItem.appendChild(h3)
             .textContent = `Boek${amountOfBooks === 1 ? '' : 'en'} (${amountOfBooks})`
 
-        value.map(v => {
-            const span = document.createElement('span')
+        value
+            .sort((a, b) => a > b ? 1 : -1)
+            .map(v => {
+                const span = document.createElement('span')
 
-            booksListItem
-                .appendChild(span)
-                .textContent = v
-        })
+                booksListItem
+                    .appendChild(span)
+                    .textContent = v
+            })
 
         booksListItem.classList.add('data-list')
         booksListItem.classList.add('data-list--multiple')
