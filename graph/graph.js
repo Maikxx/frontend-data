@@ -249,6 +249,7 @@ const setUISelectionSettings = () => {
 
     dataOptions.forEach(updateExistingUISelectionListItem)
 }
+
 const toastError = (error) => {
     const tIn = d3.transition()
         .duration(300)

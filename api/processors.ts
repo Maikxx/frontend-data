@@ -22,7 +22,7 @@ const writeFile = promisify(fs.writeFile)
 const obaApiDataFile = path.join(__dirname, '/../data/oba.data.json')
 const dataFile = path.join(__dirname, '/../data/transformed.data.json')
 const cityGeoFile = path.join(__dirname, '/../data/city.geo.json')
-const cityConnectionsFile = path.join(__dirname, '/../data/cityConnections.json')
+const cityConnectionsFile = path.join(__dirname, '/../data/cityConnections.geo.json')
 const locationIQPlacesFile = path.join(__dirname, '/../data/locations.api.json')
 
 const processobaApiData = async (): Promise<Book[]> => {

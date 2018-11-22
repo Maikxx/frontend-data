@@ -75,9 +75,9 @@ export const getTransformedLocationNameForAPI = (locationName?: string): string 
         return 'London'
     }
 
-    if (name === 'new york') {
-        return 'Brooklyn'
-    }
+    // if (name === 'new york') {
+    //     return 'Brooklyn'
+    // }
 
     if (name === 'nðmegen') {
         return 'Nijmegen'
