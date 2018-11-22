@@ -7,6 +7,10 @@
 * [Future enhancements](#Future-enhancements)
 * [Process](#Process)
 * [Development](#Development)
+    * [Code attribution](#Code-attribution)
+    * [Data](#Data)
+    * [Interaction](#Interaction)
+    * [Tools and APIs](#Tools-and-APIs)
 * [Honourable mentions](#Honourable-mentions)
 * [Sources](#Sources)
 * [License](#License)
@@ -32,7 +36,8 @@ To build the code locally use `yarn build:client` and change the links of the CS
 
 *Note: These designs might be a little outdated, but the global concept still stands*
 
-I originally planned to make a graph, which would hold all the variables of the books from the OBA in it. However, this felt like it was not interesting enough. I also received feedback that I needed to make a visualization which was interesting to me personally.
+I originally planned to make a graph, which would hold all the variables of the books from the OBA in it (some early sketches can be found [here](docs/vis-v1.1.jpg) and [here](docs/vis-v1.2.jpg)). However, this felt like it was not interesting enough.
+I also received feedback that I needed to make a visualization which was interesting to me personally.
 
 When I heard that, I immediately looked at a way to implement airplanes in the visualization.
 I eventually came up with a map, which holds all the cities in which atleast one books is published.
@@ -143,7 +148,7 @@ If, for some reason, the interaction is not clearly visible at first, no worries
 * Clicking on a point on the map to draw a line between this city and Amsterdam in order for the statistics in the panel on the right to update with accurate approximate fly times and distances
 * When you click on a city without selecting an airplane you will get an error toast🍞.
 
-### Tools and API's
+### Tools and APIs
 
 The graphs base is using MapBox, because I heard a lot of good things about this before starting at this task and started to wonder if I could make something happen with an additional SVG layer on top.
 
