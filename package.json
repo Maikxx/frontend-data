@@ -5,8 +5,8 @@
   "scripts": {
     "serve": "nodemon",
     "lint": "tslint index.ts",
-    "start:client": "yarn clearDist && parcel index.html",
-    "build:client": "yarn clearDist && parcel build index.html --no-source-maps",
+    "start:client": "yarn clearDist && parcel index.dev.html",
+    "build:client": "yarn clearDist && parcel build index.dev.html --no-source-maps && mv dist/index.dev.html ./index.html && code ./index.html",
     "clearDist": "rm -rf dist/"
   },
   "version": "1.0.0",
