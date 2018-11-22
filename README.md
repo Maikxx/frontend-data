@@ -26,6 +26,8 @@ cd frontend-data
 
 To build the code locally use `yarn build:client` and change the links of the CSS and JS in the [index.html](index.html) file from `/client...` to `/dist/client...`.
 
+**If you are experiencing CORS errors, please consider installing [this](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en) Chrome plugin**
+
 ## Concept
 
 *Note: These designs might be a little outdated, but the global concept still stands*
