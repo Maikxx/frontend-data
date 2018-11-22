@@ -136,6 +136,7 @@ If, for some reason, the interaction is not clearly visible at first, no worries
 * Clicking on the Amsterdam legend item flies you back to Amsterdam if you get lost on the map
 * Selecting an airplane from the dropdown
 * Clicking on a point on the map to draw a line between this city and Amsterdam in order for the statistics in the panel on the right to update with accurate approximate fly times and distances
+* When you click on a city without selecting an airplane you will get an error toast🍞.
 
 ### Tools and API's
 
