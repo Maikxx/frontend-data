@@ -1,3 +1,8 @@
+import 'babel-polyfill'
+import turfAlong from '@turf/along'
+import turfLength from '@turf/length'
+import * as d3 from 'd3'
+
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFpa3h4IiwiYSI6ImNqb2p0b2c1ZzA4NWIzdnBhNTJhMjk3MmIifQ.WWh5GShedNrj-2eYYnkXxw'
 
 const geoJson = {
@@ -348,7 +353,7 @@ const setFlightTimeAndDistance = async (cityName) => {
     const flySpeedWithWeatherImpact = await getWeatherImpactOnFlySpeed()
 
     const lineByCityName = filterLinesByCityName(cityName)[0]
-    const distanceBetweenCities = turf.lineDistance(lineByCityName)
+    const distanceBetweenCities = turfLength(lineByCityName, 'kilometers')
     interactionOptions.distanceBetweenCities = distanceBetweenCities
 
     const flyTimeInMinutes = distanceBetweenCities / flySpeedWithWeatherImpact * 60
@@ -410,13 +415,13 @@ async function handleOnSelectorChange({ target }) {
 
 const createArc = (d) => {
     // Heavily inspired by MapBox's (2018) example about animating a point along a route.
-    const lineDistance = turf.lineDistance(d, 'kilometers')
+    const lineDistance = turfLength(d, 'kilometers')
     const arc = []
 
     const steps = 40
 
     for (let i = 0; i < lineDistance; i += lineDistance / steps) {
-        const segment = turf.along(d, i, 'kilometers')
+        const segment = turfAlong(d, i, 'kilometers')
         arc.push(segment.geometry.coordinates)
     }
 
