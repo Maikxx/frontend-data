@@ -13,6 +13,7 @@ const interactionOptions = {
     readableFlyTime: undefined,
     cityName: undefined,
     bookNames: [],
+    fromCityCoordinates: []
 }
 
 const map = new mapboxgl.Map({
@@ -144,6 +145,34 @@ const getReadableFlyTime = () => {
     return flyTimeWithUnits
 }
 
+const fetchWindSpeed = async () => {
+    const { fromCityCoordinates } = interactionOptions
+
+    if (!fromCityCoordinates.length) {
+        return null
+    }
+
+    const [ lon, lat ] = fromCityCoordinates
+    const url = `https://api.darksky.net/forecast/5b3678e68ed7fd50f15f7acf20625ff6/${lat},${lon}`
+    const data = await fetch(url, {method: 'GET'})
+    const parsed = await data.json()
+
+    return parsed
+}
+
+const getWindSpeedAndBearing = async () => {
+    const weatherForLocation = await fetchWindSpeed()
+    const currentWeather = weatherForLocation && weatherForLocation.currently
+    const windSpeedInMph = currentWeather && currentWeather.windSpeed
+    const windBearing = currentWeather && currentWeather.windBearing
+    const windSpeedInKmh = windSpeedInMph && windSpeedInMph * 1.609344
+
+    return {
+        windBearing,
+        windSpeedInKmh,
+    }
+}
+
 const filterLinesByCityName = (cityName) => {
     const { lines } = geoJson
 
@@ -205,14 +234,17 @@ const updateExistingUISelectionListItem = (options) => {
     }
 }
 
-const setUISelectionSettings = () => {
+const setUISelectionSettings = async () => {
     const { flySpeed, distanceBetweenCities, airplane, readableFlyTime, books } = interactionOptions
+    const { windBearing, windSpeedInKmh } = await getWindSpeedAndBearing()
     const list = document.getElementById('settings-list')
 
     const roundFlySpeed = Math.floor(flySpeed)
     const roundDistance = Math.floor(distanceBetweenCities)
     const planePlaceholder = 'Selecteer een vliegtuig'
-    const placeholderForInfoRequiringPlane = airplane ? 'Selecteer een locatie' : planePlaceholder
+    const placeholderForInfoRequiringPlane = airplane
+        ? 'Selecteer een locatie'
+        : planePlaceholder
 
     const dataOptions = [
         {
@@ -234,6 +266,16 @@ const setUISelectionSettings = () => {
             title: `Geschatte vluchtduur`,
             value: readableFlyTime || placeholderForInfoRequiringPlane,
             identifier: 'flight-duration'
+        },
+        {
+            title: `Windsnelheid`,
+            value: windSpeedInKmh ? `${Math.floor(windSpeedInKmh)}km/h` : placeholderForInfoRequiringPlane,
+            identifier: 'wind-speed',
+        },
+        {
+            title: `Windrichting`,
+            value: windBearing ? `${windBearing}˚̊̊` : placeholderForInfoRequiringPlane,
+            identifier: 'wind-bearing',
         },
         {
             title: `Boeken`,
@@ -272,20 +314,53 @@ const toastError = (error) => {
     throw new Error(error)
 }
 
-const setFlightTimeAndDistance = (cityName) => {
-    const { flySpeed } = interactionOptions
+const getWeatherImpactOnFlySpeed = async () => {
+    const AMSTERDAM_LONGITUDE = 4.8951679
+    const { flySpeed, fromCityCoordinates } = interactionOptions
+    const [ fromCityLongitude ] = fromCityCoordinates
+
+    const { windBearing, windSpeedInKmh } = await getWindSpeedAndBearing()
+
+    if (!windBearing) {
+        return flySpeed
+    }
+
+    let processedFlightSpeed = flySpeed
+
+    if (windBearing >= 0 && windBearing <= 180) {
+        if (fromCityLongitude > AMSTERDAM_LONGITUDE) {
+            processedFlightSpeed = flySpeed + windSpeedInKmh
+        } else {
+            processedFlightSpeed = flySpeed - windSpeedInKmh
+        }
+    } else {
+        if (fromCityLongitude > AMSTERDAM_LONGITUDE) {
+            processedFlightSpeed = flySpeed - windSpeedInKmh
+        } else {
+            processedFlightSpeed = flySpeed + windSpeedInKmh
+        }
+    }
+
+    return processedFlightSpeed
+}
+
+const setFlightTimeAndDistance = async (cityName) => {
+    const flySpeedWithWeatherImpact = await getWeatherImpactOnFlySpeed()
+
     const lineByCityName = filterLinesByCityName(cityName)[0]
     const distanceBetweenCities = turf.lineDistance(lineByCityName)
     interactionOptions.distanceBetweenCities = distanceBetweenCities
 
-    const flyTimeInMinutes = distanceBetweenCities / flySpeed * 60
+    const flyTimeInMinutes = distanceBetweenCities / flySpeedWithWeatherImpact * 60
     interactionOptions.flyTimeInMinutes = flyTimeInMinutes
     interactionOptions.readableFlyTime = getReadableFlyTime()
     interactionOptions.cityName = cityName
 }
 
-function handleCircleClick(d) {
+async function handleCircleClick(d) {
     const { name: cityName, books } = d.properties
+    const { geometry : { coordinates } } = d
+
     const { flySpeed } = interactionOptions
 
     if (cityName === 'Amsterdam') {
@@ -298,6 +373,7 @@ function handleCircleClick(d) {
         toastError(error)
     }
 
+    interactionOptions.fromCityCoordinates = coordinates
     interactionOptions.books = books
 
     d3.selectAll('.line')
@@ -312,11 +388,11 @@ function handleCircleClick(d) {
     const transformedCityName = getTransformedCityName(cityName)
     setLineToActive(transformedCityName)
 
-    setFlightTimeAndDistance(transformedCityName)
-    setUISelectionSettings()
+    await setFlightTimeAndDistance(transformedCityName)
+    await setUISelectionSettings()
 }
 
-function handleOnSelectorChange({ target }) {
+async function handleOnSelectorChange({ target }) {
     const selectedOption = target.options[target.selectedIndex]
     const selectedPlane = selectedOption.text
     const { cityName } = interactionOptions
@@ -326,10 +402,10 @@ function handleOnSelectorChange({ target }) {
 
     if (cityName) {
         const transformedCityName = getTransformedCityName(cityName)
-        setFlightTimeAndDistance(transformedCityName)
+        await setFlightTimeAndDistance(transformedCityName)
     }
 
-    setUISelectionSettings()
+    await setUISelectionSettings()
 }
 
 const createArc = (d) => {
