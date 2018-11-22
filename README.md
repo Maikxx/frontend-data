@@ -31,6 +31,9 @@ I originally planned to make a graph, which would hold all the variables of the 
 
 When I heard that, I immediately looked at a way to implement airplanes in the visualization.
 I eventually came up with a map, which holds all the cities in which atleast one books is published.
+
+I decided to go for a map in D3, because I heard good things about that from [Tim](https://github.com/timruiterkamp), [Titus](https://github.com/wooorm) and [Lifely](https://lifely.nl).
+
 The landing page can be seen in this image:
 
 ![Concept image 1](docs/concept-visualization-01.jpg)
@@ -96,13 +99,55 @@ The full log of my process can be found [here](docs/PROCESS.md)!
 
 ## Development
 
+### Code attribution
+
+Pretty much all the code I wrote is made by myself. This includes the complete development environment setup, as well as the [server](./index.ts) every file in the [api folder](./api).
+
+The server and api code is mainly used for transforming the raw data from the OBA to usable geoJson. The reason I complete this task on the server instead of the client, is because otherwise the client would need to send out 230 requests, as I explained earlier.
+
+Pretty much the whole graph is also made by me, except for [the gradient part of the scaleLegend function](./graph/graph.js#L468) and the [code that transforms a line into an arc](./graph/graph.js#L332).
+For both of these, the motivation to not write it myself, is because I couldn't understand how they would work.
+For the line to arc transformation, this was pretty much the only decent example that I could find and could get to work with the structure I had built at that moment.
+
+All of the other code is written by myself, unless otherwise stated.
+
+### Data
+
+In the visualization I used books that have a publication location. The base data came from Wouter, who had exported about 4500 hits in a JSON file, which made developing way easier, instead of having to wait for like 500000 books to load.
+Thus, this visualization is made up of a subset of the data from the OBA.
+
+What I used in terms of variables to tie it all together:
+
+* Book title
+* Publication location of a book
+* Lat, long coordinates based on the publication locations, revrieved from [LocationIQ](https://locationiq.com/docs)
+* The distance between cities, calculated with the help of [MapBox](https://www.mapbox.com)
+* Names and cruising speeds of a select amount of airplanes, attribution can be found [here](#L150)
+* Fly time between two points
+* Amount of books per location
+
+I originally planned to make the select have more options by attaching it to another API, from Wikipedia for example, but due to the simple fact that most planes have similar cruising speeds, this was not usefull enough for me to start looking in it, for now.
+
+### Interaction
+
+If, for some reason, the interaction is not clearly visible at first, no worries, I got you covered here.
+
+* Zooming in and out on the map
+* Clicking on the Amsterdam legend item flies you back to Amsterdam if you get lost on the map
+* Selecting an airplane from the dropdown
+* Clicking on a point on the map to draw a line between this city and Amsterdam in order for the statistics in the panel on the right to update with accurate approximate fly times and distances
+
+### Tools and API's
+
+The graphs base is using MapBox, because I heard a lot of good things about this before starting at this task and started to wonder if I could make something happen with an additional SVG layer on top.
+
 * [D3](https://d3js.org)
 * [Git-LFS](https://git-lfs.github.com)
 * [JSON To TS](http://www.jsontots.com)
 * [JSONbin](https://jsonbin.io)
-* [LocationIQ](https://locationiq.com/docs)
+* [LocationIQ](https://locationiq.com/docs) - API
 * [Lodash](https://lodash.com)
-* [MapBox](https://www.mapbox.com)
+* [MapBox](https://www.mapbox.com) - API
 * [Node.js](https://nodejs.org/en/)
 * [Nodemon](https://nodemon.io)
 * [TypeScript](https://www.typescriptlang.org)
