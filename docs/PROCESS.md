@@ -151,6 +151,13 @@ More things I did include:
 
 *Note* I am also slowly starting to lose grip on both the [JavaScript](../graph/graph.js) and [CSS](../graph/graph.css) files because of their immense size. This makes me definately want to look into a build process from the start the next project I make.
 
+### Day 9
+
+My main focus today was helping others. The rest of the day I spent working on two major [issues](https://github.com/Maikxx/frontend-data/issues). I refactored the whole client so that the JavaScript gets bundled, babelified and minified before shipping.
+
+The other major feature I added was integration with live weather of the location that you select.
+This feature was high on my list, I don't even know exactly why. It might just be that I have never seen a flight radar map which had live weather data.
+
 <!-- Links -->
 [nodemon]: https://nodemon.io
 [typescript]: https://www.typescriptlang.org

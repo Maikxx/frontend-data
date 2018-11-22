@@ -20,8 +20,11 @@ cd frontend-data
 
 1. Install the dependencies with: `yarn` or `npm install`.
 2. Copy the _.env.example_ file with `cp .env.example .env` and provide the API keys.
-3. Run the _development server_ with (**Warning: Don't do this on celular**) `yarn serve` or `npm run serve`.
-4. Start _linting_ with `yarn lint` or `npm run lint`.
+3. Run the _server_ with (**Warning: Don't do this on celular**) `yarn serve` or `npm run serve`.
+4. Run the _client_ with `yarn start:client` or `npm run start:client`.
+5. Start _linting_ with `yarn lint` or `npm run lint`.
+
+To build the code locally use `yarn build:client` and change the links of the CSS and JS in the [index.html](index.html) file from `/client...` to `/dist/client...`.
 
 ## Concept
 
@@ -146,11 +149,12 @@ The graphs base is using MapBox, because I heard a lot of good things about this
 * [Git-LFS](https://git-lfs.github.com)
 * [JSON To TS](http://www.jsontots.com)
 * [JSONbin](https://jsonbin.io)
-* [LocationIQ](https://locationiq.com/docs) - API
+* [LocationIQ](https://locationiq.com/docs) - API for getting coordinates from city names.
 * [Lodash](https://lodash.com)
-* [MapBox](https://www.mapbox.com) - API
+* [MapBox](https://www.mapbox.com) - API for showing the map
 * [Node.js](https://nodejs.org/en/)
 * [Nodemon](https://nodemon.io)
+* [Dark Sky](https://darksky.net/dev) - API for live weather data
 * [TypeScript](https://www.typescriptlang.org)
 * [Yarn](https://yarnpkg.com/en/)
 
