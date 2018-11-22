@@ -146,7 +146,7 @@ If, for some reason, the interaction is not clearly visible at first, no worries
 * Clicking on the Amsterdam legend item flies you back to Amsterdam if you get lost on the map
 * Selecting an airplane from the dropdown
 * Clicking on a point on the map to draw a line between this city and Amsterdam in order for the statistics in the panel on the right to update with accurate approximate fly times and distances
-* When you click on a city without selecting an airplane you will get an error toast🍞.
+* When you click on a city without selecting an airplane you will get an error toast🍞
 
 ### Tools and APIs
 
@@ -156,7 +156,7 @@ The graphs base is using MapBox, because I heard a lot of good things about this
 * [Git-LFS](https://git-lfs.github.com)
 * [JSON To TS](http://www.jsontots.com)
 * [JSONbin](https://jsonbin.io)
-* [LocationIQ](https://locationiq.com/docs) - API for getting coordinates from city names.
+* [LocationIQ](https://locationiq.com/docs) - API for getting coordinates from city names
 * [Lodash](https://lodash.com)
 * [MapBox](https://www.mapbox.com) - API for showing the map
 * [Node.js](https://nodejs.org/en/)
