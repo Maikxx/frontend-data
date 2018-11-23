@@ -14,7 +14,7 @@
     * [Code](#Code)
         * [Server](#Server)
         * [Client](#Client)
-        * [Data](#Data)s
+        * [Data storage](#Data-storage)
 * [Honourable mentions](#Honourable-mentions)
 * [Sources](#Sources)
 * [License](#License)
@@ -209,7 +209,7 @@ The graphs base is using MapBox, because I heard a lot of good things about this
 * [updaters/cities](./client/js/updaters/cities.js) - Functions that update the data in the state for cities.
 * [updaters/general](./client/js/updaters/general.js) - General updaters.
 
-#### Data
+#### Data storage
 
 * [city.geo](./data/city.geo.json) - Data that gets sent to the client, containing all city data geoJson data.
 * [cityConnections.geo](./data/cityConnections.geo.json) - Data that gets sent to the client, containing all lines between cities.
