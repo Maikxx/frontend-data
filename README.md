@@ -174,11 +174,38 @@ The graphs base is using MapBox, because I heard a lot of good things about this
 #### Server
 
 * [server](./index.ts) - Base for the server.
+
 * [types](./api/types) - TypeScript type definition files.
+
 * [filters](./api/filters.ts) - Contains some general modularized filter functions.
 * [getters](./api/getters.ts) - Most of the transformation logic happens here.
 * [processors](./api/processors.ts) - The brains of the server, fires getters, filters and queries.
 * [queries](./api/queries.ts) - Contains a function that sends a request to the [LocationIQ](https://locationiq.com/docs) API to get coordinates by the name of a book.
+
+#### Client
+
+* [client](./client/js/client.js) - Client initializer, which fires all sub files.
+
+* [animations/pageLoad](./client/js/animations/pageLoad.js) - Function that animates in page content.
+
+* [drawers/cities](./client/js/drawers/cities.js) - Functions that draw dots and lines on the map.
+* [drawers/scaleLegend](./client/js/drawers/scaleLegend.js) - Function that creates the legend in the bottom right of the page.
+
+* [feedback/error](./client/js/feedback/error.js) - Function that handles showing of errors to the page.
+
+* [filters/cities](./client/js/filters/cities.js) - Handles filtering of a specific line when clicked.
+
+* [getters/amountOfBooks](./client/js/getters/amountOfBooks.js) - Functions that have to do with calculating the amount of books for a given spot.
+* [getters/cities](./client/js/getters/cities.js) - Functions that return something that has something to do with cities.
+* [getters/planes](./client/js/getters/planes.js) - Functions that return something that has something to do with planes.
+* [getters/scales](./client/js/getters/scales.js) - Functions that return a certain scale.
+
+* [setters/interaction](./client/js/setters/interaction.js) - Functions that set data to the state or UI, which have something to do with interaction.
+* [setters/planes](./client/js/setters/planes.js) - Functions that set data to the state or UI, which have something to do with planes.
+* [setters/ui](./client/js/setters/ui.js) - Main file that contains UI interactions.
+
+* [updaters/cities](./client/js/updaters/cities.js) - Functions that update the data in the state for cities.
+* [updaters/general](./client/js/updaters/general.js) - General updaters.
 
 ## Honourable mentions
 
