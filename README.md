@@ -169,12 +169,14 @@ The graphs base is using MapBox, because I heard a lot of good things about this
 
 ## Honourable mentions
 
-* [Wouter](https://github.com/maanlamp):
-    Wouter created the [boilerplate for pagination](https://github.com/maanlamp/node-oba-api-wrapper) with the OBA API.
 * [Chelsea](https://github.com/chelseadoeleman):
     Chelsea helped me writing the data transformators and getting me up and running with D3.
 * [Jessie](https://github.com/jessiemasonx):
     Jessie helped me getting up and running with D3.
+* [Wouter](https://github.com/maanlamp):
+    Wouter created the [boilerplate for pagination](https://github.com/maanlamp/node-oba-api-wrapper) with the OBA API.
+* [Tim](https://github.com/timruiterkamp):
+    Tim helped me solve some complex issues, mainly things that involved the connection between MapBox and D3.
 
 ## Sources
 
