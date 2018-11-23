@@ -154,6 +154,7 @@ If, for some reason, the interaction is not clearly visible at first, no worries
 The graphs base is using MapBox, because I heard a lot of good things about this before starting at this task and started to wonder if I could make something happen with an additional SVG layer on top.
 
 * [D3](https://d3js.org)
+* [Dark Sky](https://darksky.net/dev) - API for live weather data
 * [Git-LFS](https://git-lfs.github.com)
 * [JSON To TS](http://www.jsontots.com)
 * [JSONbin](https://jsonbin.io)
@@ -162,7 +163,7 @@ The graphs base is using MapBox, because I heard a lot of good things about this
 * [MapBox](https://www.mapbox.com) - API for showing the map
 * [Node.js](https://nodejs.org/en/)
 * [Nodemon](https://nodemon.io)
-* [Dark Sky](https://darksky.net/dev) - API for live weather data
+* [OBA Api](https://zoeken.oba.nl/api/v1/) - Api for gathering a certain amount of books
 * [TypeScript](https://www.typescriptlang.org)
 * [Yarn](https://yarnpkg.com/en/)
 
