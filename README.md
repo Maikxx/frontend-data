@@ -135,7 +135,7 @@ What I used in terms of variables to tie it all together:
 * Names and cruising speeds of a select amount of airplanes, attribution can be found [here](#L150)
 * Fly time between two points
 * Amount of books per location
-* Wind speed and bearing for the selected city
+* Wind speed and bearing for the selected city, by sending a request to [Dark Sky](https://darksky.net/dev).
 
 I originally planned to make the select have more options by attaching it to another API, from Wikipedia for example, but due to the simple fact that most planes have similar cruising speeds, this was not usefull enough for me to start looking in it, for now.
 
