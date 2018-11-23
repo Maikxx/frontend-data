@@ -11,6 +11,8 @@
     * [Data](#Data)
     * [Interaction](#Interaction)
     * [Tools and APIs](#Tools-and-APIs)
+    * [Code](#Code)
+        * [Server](#Server)
 * [Honourable mentions](#Honourable-mentions)
 * [Sources](#Sources)
 * [License](#License)
