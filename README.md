@@ -167,6 +167,17 @@ The graphs base is using MapBox, because I heard a lot of good things about this
 * [TypeScript](https://www.typescriptlang.org)
 * [Yarn](https://yarnpkg.com/en/)
 
+### Code
+
+#### Server
+
+* [server](./index.ts) - Base for the server.
+* [types](./api/types) - TypeScript type definition files.
+* [filters](./api/filters.ts) - Contains some general modularized filter functions.
+* [getters](./api/getters.ts) - Most of the transformation logic happens here.
+* [processors](./api/processors.ts) - The brains of the server, fires getters, filters and queries.
+* [queries](./api/queries.ts) - Contains a function that sends a request to the [LocationIQ](https://locationiq.com/docs) API to get coordinates by the name of a book.
+
 ## Honourable mentions
 
 * [Chelsea](https://github.com/chelseadoeleman):
