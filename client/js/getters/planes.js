@@ -1,4 +1,5 @@
 import { state } from '../client'
+require('dotenv').load()
 
 export const getSpeedFromSelectedPlane = (text) => {
     const cleanedText = text
@@ -64,11 +65,16 @@ export const fetchWindSpeed = async () => {
     }
 
     const [ lon, lat ] = fromCityCoordinates
-    const url = `https://api.darksky.net/forecast/5b3678e68ed7fd50f15f7acf20625ff6/${lat},${lon}`
-    const data = await fetch(url, {method: 'GET'})
-    const parsed = await data.json()
+    try {
+        const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/5b3678e68ed7fd50f15f7acf20625ff6/${lat},${lon}`
+        const data = await fetch(url, {method: 'GET'})
+        const parsed = await data.json()
 
-    return parsed
+        return parsed
+    } catch (error) {
+        console.error(error)
+        throw new Error(error)
+    }
 }
 
 export const getWindSpeedAndBearing = async () => {
