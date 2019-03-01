@@ -1,4 +1,4 @@
-import 'babel-polyfill'
+require('babel-polyfill')
 import * as d3 from 'd3'
 import { setUISelectionSettings } from './setters/ui'
 import { setupListeners } from './setters/interaction'
