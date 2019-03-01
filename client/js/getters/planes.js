@@ -1,5 +1,4 @@
 import { state } from '../client'
-require('dotenv').load()
 
 export const getSpeedFromSelectedPlane = (text) => {
     const cleanedText = text
